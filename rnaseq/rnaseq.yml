@@ -1,0 +1,54 @@
+name: salmon_tracer_workflow
+description: |
+  This workflow performs read indexing and quantification using Salmon, with workflow tracking enabled via Tracer.
+keywords:
+  - salmon
+  - quantification
+  - indexing
+  - RNA-seq
+  - tracer
+tools:
+  - salmon_index:
+      description: |
+        Salmon is a tool for quantifying the expression of transcripts using RNA-seq data. 
+        This process indexes the transcriptome.
+      documentation: https://salmon.readthedocs.io/en/latest/salmon.html
+      licence: ["GPL-3.0"]
+  - salmon_quant:
+      description: |
+        Salmon quantifies the expression of transcripts using RNA-seq data. 
+        This process performs the quantification step.
+      documentation: https://salmon.readthedocs.io/en/latest/salmon.html
+      licence: ["GPL-3.0"]
+  - tracer:
+      description: |
+        Tracer is a tool used for tracking workflow execution. 
+        It is used to initiate and terminate workflow processes.
+      documentation: https://example.com/tracer/documentation
+      licence: ["MIT"]
+input:
+  - reads:
+      type: file
+      description: |
+        Paired-end RNA-seq read files.
+      pattern: "*.fq"
+  - transcriptome:
+      type: file
+      description: |
+        Reference transcriptome file to be indexed by Salmon.
+      pattern: "*.fa"
+output:
+  - salmon_index:
+      type: directory
+      description: Directory containing the Salmon index files.
+      pattern: "salmon_index"
+  - quant:
+      type: directory
+      description: Directory containing the quantification results.
+      pattern: "*_quant"
+  - versions:
+      type: file
+      description: File containing software versions.
+      pattern: "versions.yml"
+authors:
+  - "@tw599"
