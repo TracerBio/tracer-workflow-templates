@@ -1,4 +1,0 @@
-# .gitpod.yml
-tasks:
-  - name: Run Demo Script
-    command: $HOME/Desktop/demo.sh
