@@ -137,6 +137,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Thanks to the Nextflow community for their excellent documentation and support.
 - Special thanks to the developers of Tracer for providing the tracking tool used in this example.
 
+## GitPod
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tw599/nextflow-tracer)
+
 ---
 
 This README provides a comprehensive guide for users to understand and execute the workflow. Adjust the repository URL, license details, and acknowledgments as per your specific project details.
