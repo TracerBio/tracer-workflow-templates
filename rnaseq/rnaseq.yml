@@ -32,6 +32,11 @@ steps:
       sudo mv nextflow /usr/local/bin
       nextflow info
 
+  name: Install GNOME
+    run: |
+      sudo apt-get update
+      sudo apt-get install -y gnome-shell ubuntu-gnome-desktop
+  
   name: Prepare for Terminal Reopen
     command: |
       echo 'bash ./rnaseq/continue-setup.sh' > ~/.bashrc
