@@ -1,5 +1,4 @@
 # .gitpod.yml
 tasks:
   - name: Run Demo Script
-    command: cd rnaseq
-    command: bash ./demo.sh
+    command: bash ./rnaseq/demo.sh
