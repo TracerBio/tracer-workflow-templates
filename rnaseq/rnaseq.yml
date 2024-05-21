@@ -35,12 +35,19 @@ steps:
     run: |
       kill -HUP $PPID
 
-  - name: Check Tools
+  - name: Prepare for Terminal Reopen
     run: |
-      tracer --version
-      conda
-      conda init
-      conda activate salmon
+      echo 'bash ./rnaseq/continue-setup.sh' > ~/.bashrc
+
+  - name: Write Continue Script
+    run: |
+      echo '#!/bin/bash' > ./rnaseq/continue-setup.sh
+      echo 'tracer --version' >> ./rnaseq/continue-setup.sh
+      echo 'conda' >> ./rnaseq/continue-setup.sh
+      echo 'conda init' >> ./rnaseq/continue-setup.sh
+      echo 'conda activate salmon' >> ./rnaseq/continue-setup.sh
+      echo 'nextflow run ./rnaseq/main2.nf' >> ./rnaseq/continue-setup.sh
+      chmod +x ./rnaseq/continue-setup.sh
 
   - name: Run Nextflow Pipeline
     run: |
