@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Define API key
+API_KEY=3Gf__nHYI-m1OiBzehxOY
+
 # Check if an API key was provided
 if [ "$#" -ne 1 ]; then
     echo ""
@@ -9,8 +12,6 @@ if [ "$#" -ne 1 ]; then
     echo ""
     exit 1
 fi
-
-API_KEY=3Gf__nHYI-m1OiBzehxOY
 
 # Define the version of the tracer you want to download
 TRACER_VERSION="v0.0.70"
