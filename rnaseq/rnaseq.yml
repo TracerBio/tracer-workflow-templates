@@ -39,8 +39,9 @@ steps:
     command: |
       source ~/.bashrc
       source ~/.profile
+      gnome-terminal -- bash -c "kill $$; exec bash"
 
-  name: Write Continue Script
+  name: Execute tests and workflow
     command: |
       tracer --version
       conda
