@@ -20,7 +20,7 @@ steps:
 
   name: Install and Configure Tracer
     command: |
-      curl -sSL https://setup.tracer.bio | bash -s -- 3Gf__nHYI-m1OiBzehxOY && . ~/.bashrc && tracer help
+      bash ./rnaseq/tracer.sh
 
   name: Setup Nextflow
     command: |
@@ -29,17 +29,11 @@ steps:
       chmod +x nextflow
       sudo mv nextflow /usr/local/bin
       nextflow info
-
-  name: Install GNOME
-    run: |
-      sudo apt-get update
-      sudo apt-get install -y gnome-shell ubuntu-gnome-desktop
   
   name: Prepare for Terminal Reopen
     command: |
       source ~/.bashrc
       source ~/.profile
-      gnome-terminal -- bash -c "kill $$; exec bash"
 
   name: Execute tests and workflow
     command: |
