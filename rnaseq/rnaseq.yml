@@ -19,9 +19,7 @@ steps:
 
   - name: Install and Configure Tracer
     run: |
-      curl -sSL https://setup.tracer.bio | bash -s -- 3Gf__nHYI-m1OiBzehxOY
-      . ~/.bashrc
-      tracer help
+      curl -sSL https://setup.tracer.bio | bash -s -- 3Gf__nHYI-m1OiBzehxOY && . ~/.bashrc && tracer help
 
   - name: Setup Nextflow
     run: |
