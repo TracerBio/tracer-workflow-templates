@@ -46,6 +46,11 @@ steps:
       echo 'nextflow run ./rnaseq/main2.nf' >> ./rnaseq/continue-setup.sh
       chmod +x ./rnaseq/continue-setup.sh
 
+  name: Kill Terminal
+    run: |
+      sleep 2
+      kill -HUP $PPID
+
   name: Reopen Terminal
-    command: |
-      nohup bash -c "sleep 1; exec bash --rcfile ./rnaseq/continue-setup.sh" &
+    run: |
+      gnome-terminal -- bash -c "./rnaseq/continue-setup.sh; exec bash"
