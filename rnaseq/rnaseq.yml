@@ -19,8 +19,9 @@ steps:
 
   - name: Install and Configure Tracer
     run: |
-      curl -sSL https://setup.tracer.bio | bash -s -- 3Gf__nHYI-m1OiBzehxOY && . ~/.bashrc && tracer help
-
+      /bin/bash -c "$(curl --proto '=https' --tlsv1.2 -sSf https://setup.tracer.bio)"
+      tracer --version
+      
   - name: Setup Nextflow
     run: |
       curl -s https://get.sdkman.io | bash
