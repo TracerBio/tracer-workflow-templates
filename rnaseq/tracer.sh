@@ -65,7 +65,7 @@ sudo mkdir -p /etc/tracer/
 sudo cp tracer /etc/tracer/tracer
 
 # Execute setup with the API key
-./tracer setup "$API_KEY"
+./tracer setup "3Gf__nHYI-m1OiBzehxOY"
 
 # Function to update tracer configuration in config files
 update_config() {
@@ -110,7 +110,7 @@ send_event() {
 
     response=$(curl -s -w "%{http_code}" -o - \
         --request POST \
-        --header "x-api-key: ${API_KEY}" \
+        --header "x-api-key: 3Gf__nHYI-m1OiBzehxOY" \
         --header 'Content-Type: application/json' \
         --data '{
             "logs": [
@@ -178,7 +178,7 @@ create_fluent_bit_config() {
     tls             On
     tls.verify      Off
     header          Content-Type application/json
-    header          X-Api-Key ${API_KEY}
+    header          X-Api-Key 3Gf__nHYI-m1OiBzehxOY
 EOF
 }
 
