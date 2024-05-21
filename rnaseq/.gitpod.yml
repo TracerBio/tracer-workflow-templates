@@ -1,4 +1,4 @@
 # .gitpod.yml
 tasks:
   - name: Run Demo Script
-    command: bash $HOME/Desktop/nextflow-tracer/rnaseq/demo.sh
+    command: bash ./rnaseq/demo.sh
