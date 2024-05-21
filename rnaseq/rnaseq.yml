@@ -27,13 +27,10 @@ steps:
   - name: Setup Nextflow
     run: |
       curl -s https://get.sdkman.io | bash
-      source "$HOME/.sdkman/bin/sdkman-init.sh"
-      sdk install nextflow
+      curl -s https://get.nextflow.io | bash
+      chmod +x nextflow
+      sudo mv nextflow /usr/local/bin
       nextflow info
-
-  - name: Reopen Terminal
-    run: |
-      kill -HUP $PPID
 
   - name: Prepare for Terminal Reopen
     run: |
@@ -49,6 +46,10 @@ steps:
       echo 'nextflow run ./rnaseq/main2.nf' >> ./rnaseq/continue-setup.sh
       chmod +x ./rnaseq/continue-setup.sh
 
+  name: Reopen Terminal
+    run: |
+      gnome-terminal -- bash -c "bash ./rnaseq/continue-setup.sh; exec bash"
+
   - name: Run Nextflow Pipeline
     run: |
-      nextflow run ./rnaseq/main2.nf
+      bash run ./rnaseq/continue-setup.sh
