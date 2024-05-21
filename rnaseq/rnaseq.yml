@@ -32,8 +32,7 @@ steps:
 
   - name: Run Nextflow Pipeline
     run: |
-      cd rnaseq
-      nextflow run main2.nf
+      nextflow run ./rnaseq/main2.nf
 
 authors:
   - "@tw599"
