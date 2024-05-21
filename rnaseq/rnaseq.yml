@@ -1,5 +1,10 @@
 # rnaseq.yml
 steps:
+  - name: Configure Conda
+    run: |
+      bash <conda-installer-name>-latest-Linux-x86_64.sh
+      conda list
+
   - name: Configure Conda Channels
     run: |
       conda config --add channels conda-forge
@@ -16,6 +21,14 @@ steps:
       curl -sSL https://setup.tracer.bio | bash -s -- 3Gf__nHYI-m1OiBzehxOY
       . ~/.bashrc
       tracer help
+
+  - name: Setup Nextflow
+    run: |
+      curl -s https://get.sdkman.io | bash
+      curl -s https://get.nextflow.io | bash
+      chmod +x nextflow
+      sudo mv nextflow /usr/local/bin
+      nextflow info
 
   - name: Run Nextflow Pipeline
     run: |
