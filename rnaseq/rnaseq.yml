@@ -2,7 +2,7 @@
 steps:
   - name: Configure Conda
     run: |
-      bash <conda-installer-name>-latest-Linux-x86_64.sh
+      bash Anaconda-latest-Linux-x86_64.sh
       conda list
 
   - name: Configure Conda Channels
