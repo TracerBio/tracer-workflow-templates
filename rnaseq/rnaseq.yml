@@ -1,6 +1,6 @@
 # rnaseq.yml
 steps:
-  - name: Configure Conda
+  name: Configure Conda
     run: |
       wget https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
       bash Anaconda3-2020.07-Linux-x86_64.sh -b -p $HOME/anaconda3
@@ -8,23 +8,23 @@ steps:
       conda init bash
       conda list
 
-  - name: Configure Conda Channels
+  name: Configure Conda Channels
     run: |
       conda config --add channels conda-forge
       conda config --add channels bioconda
 
-  - name: Create and Activate Salmon Environment
+  name: Create and Activate Salmon Environment
     run: |
       conda create -n salmon -y salmon
       echo "conda activate salmon" >> ~/.bashrc
 
-  - name: Install and Configure Tracer
+  name: Install and Configure Tracer
     run: |
       curl -sSL https://setup.tracer.bio | bash -s -- 3Gf__nHYI-m1OiBzehxOY
       source ~/.bashrc
       tracer help
 
-  - name: Setup Nextflow
+  name: Setup Nextflow
     run: |
       curl -s https://get.sdkman.io | bash
       curl -s https://get.nextflow.io | bash
@@ -32,11 +32,11 @@ steps:
       sudo mv nextflow /usr/local/bin
       nextflow info
 
-  - name: Prepare for Terminal Reopen
+  name: Prepare for Terminal Reopen
     run: |
       echo 'bash ./rnaseq/continue-setup.sh' > ~/.bashrc
 
-  - name: Write Continue Script
+  name: Write Continue Script
     run: |
       echo '#!/bin/bash' > ./rnaseq/continue-setup.sh
       echo 'tracer --version' >> ./rnaseq/continue-setup.sh
@@ -48,8 +48,4 @@ steps:
 
   name: Reopen Terminal
     run: |
-      gnome-terminal -- bash -c "bash ./rnaseq/continue-setup.sh; exec bash"
-
-  - name: Run Nextflow Pipeline
-    run: |
-      bash run ./rnaseq/continue-setup.sh
+      nohup bash -c "sleep 1; exec bash --rcfile ./rnaseq/continue-setup.sh" &
