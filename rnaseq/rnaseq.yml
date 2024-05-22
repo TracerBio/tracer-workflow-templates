@@ -24,8 +24,11 @@ steps:
       chmod +x nextflow
       sudo mv nextflow /usr/local/bin
       nextflow info
-      source ~/.bashrc
+
+  - name: Activate salmon
+    command: |
       conda init bash
+      source ~/.bashrc
       conda activate salmon
 
   - name: Tracer Installation
