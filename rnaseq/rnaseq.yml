@@ -16,6 +16,7 @@ steps:
   - name: Create and Activate Salmon Environment
     command: |
       conda create -n salmon -y salmon
+      echo "conda activate salmon" >> ~/.bashrc
 
   - name: Setup Nextflow
     command: |
@@ -25,16 +26,11 @@ steps:
       sudo mv nextflow /usr/local/bin
       nextflow info
 
-  - name: Activate salmon
-    command: |
-      conda init bash
-      source ~/.bashrc
-      conda activate salmon
-
   - name: Tracer Installation
     command: |
       echo "Please paste your Tracer API key:"
       read -r API
       curl -sSL https://setup.tracer.bio | bash -s -- ${API} && . ~/.bashrc && tracer help
       source ~/.bashrc
-      tracer --version
+      echo "nextflow run ./rnaseq/main2.nf" >> ~/.bashrc
+      echo "Exit & open a new terminal..."
