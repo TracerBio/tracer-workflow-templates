@@ -1,30 +1,34 @@
 # rnaseq.yml
 steps:
-    name: Configure Conda
-        command: |
-            wget https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
-            bash Anaconda3-2020.07-Linux-x86_64.sh -b -p $HOME/anaconda3
-            export PATH="$HOME/anaconda3/bin:$PATH"
-            conda init bash
-    name: Conda channels
-        command: |
-            conda config --add channels conda-forge
-            conda config --add channels bioconda
+  name: Configure Conda
+    command: |
+      wget https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
+      bash Anaconda3-2020.07-Linux-x86_64.sh -b -p $HOME/anaconda3
+      export PATH="$HOME/anaconda3/bin:$PATH"
+      conda init bash
+      conda list
 
-    name: Create and Activate Salmon Environment
-        command: |
-            source ~/.bashrc
-            source ~/.profile
-            conda init
-            conda create -n salmon -y salmon
-            conda activate salmon
-    name: Nextflow Setup
-        command: 
-             - curl -s https://get.sdkman.io | bash
-             - curl -s https://get.nextflow.io | bash
-             - chmod +x nextflow
-             - sudo mv nextflow /usr/local/bin
-             - nextflow info
-    name: Tracer Setup
-        command:
-             - echo "Please paste your Tracer API key..."
+  name: Configure Conda Channels
+    command: |
+      conda config --add channels conda-forge
+      conda config --add channels bioconda
+
+  name: Create and Activate Salmon Environment
+    command: |
+      source ~/.bashrc
+      source ~/.profile
+      conda init
+      conda create -n salmon -y salmon
+      conda activate salmon
+
+  name: Setup Nextflow
+    command: |
+      curl -s https://get.sdkman.io | bash
+      curl -s https://get.nextflow.io | bash
+      chmod +x nextflow
+      sudo mv nextflow /usr/local/bin
+      nextflow info
+  
+  name: Tracer Installation
+    command: |
+      echo "Please paste your Tracer API key..."
