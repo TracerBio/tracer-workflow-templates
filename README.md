@@ -20,8 +20,9 @@ The user can run the entire workflow by typing `nextflow run main2.nf`.
 
 ## Requirements
 
-- Nextflow: Ensure you have Nextflow installed. Follow the instructions on the [Nextflow website](https://www.nextflow.io/docs/latest/getstarted.html#installation) to install it.
-- Tracer: The tracking tool used in this workflow. Ensure Tracer is properly set up in your environment.
+- Conda and Salmon: Anaconda will be auto-installed along with salmon when you initialise your GitPod workspace.
+- Nextflow: Nextflow will be auto-installed on your GitPod workspace [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tw599/nextflow-tracer) 
+- Tracer: The tracking tool used in this workflow. Setup your Tracer account and record your unique API key at https://app.tracer.bio. Enter this API key when prompted for Tracer installation. Exit terminal & Open a new terminal to initiate Tracer.  
 
 ## Usage
 
@@ -32,13 +33,12 @@ The user can run the entire workflow by typing `nextflow run main2.nf`.
     cd your-repo-name
     
 
-2. Prepare your input data:
-    - Ensure your reads are placed in the `data/ggal/` directory and named `gut_1.fq` and `gut_2.fq`.
-    - Ensure your transcriptome reference is placed in the `data/ggal/` directory and named `ref1.fa`.
+2. Input data:
+    - Input files `gut_1.fq` and `gut_2.fq` are present in the `data/ggal/` directory.
+    - Transcriptome reference is placed in the `data/ggal/` directory and is named `ref1.fa`.
 
-3. Run the workflow:
+3. Workflow will be auto-run upon initiating a new terminal post Tracer installation using the following command:
 
-    bash
     nextflow run main2.nf
 
 ## Workflow Details
@@ -47,7 +47,7 @@ The user can run the entire workflow by typing `nextflow run main2.nf`.
 
 This file contains the main workflow definition:
 
-groovy
+'groovy'
 nextflow.enable.dsl=2
 
 params.reads = "$projectDir/data/ggal/gut_{1,2}.fq"
@@ -75,8 +75,7 @@ workflow {
 
 Defines the INDEX process that builds an index from the transcriptome reference:
 
-groovy
-
+'groovy'
 nextflow.enable.dsl=2
 
 /*
@@ -101,8 +100,7 @@ process INDEX {
 
 Defines the QUANTIFICATION process that quantifies the paired-end reads using the index:
 
-groovy
-
+'groovy'
 nextflow.enable.dsl=2
 
 /*
@@ -126,7 +124,7 @@ process QUANTIFICATION {
 
 ## Tracer Integration
 
-Tracer is integrated into the workflow to track the execution and versions of the processes. The workflow initiates Tracer at the beginning and terminates it at the end. Ensure that Tracer commands are appropriately inserted in your processes if necessary.
+Tracer is integrated into the workflow to track the execution and versions of the processes. The workflow initiates Tracer at the beginning and terminates it at the end. 
 
 ## License
 
@@ -135,7 +133,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - Thanks to the Nextflow community for their excellent documentation and support.
-- Special thanks to the developers of Tracer for providing the tracking tool used in this example.
 
 ## GitPod
 
@@ -143,4 +140,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-This README provides a comprehensive guide for users to understand and execute the workflow. Adjust the repository URL, license details, and acknowledgments as per your specific project details.
+This README provides a comprehensive guide for users to understand and execute a nextflow RNA-Seq workflow with Tracer enabled tracking. Adjust the repository URL, license details, and acknowledgments as per your specific project details.
