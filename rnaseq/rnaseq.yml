@@ -1,6 +1,6 @@
 # rnaseq.yml
 steps:
-  name: Configure Conda
+  - name: Configure Conda
     command: |
       wget https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
       bash Anaconda3-2020.07-Linux-x86_64.sh -b -p $HOME/anaconda3
@@ -8,16 +8,16 @@ steps:
       conda init bash
       conda list
 
-  name: Configure Conda Channels
+  - name: Configure Conda Channels
     command: |
       conda config --add channels conda-forge
       conda config --add channels bioconda
 
-  name: Create and Activate Salmon Environment
+  - name: Create and Activate Salmon Environment
     command: |
       conda create -n salmon -y salmon
-      
-  name: Setup Nextflow
+
+  - name: Setup Nextflow
     command: |
       curl -s https://get.sdkman.io | bash
       curl -s https://get.nextflow.io | bash
@@ -27,7 +27,11 @@ steps:
       source ~/.bashrc
       conda init
       conda activate salmon
-  
-  name: Tracer Installation
+
+  - name: Tracer Installation
     command: |
-      echo "Please paste your Tracer API key..."
+      echo "Please paste your Tracer API key:"
+      read -r API
+      curl -sSL https://setup.tracer.bio | bash -s -- ${API} && . ~/.bashrc && tracer help
+      source ~/.bashrc
+      tracer --version
