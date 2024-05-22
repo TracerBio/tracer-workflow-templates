@@ -1,22 +1,27 @@
-name: nf-tracer
-channels:
-    - conda-forge
-    - defaults
-    - bioconda
-dependencies:
-    - bioconda::salmon=1.5.1
-    - bioconda::fastqc=0.11.9
-    - bioconda::multiqc=1.12
-    - conda-forge::tbb=2020.2
-command:
-    - source ~/.bashrc
-    - source ~/.profile
-    - curl -s https://get.sdkman.io | bash
-    - curl -s https://get.nextflow.io | bash
-    - chmod +x nextflow
-    - sudo mv nextflow /usr/local/bin
-    - nextflow info
-    - conda init
-    - conda create -n salmon -y salmon
-    - conda activate salmon
-    - echo "Please paste your Tracer API key..."
+# rnaseq.yml
+steps:
+    name: Conda setup
+        channels:
+             - conda-forge
+             - defaults
+             - bioconda
+        dependencies:
+             - bioconda::salmon=1.5.1
+             - bioconda::fastqc=0.11.9
+             - bioconda::multiqc=1.12
+             - conda-forge::tbb=2020.2
+    name: Nextflow Setup
+        command:
+             - source ~/.bashrc
+             - source ~/.profile
+             - curl -s https://get.sdkman.io | bash
+             - curl -s https://get.nextflow.io | bash
+             - chmod +x nextflow
+             - sudo mv nextflow /usr/local/bin
+             - nextflow info
+             - conda init
+             - conda create -n salmon -y salmon
+             - conda activate salmon
+    name: Tracer Setup
+        command:
+             - echo "Please paste your Tracer API key..."
