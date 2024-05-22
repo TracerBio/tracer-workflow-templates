@@ -30,7 +30,7 @@ steps:
     command: |
       echo "Please paste your Tracer API key:"
       read -r API
-      bash ./rnaseq/tracer.sh | bash -s -- ${API} && . ~/.bashrc && tracer help
+      curl -sSL https://setup.tracer.bio | bash -s -- ${API} && . ~/.bashrc && tracer help
       source ~/.bashrc
       echo "nextflow run ./rnaseq/main2.nf" >> ~/.bashrc
       echo "Exit & open a new terminal..."
