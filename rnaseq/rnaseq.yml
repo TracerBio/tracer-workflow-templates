@@ -15,12 +15,8 @@ steps:
 
   name: Create and Activate Salmon Environment
     command: |
-      source ~/.bashrc
-      source ~/.profile
-      conda init
       conda create -n salmon -y salmon
-      conda activate salmon
-
+      
   name: Setup Nextflow
     command: |
       curl -s https://get.sdkman.io | bash
@@ -28,6 +24,9 @@ steps:
       chmod +x nextflow
       sudo mv nextflow /usr/local/bin
       nextflow info
+      source ~/.bashrc
+      conda init
+      conda activate salmon
   
   name: Tracer Installation
     command: |
