@@ -15,9 +15,7 @@ RUN apt-get update --quiet && \
         curl \
         tree \
         graphviz \
-        software-properties-common
-        > /dev/null 2>&1 && apt-get clean
-
+        software-properties-common > /dev/null 2>&1 && apt-get clean
 
 # Taken from: https://github.com/nf-core/tools/blob/master/nf_core/gitpod/gitpod.Dockerfile
 # Install Apptainer (Singularity)
@@ -59,8 +57,7 @@ RUN conda config --add channels defaults && \
         black \
         prettier \
         pre-commit \
-        pytest-workflow && \
-        > /dev/null 2>&1 &&
+        pytest-workflow && > /dev/null 2>&1 && \
     conda clean --all --force-pkgs-dirs --yes > /dev/null 2>&1 &&
 
 
