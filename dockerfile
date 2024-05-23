@@ -15,7 +15,7 @@ RUN apt-get update --quiet && \
         curl \
         tree \
         graphviz \
-        software-properties-common > /dev/null 2>&1 && apt-get clean
+        software-properties-common
 
 # Taken from: https://github.com/nf-core/tools/blob/master/nf_core/gitpod/gitpod.Dockerfile
 # Install Apptainer (Singularity)
@@ -24,9 +24,9 @@ RUN add-apt-repository -y ppa:apptainer/ppa && \
     apt install -y apptainer
 
 # Install Conda
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && > /dev/null 2>&1 && \ 
-    bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda && > /dev/null 2>&1 && \
-    rm Miniconda3-latest-Linux-x86_64.sh > /dev/null 2>&1 &&
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \ 
+    bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda && \
+    rm Miniconda3-latest-Linux-x86_64.sh
 
 ENV PATH="/opt/conda/bin:$PATH"
 
@@ -57,8 +57,8 @@ RUN conda config --add channels defaults && \
         black \
         prettier \
         pre-commit \
-        pytest-workflow && > /dev/null 2>&1 && \
-    conda clean --all --force-pkgs-dirs --yes > /dev/null 2>&1 &&
+        pytest-workflow && \
+    conda clean --all --force-pkgs-dirs --yes
 
 
 # Update Nextflow
