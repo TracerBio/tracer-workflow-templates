@@ -1,5 +1,29 @@
 # .gitpod.yml
 tasks:
+  - name: Initialize Submodules
+    init: |
+      git nextflow update --init --recursive
+
+  - name: Install Anaconda and Set Up Environment
+    init: |
+      wget https://repo.anaconda.com/archive/Anaconda3-2020.07-Linux-x86_64.sh
+      bash Anaconda3-2020.07-Linux-x86_64.sh -b -p $HOME/anaconda3
+      export PATH="$HOME/anaconda3/bin:$PATH"
+      conda init bash
+      conda config --add channels conda-forge
+      conda config --add channels bioconda
+      conda create -n salmon -y salmon
+      echo "conda activate salmon" >> ~/.bashrc
+
+  - name: Activate Environment and Verify Setup
+    command: |
+      source ~/.bashrc
+      conda activate salmon
+      salmon --version
+      # Add any other commands to verify or use the submodules
+
   - name: Setup and Run RNA-seq Pipeline
     command: |
       bash ./rnaseq/rnaseq.yml
+
+  
