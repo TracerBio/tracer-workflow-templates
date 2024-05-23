@@ -16,6 +16,7 @@ RUN apt-get update --quiet && \
         tree \
         graphviz \
         software-properties-common
+        > /dev/null 2>&1 && apt-get clean
 
 
 # Taken from: https://github.com/nf-core/tools/blob/master/nf_core/gitpod/gitpod.Dockerfile
@@ -25,9 +26,9 @@ RUN add-apt-repository -y ppa:apptainer/ppa && \
     apt install -y apptainer
 
 # Install Conda
-RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-    bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda && \
-    rm Miniconda3-latest-Linux-x86_64.sh
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && > /dev/null 2>&1 && \ 
+    bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda && > /dev/null 2>&1 && \
+    rm Miniconda3-latest-Linux-x86_64.sh > /dev/null 2>&1 &&
 
 ENV PATH="/opt/conda/bin:$PATH"
 
@@ -59,7 +60,9 @@ RUN conda config --add channels defaults && \
         prettier \
         pre-commit \
         pytest-workflow && \
-    conda clean --all --force-pkgs-dirs --yes
+        > /dev/null 2>&1 &&
+    conda clean --all --force-pkgs-dirs --yes > /dev/null 2>&1 &&
+
 
 # Update Nextflow
 RUN nextflow self-update && nextflow -version
@@ -67,3 +70,6 @@ RUN nextflow self-update && nextflow -version
 RUN unset JAVA_TOOL_OPTIONS
 
 RUN export PS1='\t -> '
+
+# Set the entrypoint to bash
+ENTRYPOINT ["bash"]
