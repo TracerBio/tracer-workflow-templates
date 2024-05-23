@@ -63,11 +63,6 @@ RUN conda config --add channels defaults && \
 # Update Nextflow
 RUN nextflow self-update && nextflow -version
 
-# Install Salmon in a new Conda environment
-RUN /opt/conda/bin/conda config --add channels conda-forge && \
-    /opt/conda/bin/conda config --add channels bioconda && \
-    /opt/conda/bin/conda create -n salmon -y salmon
-
 RUN unset JAVA_TOOL_OPTIONS
 
 RUN export PS1='\t -> '

@@ -8,7 +8,3 @@ tasks:
       git submodule update --init --recursive
       cd nextflow
       make
-
-  - name: Initialize Salmon
-    init: |
-      conda activate salmon
