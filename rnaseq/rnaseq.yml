@@ -20,10 +20,7 @@ steps:
 
   - name: Setup Nextflow
     command: |
-      curl -s https://get.sdkman.io | bash
-      curl -s https://get.nextflow.io | bash
-      chmod +x nextflow
-      sudo mv nextflow /usr/local/bin
+      sudo mv ./nextflow /usr/local/bin
       nextflow info
 
   - name: Tracer Installation
