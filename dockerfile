@@ -67,6 +67,7 @@ RUN nextflow self-update && nextflow -version
 RUN /opt/conda/bin/conda config --add channels conda-forge && \
     /opt/conda/bin/conda config --add channels bioconda && \
     /opt/conda/bin/conda create -n salmon -y salmon
+    conda activate salmon
 
 RUN unset JAVA_TOOL_OPTIONS
 

@@ -8,8 +8,3 @@ tasks:
       git submodule update --init --recursive
       cd nextflow
       make
-  - name: Activate Conda Environment
-    command: |
-      conda activate salmon
-      nextflow -version
-      salmon --version
