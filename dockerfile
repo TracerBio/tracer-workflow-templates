@@ -59,8 +59,7 @@ RUN conda config --add channels defaults && \
         pre-commit \
         pytest-workflow && \
     conda clean --all --force-pkgs-dirs --yes
-    conda create -n salmon -y salmon
-
+    
 # Update Nextflow
 RUN nextflow self-update && nextflow -version
 
