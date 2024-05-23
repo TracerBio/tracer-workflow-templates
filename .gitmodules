@@ -1,3 +1,0 @@
-[submodule "nextflow"]
-	path = nextflow
-	url = https://github.com/nextflow-io/nextflow.git
