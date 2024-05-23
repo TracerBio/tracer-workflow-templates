@@ -11,6 +11,7 @@ tasks:
   - name: Activate Conda Environment
     command: |
       source /opt/conda/etc/profile.d/conda.sh
+      conda create -n salmon -y salmon
       conda activate salmon
       nextflow -version
       salmon --version
