@@ -60,6 +60,11 @@ RUN conda config --add channels defaults && \
         pytest-workflow && \
     conda clean --all --force-pkgs-dirs --yes
 
+# Install STAR
+RUN git clone https://github.com/alexdobin/STAR.git && \
+    cd STAR/source && \
+    make STAR
+
 # Update Nextflow
 RUN nextflow self-update && nextflow -version
 
