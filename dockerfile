@@ -50,6 +50,7 @@ RUN conda config --add channels defaults && \
     conda update --quiet --yes --all && \
     conda install --quiet --yes --name base \
         salmon \
+        star \
         mamba \
         nextflow \
         nf-core \
@@ -59,11 +60,6 @@ RUN conda config --add channels defaults && \
         pre-commit \
         pytest-workflow && \
     conda clean --all --force-pkgs-dirs --yes
-
-# Install STAR
-RUN git clone https://github.com/alexdobin/STAR.git && \
-    cd STAR/source && \
-    make STAR
 
 # Update Nextflow
 RUN nextflow self-update && nextflow -version
