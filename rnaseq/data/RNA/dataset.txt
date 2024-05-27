@@ -1,0 +1,3 @@
+https://www.ncbi.nlm.nih.gov/sra?term=SRX24613828
+GSM8281734: HUVEC, control, biological replicate 1 (C1); Homo sapiens; RNA-Seq
+1 ILLUMINA (Illumina NovaSeq 6000) run: 25M spots, 7.1G bases, 2.1Gb downloads
