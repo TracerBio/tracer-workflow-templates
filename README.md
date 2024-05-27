@@ -1,5 +1,7 @@
 # Nextflow Tracer Use-Case Example
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracerhub/tracer-usecase)
+
 This repository provides an example of using Nextflow with a tracking tool called Tracer. The workflow consists of three main files: `main2.nf`, `index.nf`, and `quantpe.nf`. The key workflow file is `main2.nf`.
 
 ## Overview
@@ -21,7 +23,7 @@ The user can run the entire workflow by typing `nextflow run main2.nf`.
 ## Requirements
 
 - Conda and Salmon: Anaconda will be auto-installed along with salmon when you initialise your GitPod workspace.
-- Nextflow: Nextflow will be auto-installed on your GitPod workspace [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tw599/nextflow-tracer) 
+- Nextflow: Nextflow will be auto-installed on your GitPod workspace) 
 - Tracer: The tracking tool used in this workflow. Setup your Tracer account and record your unique API key at https://app.tracer.bio. Enter this API key when prompted for Tracer installation. Exit terminal & Open a new terminal to initiate Tracer.  
 
 ## Usage
@@ -136,7 +138,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## GitPod
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tw599/nextflow-tracer) 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracerhub/tracer-usecase) 
 
 ---
 
