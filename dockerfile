@@ -30,9 +30,9 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86
 
 ENV PATH="/opt/conda/bin:$PATH"
 
-# User permissions
-RUN mkdir -p /workspace/data \
-    && chown -R gitpod:gitpod /opt/conda /workspace/data
+# Ensure conda can use the cache directories without permission issues
+RUN mkdir -p /home/gitpod/.cache/conda && \
+    chown -R gitpod:gitpod /home/gitpod/.cache /opt/conda /workspace
 
 # Change user to gitpod
 USER gitpod
