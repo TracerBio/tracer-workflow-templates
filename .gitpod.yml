@@ -1,6 +1,6 @@
 # .gitpod.yml
 image:
-  file: .gitpod.Dockerfile
+  file: tw599/nextflow-conda-gitpod
 
 tasks:
   - name: Initialize Submodules
