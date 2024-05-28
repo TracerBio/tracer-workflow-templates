@@ -14,6 +14,6 @@ process INDEX {
     """
     tracer start
     tracer tool index v1
-    salmon index --threads $task.cpus -t $transcriptome -i salmon_index
+    salmon index --threads 4 -t $transcriptome -i salmon_index
     """
 }
