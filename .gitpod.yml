@@ -2,10 +2,6 @@
 image:
   file: .gitpod.Dockerfile
 
-tasks:
-  - init: nextflow run main2.nf -params-file params.json
-    command: nextflow run main2.nf
-
 vscode:
   extensions:
     - nextflow.nextflow
