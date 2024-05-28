@@ -1,7 +1,7 @@
 nextflow.enable.dsl=2
 
-params.reads = "./data/ggal/gut_{1,2}.fq"
-params.transcriptome = "./data/ggal/ref1.fa"
+params.reads = "$projectDir/data/ggal/gut_{1,2}.fq"
+params.transcriptome = "$projectDir/data/ggal/ref1.fa"
 
 // Include the INDEX process
 include { INDEX } from './index.nf'
