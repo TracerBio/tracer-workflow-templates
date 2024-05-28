@@ -1,6 +1,6 @@
 # Nextflow Tracer Use-Case Example
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracerhub/tracer-usecase)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracer-pod/utility-pod)
 
 This repository provides an example of using Nextflow with a tracking tool called Tracer. The workflow consists of three main files: `main2.nf`, `index.nf`, and `quantpe.nf`. The key workflow file is `main2.nf`.
 
@@ -138,8 +138,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## GitPod
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracerhub/tracer-usecase) 
-
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracer-pod/utility-pod)
 ---
 
 This README provides a comprehensive guide for users to understand and execute a nextflow RNA-Seq workflow with Tracer enabled tracking. Adjust the repository URL, license details, and acknowledgments as per your specific project details.
