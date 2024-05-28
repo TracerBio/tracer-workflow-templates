@@ -1,0 +1,5 @@
+---
+samples:
+    - - gut
+      - /data/ggal/gut_1.fq
+      - /data/ggal/gut_2.fq
