@@ -1,7 +1,7 @@
 nextflow.enable.dsl=2
 
 params.reads = "$projectDir/data/RNA/HUVEC_{1,2}.fq"
-params.transcriptome = "$projectDir/data/RNA/hg19.fa"
+params.transcriptome = "$projectDir/data/RNA/chr1.fa"
 
 // Include the INDEX process
 include { INDEX } from './index.nf'
