@@ -68,7 +68,7 @@ process QC {
  */
 
 workflow {
-    params.reads = file(params.reads ?: 'data/*.fastq.gz')
+    params.reads = "$projectDir/data/ggal/gut_{1,2}.fq"
     params.meta = params.meta ?: { id -> [id: id] }
     
     Channel
