@@ -1,7 +1,7 @@
 nextflow.enable.dsl=2
 
-params.reads = "$projectDir/data/bacteria/ecol_{1,2}.fq"
-params.transcriptome = "$projectDir/data/bacteria/esc.fa"
+params.reads = "$projectDir/data/human/aml_{1,2}.fq"
+params.transcriptome = "$projectDir/data/human/human.fa"
 
 // Include the INDEX process
 include { INDEX } from './index.nf'
