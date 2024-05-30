@@ -12,38 +12,38 @@ To install Tracer on your initialized Gitpod workspace:
 # Example 1: Nextflow RNASEQ training example with indexing & quantification
 
 1. INDEX and QUANTIFICATION processes are run and tracked by Tracer
-2. "nextflow run ./rnaseq/rnaseqv1.nf"
+2. "nextflow run ./examples/example1.nf"
 
 # Example 2: Nextflow RNASEQ training example with indexing & quantification - Bacterial GEO dataset
 
 1. INDEX and QUANTIFICATION processes are run and tracked by Tracer using GEO E.coli dataset
-2. Details of dataset available at "./rnaseq/data/bacteria/datasets.txt"
-2. "nextflow run ./rnaseq/rnaseqv2.nf"
+2. Details of dataset available at "./examples/data/bacteria/datasets.txt"
+2. "nextflow run ./examples/example2.nf"
 
 # Example 3: Nextflow RNASEQ training example with indexing & quantification - Human GEO dataset
 
 1. INDEX and QUANTIFICATION processes are run and tracked by Tracer using GEO human AML dataset
-2. Details of dataset available at "./rnaseq/data/human/datasets.txt"
-2. "nextflow run ./rnaseq/rnaseqv3.nf"
+2. Details of dataset available at "./examples/data/human/datasets.txt"
+2. "nextflow run ./examples/example3.nf"
 
 # Example 4: Shell script tracking for STAR mapper with RNASEQ data
 
 1. Generate a genome index and performs mapping of sample dataset using STAR
-2. Details of dataset available at "./rnaseq/data/human/datasets.txt"
+2. Details of dataset available at "./examples/data/human/datasets.txt"
 2. "sh ./rnaseq/STAR.sh"
 
     ## Files
 
-    - `rnaseqv1.nf`, `rnaseqv2.nf`, `rnaseqv3.nf` : The main workflow script files.
-    - `index.nf`: Contains the INDEX process definition.
-    - `quantpe.nf`: Contains the QUANTIFICATION process definition.
+    - `example1.nf`, `example2.nf`, `example3.nf` : The main workflow script files.
+    - `index.nf`: Contains the INDEX process definition [./examples/misc/]
+    - `quantpe.nf`: Contains the QUANTIFICATION process definition. [./examples/misc/]
 
     ## Workspace
 
     - Conda and salmon are pre-configured in the workspace using docker.
-    - Nextflow will be pre-configured in the workspace using docker.
-    - JAVA will be pre-configured in the workspace using docker.
-    - STAR will be pre-configured in the workspace using docker.  
+    - Nextflow is pre-configured in the workspace using docker.
+    - JAVA is pre-configured in the workspace using docker.
+    - STAR is pre-configured in the workspace using docker.  
     - Tracer: The tracking tool used in this workflow. Setup your Tracer account and record your unique API key at https://app.tracer.bio. Enter this one-line installation script prior to running other example scripts.  
 
     ## Usage

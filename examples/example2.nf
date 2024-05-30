@@ -1,13 +1,13 @@
 nextflow.enable.dsl=2
 
-params.reads = "$projectDir/data/human/aml_{1,2}.fq"
-params.transcriptome = "$projectDir/data/human/human.fa"
+params.reads = "$projectDir/data/bacteria/ecol_{1,2}.fq"
+params.transcriptome = "$projectDir/data/bacteria/esc.fa"
 
 // Include the INDEX process
-include { INDEX } from './index.nf'
+include { INDEX } from './misc/index.nf'
 
 // Include the QUANTIFICATION process
-include { QUANTIFICATION } from './quantpe.nf'
+include { QUANTIFICATION } from './misc/quantpe.nf'
 
 workflow {
     // Create a channel from the reads

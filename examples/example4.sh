@@ -14,10 +14,10 @@ tracer tool STAR v2.7.10a
 # Generate genome index
 STAR --runThreadN 8 \
      --runMode genomeGenerate \
-     --genomeDir ./rnaseq//data/human/hg19 \
+     --genomeDir ./rnaseq/data/human/hg19 \
      --genomeSAindexNbases 10 \
      --genomeFastaFiles ./rnaseq//data/human/human.fa \
-     --sjdbGTFfile ./rnaseq//data/human/hg19.refGene.gtf \
+     --sjdbGTFfile ./rnaseq/data/human/hg19.refGene.gtf \
      --sjdbOverhang 99
 
 # Log progress

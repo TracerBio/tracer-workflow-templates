@@ -1,6 +1,0 @@
-# rnaseq.yml
-steps:
-  - name: Tracer Installation
-    command: |
-      echo "Install Tracer by pasting installation script from https://app.tracer.bio/app/setup:"
-      echo "Run the nextflow example script - main2.nf"
