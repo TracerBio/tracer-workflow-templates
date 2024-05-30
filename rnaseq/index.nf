@@ -12,6 +12,7 @@ process INDEX {
 
     script:
     """
+    tracer log "Tracer run initialized..."
     tracer tool index v1
     salmon index --threads 4 -t $transcriptome -i salmon_index
     """
