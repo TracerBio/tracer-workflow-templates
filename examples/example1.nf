@@ -4,10 +4,10 @@ params.reads = "$projectDir/data/ggal/gut_{1,2}.fq"
 params.transcriptome = "$projectDir/data/ggal/ref1.fa"
 
 // Include the INDEX process
-include { INDEX } from './misc/index.nf'
+include { INDEX } from '$projectDir/../misc/index.nf'
 
 // Include the QUANTIFICATION process
-include { QUANTIFICATION } from './misc/quantpe.nf'
+include { QUANTIFICATION } from '$projectDir/../misc/quantpe.nf'
 
 workflow {
     // Create a channel from the reads
