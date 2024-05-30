@@ -4,10 +4,10 @@ params.reads = "$projectDir/data/human/aml_{1,2}.fq"
 params.transcriptome = "$projectDir/data/human/human.fa"
 
 // Include the INDEX process
-include { INDEX } from '$projectDir/../misc/index.nf'
+include { INDEX } from '../misc/index.nf'
 
 // Include the QUANTIFICATION process
-include { QUANTIFICATION } from '$projectDir/../misc/quantpe.nf'
+include { QUANTIFICATION } from '../misc/quantpe.nf'
 
 workflow {
     // Create a channel from the reads
