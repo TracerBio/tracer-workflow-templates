@@ -1,2 +1,2 @@
-FROM tw599/nextflow-conda-gitpod:latest
+FROM tw599/nextflow-gitpod-v2:latest
 # Additional setup if needed

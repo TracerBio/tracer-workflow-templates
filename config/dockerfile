@@ -50,6 +50,8 @@ RUN conda config --add channels defaults && \
     conda install --quiet --yes --name base \
         salmon \
         star \
+        macs3 \
+        fastqc \
         mamba \
         nextflow \
         nf-core \
