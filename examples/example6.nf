@@ -2,7 +2,7 @@ nextflow.enable.dsl=2
 
 params.fasta = "$projectDir/data/human/human.fa"
 params.gtf = "$projectDir/data/human/hg19.refGene.gtf"
-params.reads = "$projectDir/data/human/RARA.fq 
+params.reads = "$projectDir/data/human/RARA.fq" 
 params.star_ignore_sjdbgtf = false
 params.seq_platform = "Illumina"
 params.seq_center = "CRUK"
