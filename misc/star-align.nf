@@ -5,12 +5,9 @@ process STAR_ALIGN {
     label 'process_high'
 
     input:
-    tuple val(meta)
-    path(reads, stageAs: "input*/*")
-    tuple val(meta2)
-    path(index)
-    tuple val(meta3)
-    path(gtf)
+    tuple val(meta), path(reads)
+    tuple val(meta2), path(index)
+    tuple val(meta3), path(gtf)
     val star_ignore_sjdbgtf
     val seq_platform
     val seq_center
@@ -52,7 +49,7 @@ process STAR_ALIGN {
     tracer tool align 2.7.10
     STAR \\
         --genomeDir $index \\
-        --readFilesIn ${reads1.join(",")} ${reads2.join(",")} \\
+        --readFilesIn $reads \\
         --runThreadN $task.cpus \\
         --outFileNamePrefix $prefix. \\
         $out_sam_type \\
@@ -63,13 +60,9 @@ process STAR_ALIGN {
 
     $mv_unsorted_bam
 
-    if [ -f ${prefix}.Unmapped.out.mate1 ]; then
-        mv ${prefix}.Unmapped.out.mate1 ${prefix}.unmapped.fastq
+    if [ -f ${prefix}.Unmapped.out.mate ]; then
+        mv ${prefix}.Unmapped.out.mate ${prefix}.unmapped.fastq
         gzip ${prefix}.unmapped.fastq
-    fi
-    if [ -f ${prefix}.Unmapped.out.mate2 ]; then
-        mv ${prefix}.Unmapped.out.mate2 ${prefix}.unmapped_2.fastq
-        gzip ${prefix}.unmapped_2.fastq
     fi
 
     cat <<-END_VERSIONS > versions.yml

@@ -1,5 +1,6 @@
 nextflow.enable.dsl=2
 
+params.index = "$projectDir/data/human/hg19"
 params.fasta = "$projectDir/data/human/human.fa"
 params.gtf = "$projectDir/data/human/hg19.refGene.gtf"
 params.reads = "$projectDir/data/human/RARA.fq" 
@@ -10,6 +11,7 @@ params.seq_center = "CRUK"
 // Meta information
 params.meta1 = [id: "Human"]
 params.meta2 = [description: "Neuroblastoma"]
+params.meta3 = [antibody: "RARA"]
 
 // Include the STAR_GENOMEGENERATE process
 include { STAR_GENOMEGENERATE } from '../misc/genomeGenerate.nf'
@@ -19,10 +21,10 @@ include { STAR_ALIGN } from '../misc/star-align.nf'
 
 workflow {
     // Generate genome index
-    index_ch = STAR_GENOMEGENERATE(tuple(params.meta1, file(params.fasta), params.meta2, file(params.gtf)))
+    index_ch = STAR_GENOMEGENERATE(params.meta1, params.fasta, params.meta2, params.gtf)
 
     // Align reads using the generated index
-    STAR_ALIGN(
+    align_ch = STAR_ALIGN(
         tuple(params.meta1, file(params.reads)),
         index_ch.index,
         tuple(params.meta2, file(params.gtf)),
@@ -30,7 +32,4 @@ workflow {
         params.seq_platform,
         params.seq_center
     )
-
-    // View the output of alignment
-    STAR_ALIGN.out.view { "Alignment output: $it" }
 }

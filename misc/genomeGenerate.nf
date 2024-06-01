@@ -11,7 +11,7 @@ process STAR_GENOMEGENERATE {
     path(gtf)
 
     output:
-    tuple val(meta), path("star")  , emit: index
+    tuple val(meta), path("index")  , emit: index
     path "versions.yml"            , emit: versions
 
     when:
@@ -27,7 +27,8 @@ process STAR_GENOMEGENERATE {
         tracer tool index 2.7.10
         STAR \\
             --runMode genomeGenerate \\
-            --genomeDir ./examples/data/human/hg19 \\
+            --genomeDir index/ \\
+            --genomeSAindexNbases 10 \\
             --genomeFastaFiles $fasta \\
             --sjdbGTFfile $gtf \\
             --runThreadN $task.cpus \\
