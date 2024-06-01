@@ -24,16 +24,15 @@ process STAR_GENOMEGENERATE {
         """
         mkdir star
         tracer start
-        tracer tool STAR 2.7.10
+        tracer tool index 2.7.10
         STAR \\
             --runMode genomeGenerate \\
-            --genomeDir star/ \\
+            --genomeDir ./examples/data/human/hg19 \\
             --genomeFastaFiles $fasta \\
             --sjdbGTFfile $gtf \\
             --runThreadN $task.cpus \\
             $memory \\
             $args
-        tracer end
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
