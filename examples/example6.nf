@@ -7,7 +7,7 @@ params.meta2 = "Neuroblastoma"
 
 // Include the STAR_GENOMEGENERATE process
 include { STAR_GENOMEGENERATE } from '../misc/genomeGenerate.nf'
-$projectDir/data/human/human.fa
+
 workflow {
     
     index_ch = STAR_GENOMEGENERATE(params.meta1, params.fasta, params.meta2, params.gtf)

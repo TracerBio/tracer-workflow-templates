@@ -5,8 +5,10 @@ process STAR_GENOMEGENERATE {
     label 'process_high'
 
     input:
-    tuple val(meta), path(fasta)
-    tuple val(meta2), path(gtf)
+    tuple val(meta) 
+    path(fasta)
+    tuple val(meta2) 
+    path(gtf)
 
     output:
     tuple val(meta), path("star")  , emit: index
