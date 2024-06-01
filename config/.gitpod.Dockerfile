@@ -1,2 +1,2 @@
-FROM tw599/nextflow-gitpod-v2:latest
+FROM tw599/nextflow-gitpod-v3:latest
 # Additional setup if needed

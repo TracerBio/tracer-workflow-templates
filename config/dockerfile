@@ -52,6 +52,8 @@ RUN conda config --add channels defaults && \
         star \
         macs3 \
         fastqc \
+        gawk \
+        samtools \
         mamba \
         nextflow \
         nf-core \
