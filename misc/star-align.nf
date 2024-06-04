@@ -30,7 +30,6 @@ process STAR_ALIGN {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def seq_center = params.seq_center ? "--outSAMattrRGline ID:$prefix 'CN:$params.seq_center' 'SM:$prefix'" : "--outSAMattrRGline ID:$prefix 'SM:$prefix'"
     def out_sam_type = (args.contains('--outSAMtype')) ? '' : '--outSAMtype BAM Unsorted'
-    def mv_unsorted_bam = (args.contains('--outSAMtype BAM Unsorted SortedByCoordinate')) ? "mv ${prefix}.Aligned.out.bam ${prefix}.Aligned.unsort.out.bam" : ''
     """
     tracer tool STAR 2.6.1
     STAR \\
@@ -42,7 +41,6 @@ process STAR_ALIGN {
         $seq_center \\
         $args
     mv ./responses/* $projectDir/data
-    tracer end
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
