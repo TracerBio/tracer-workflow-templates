@@ -3,7 +3,8 @@ nextflow.enable.dsl=2
 params.index = "$projectDir/data/human/hg19"
 params.fasta = "$projectDir/data/human/human.fa"
 params.gtf = "$projectDir/data/human/hg19.refGene.gtf"
-params.reads = "$projectDir/data/human/RARA.fq" 
+params.reads = "$projectDir/data/human/RARA.fq"
+Params.bam = "$projectDir/data/responses/*.bam" 
 params.star_ignore_sjdbgtf = false
 params.seq_platform = "Illumina"
 params.seq_center = "CRUK"
@@ -19,6 +20,9 @@ include { STAR_GENOMEGENERATE } from '../misc/genomeGenerate.nf'
 // Include the STAR_ALIGN process
 include { STAR_ALIGN } from '../misc/star-align.nf'
 
+// Include the SAMTOOLS_SORT process
+include { SAMTOOLS_SORT } from '../misc/samtools-sort.nf'
+
 workflow {
     // Generate genome index
     index_ch = STAR_GENOMEGENERATE(params.meta1, params.fasta, params.meta2, params.gtf)
@@ -32,4 +36,10 @@ workflow {
         params.seq_platform,
         params.seq_center
     )
+    // Sort BAM files using SAMTOOLS_SORT process
+    sorted_bam_ch = SAMTOOLS_SORT(
+        tuple(params.meta1, align_ch.bam)
+    )
+
+    sorted_bam_ch.view()
 }
