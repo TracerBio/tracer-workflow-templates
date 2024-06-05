@@ -40,10 +40,16 @@ process STAR_ALIGN {
         $out_sam_type \\
         $seq_center \\
         $args
-    mv ./responses/* $projectDir/data
-
+    mkdir -p /workspace/utility-pod/examples/data/results
+    cp -r ./* /workspace/utility-pod/examples/data/results
+    tracer tool sort 1.16.1
+    samtools sort /workspace/utility-pod/examples/data/results/Human.Aligned.out.bam -@ 4 -o /workspace/utility-pod/examples/data/results/Human.sorted.bam
+    tracer tool index 1.16.1
+    samtools index /workspace/utility-pod/examples/data/results/Human.sorted.bam
+    
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         star: \$(STAR --version | sed -e "s/STAR_//g")
+    END_VERSIONS
     """
 }

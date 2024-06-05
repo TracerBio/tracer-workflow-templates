@@ -20,9 +20,6 @@ include { STAR_GENOMEGENERATE } from '../misc/genomeGenerate.nf'
 // Include the STAR_ALIGN process
 include { STAR_ALIGN } from '../misc/star-align.nf'
 
-// Include the SAMTOOLS_SORT process
-include { SAMTOOLS_SORT } from '../misc/samtools-sort.nf'
-
 workflow {
     // Generate genome index
     index_ch = STAR_GENOMEGENERATE(params.meta1, params.fasta, params.meta2, params.gtf)
@@ -36,10 +33,4 @@ workflow {
         params.seq_platform,
         params.seq_center
     )
-    // Sort BAM files using SAMTOOLS_SORT process
-    sorted_bam_ch = SAMTOOLS_SORT(
-        tuple(params.meta1, align_ch.bam)
-    )
-
-    sorted_bam_ch.view()
 }
