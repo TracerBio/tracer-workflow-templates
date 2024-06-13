@@ -1,0 +1,6 @@
+Processing tool...
+Tool processed successfully...
+	STAR --runThreadN 4 --runMode genomeGenerate --genomeDir human --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99
+	STAR version: 2.7.10b   compiled:  :/Users/distiller/project/STARcompile/source
+Jun 13 13:22:33 ..... started STAR run
+Jun 13 13:22:33 ... starting to generate Genome files

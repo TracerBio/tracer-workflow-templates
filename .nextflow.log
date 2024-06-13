@@ -1,0 +1,80 @@
+Jun-13 13:30:36.180 [main] DEBUG nextflow.cli.Launcher - $> nextflow run ./workflows/chipseq/chipseq.nf
+Jun-13 13:30:36.227 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.10.1
+Jun-13 13:30:36.236 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/Users/tw1628/.nextflow/plugins; core-plugins: nf-amazon@2.1.4,nf-azure@1.3.3,nf-cloudcache@0.3.0,nf-codecommit@0.1.5,nf-console@1.0.6,nf-ga4gh@1.1.0,nf-google@1.8.3,nf-tower@1.6.3,nf-wave@1.0.1
+Jun-13 13:30:36.239 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Jun-13 13:30:36.239 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Jun-13 13:30:36.240 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Jun-13 13:30:36.244 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Jun-13 13:30:36.278 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declararion
+Jun-13 13:30:36.287 [main] INFO  nextflow.cli.CmdRun - Launching `./workflows/chipseq/chipseq.nf` [distracted_linnaeus] DSL2 - revision: e4ad754bb4
+Jun-13 13:30:36.287 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Jun-13 13:30:36.287 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Jun-13 13:30:36.292 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /Users/tw1628/.nextflow/secrets/store.json
+Jun-13 13:30:36.294 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@c6634d] - activable => nextflow.secret.LocalSecretsProvider@c6634d
+Jun-13 13:30:36.326 [main] DEBUG nextflow.Session - Session UUID: 2f27cf39-4a7f-4622-b112-78ffdf02fdaa
+Jun-13 13:30:36.326 [main] DEBUG nextflow.Session - Run name: distracted_linnaeus
+Jun-13 13:30:36.327 [main] DEBUG nextflow.Session - Executor pool size: 8
+Jun-13 13:30:36.331 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Jun-13 13:30:36.333 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Jun-13 13:30:36.351 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.10.1 build 5891
+  Created: 12-01-2024 22:01 UTC (22:01 BST)
+  System: Mac OS X 14.5
+  Runtime: Groovy 3.0.19 on OpenJDK 64-Bit Server VM 17.0.10+7
+  Encoding: UTF-8 (UTF-8)
+  Process: 56982@dhcp-10-248-132-34.eduroam.wireless.private.cam.ac.uk [10.248.132.34]
+  CPUs: 8 - Mem: 8 GB (108.5 MB) - Swap: 6 GB (1 GB)
+Jun-13 13:30:36.356 [main] DEBUG nextflow.Session - Work-dir: /Users/tw1628/Desktop/utility-pod/work [Mac OS X]
+Jun-13 13:30:36.357 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /Users/tw1628/Desktop/utility-pod/workflows/chipseq/bin
+Jun-13 13:30:36.361 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Jun-13 13:30:36.365 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Jun-13 13:30:36.375 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Jun-13 13:30:36.380 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Jun-13 13:30:36.411 [main] DEBUG nextflow.Session - Session start
+Jun-13 13:30:36.697 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Jun-13 13:30:36.751 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-13 13:30:36.751 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-13 13:30:36.755 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Jun-13 13:30:36.757 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=8 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Jun-13 13:30:36.759 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Jun-13 13:30:36.790 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-13 13:30:36.790 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-13 13:30:36.792 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-13 13:30:36.792 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-13 13:30:36.794 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-13 13:30:36.794 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-13 13:30:36.795 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-13 13:30:36.795 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-13 13:30:36.796 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: FASTQC, STAR_INDEX, MACS, DEEPTOOLS, STAR_ALIGN
+Jun-13 13:30:36.796 [main] DEBUG nextflow.Session - Igniting dataflow network (9)
+Jun-13 13:30:36.799 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > FASTQC
+Jun-13 13:30:36.800 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > STAR_INDEX
+Jun-13 13:30:36.800 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > STAR_ALIGN
+Jun-13 13:30:36.800 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > MACS
+Jun-13 13:30:36.800 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > DEEPTOOLS
+Jun-13 13:30:36.800 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  Script_a186ca9e6610aa37: /Users/tw1628/Desktop/utility-pod/workflows/chipseq/chipseq.nf
+Jun-13 13:30:36.800 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Jun-13 13:30:36.801 [main] DEBUG nextflow.Session - Session await
+Jun-13 13:30:36.852 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-13 13:30:36.853 [Task submitter] INFO  nextflow.Session - [1d/c14071] Submitted process > STAR_INDEX (1)
+Jun-13 13:30:36.855 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-13 13:30:36.855 [Task submitter] INFO  nextflow.Session - [0e/f85924] Submitted process > FASTQC (null)
+Jun-13 13:30:41.462 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: FASTQC (null); status: COMPLETED; exit: 0; error: -; workDir: /Users/tw1628/Desktop/utility-pod/work/0e/f85924fd5ff8f048a0a9fa12f70b02]
+Jun-13 13:30:44.035 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: STAR_INDEX (1); status: COMPLETED; exit: 0; error: -; workDir: /Users/tw1628/Desktop/utility-pod/work/1d/c14071c40ac799c98c2b752d932d1d]
+Jun-13 13:30:44.047 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-13 13:30:44.047 [Task submitter] INFO  nextflow.Session - [dc/70dfeb] Submitted process > STAR_ALIGN (null)
+Jun-13 13:31:19.563 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 3; name: STAR_ALIGN (null); status: COMPLETED; exit: 0; error: -; workDir: /Users/tw1628/Desktop/utility-pod/work/dc/70dfebeef0f19a0693b228a152b877]
+Jun-13 13:31:19.591 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-13 13:31:19.591 [Task submitter] INFO  nextflow.Session - [62/af4c04] Submitted process > MACS (null)
+Jun-13 13:31:19.594 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-13 13:31:19.594 [Task submitter] INFO  nextflow.Session - [d5/7fe6d9] Submitted process > DEEPTOOLS (null)
+Jun-13 13:31:20.741 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 5; name: MACS (null); status: COMPLETED; exit: 0; error: -; workDir: /Users/tw1628/Desktop/utility-pod/work/62/af4c04f3aa1ce8e992ba846fc49629]
+Jun-13 13:31:52.293 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 4; name: DEEPTOOLS (null); status: COMPLETED; exit: 0; error: -; workDir: /Users/tw1628/Desktop/utility-pod/work/d5/7fe6d91d47788b17988ed743ada568]
+Jun-13 13:31:52.296 [main] DEBUG nextflow.Session - Session await > all processes finished
+Jun-13 13:31:52.298 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Jun-13 13:31:52.298 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Jun-13 13:31:52.303 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=5; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=1m 21s; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=2; peakCpus=2; peakMemory=0; ]
+Jun-13 13:31:52.475 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Jun-13 13:31:52.482 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'FileTransfer' shutdown completed (hard=false)
+Jun-13 13:31:52.482 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

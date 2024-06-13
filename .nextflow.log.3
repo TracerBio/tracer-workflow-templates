@@ -1,0 +1,115 @@
+Jun-13 13:22:32.287 [main] DEBUG nextflow.cli.Launcher - $> nextflow run ./workflows/chipseq.nf
+Jun-13 13:22:32.329 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.10.1
+Jun-13 13:22:32.337 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/Users/tw1628/.nextflow/plugins; core-plugins: nf-amazon@2.1.4,nf-azure@1.3.3,nf-cloudcache@0.3.0,nf-codecommit@0.1.5,nf-console@1.0.6,nf-ga4gh@1.1.0,nf-google@1.8.3,nf-tower@1.6.3,nf-wave@1.0.1
+Jun-13 13:22:32.341 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Jun-13 13:22:32.341 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Jun-13 13:22:32.342 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Jun-13 13:22:32.347 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Jun-13 13:22:32.378 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declararion
+Jun-13 13:22:32.387 [main] INFO  nextflow.cli.CmdRun - Launching `./workflows/chipseq.nf` [condescending_shirley] DSL2 - revision: 704986628f
+Jun-13 13:22:32.388 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Jun-13 13:22:32.388 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Jun-13 13:22:32.392 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /Users/tw1628/.nextflow/secrets/store.json
+Jun-13 13:22:32.395 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@f4cfd90] - activable => nextflow.secret.LocalSecretsProvider@f4cfd90
+Jun-13 13:22:32.425 [main] DEBUG nextflow.Session - Session UUID: de6ec3cc-1a9a-459e-90c1-d3f005eb5278
+Jun-13 13:22:32.425 [main] DEBUG nextflow.Session - Run name: condescending_shirley
+Jun-13 13:22:32.426 [main] DEBUG nextflow.Session - Executor pool size: 8
+Jun-13 13:22:32.430 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Jun-13 13:22:32.432 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Jun-13 13:22:32.449 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.10.1 build 5891
+  Created: 12-01-2024 22:01 UTC (22:01 BST)
+  System: Mac OS X 14.5
+  Runtime: Groovy 3.0.19 on OpenJDK 64-Bit Server VM 17.0.10+7
+  Encoding: UTF-8 (UTF-8)
+  Process: 56602@dhcp-10-248-132-34.eduroam.wireless.private.cam.ac.uk [10.248.132.34]
+  CPUs: 8 - Mem: 8 GB (152.6 MB) - Swap: 6 GB (954.6 MB)
+Jun-13 13:22:32.454 [main] DEBUG nextflow.Session - Work-dir: /Users/tw1628/Desktop/utility-pod/work [Mac OS X]
+Jun-13 13:22:32.455 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /Users/tw1628/Desktop/utility-pod/workflows/bin
+Jun-13 13:22:32.459 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Jun-13 13:22:32.463 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Jun-13 13:22:32.471 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Jun-13 13:22:32.477 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Jun-13 13:22:32.503 [main] DEBUG nextflow.Session - Session start
+Jun-13 13:22:32.789 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Jun-13 13:22:32.843 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-13 13:22:32.843 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-13 13:22:32.845 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Jun-13 13:22:32.847 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=8 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Jun-13 13:22:32.849 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Jun-13 13:22:32.879 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-13 13:22:32.879 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-13 13:22:32.881 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-13 13:22:32.881 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-13 13:22:32.882 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-13 13:22:32.882 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-13 13:22:32.883 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-13 13:22:32.883 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-13 13:22:32.885 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: FASTQC, STAR_INDEX, MACS, DEEPTOOLS, STAR_ALIGN
+Jun-13 13:22:32.885 [main] DEBUG nextflow.Session - Igniting dataflow network (9)
+Jun-13 13:22:32.888 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > FASTQC
+Jun-13 13:22:32.888 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > STAR_INDEX
+Jun-13 13:22:32.888 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > STAR_ALIGN
+Jun-13 13:22:32.888 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > MACS
+Jun-13 13:22:32.888 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > DEEPTOOLS
+Jun-13 13:22:32.888 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  Script_971935664947714a: /Users/tw1628/Desktop/utility-pod/workflows/chipseq.nf
+Jun-13 13:22:32.888 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Jun-13 13:22:32.888 [main] DEBUG nextflow.Session - Session await
+Jun-13 13:22:32.916 [Actor Thread 8] DEBUG nextflow.util.CacheHelper - Unable to get file attributes file: /Users/tw1628/Desktop/utility-pod/human.fa -- Cause: java.nio.file.NoSuchFileException: /Users/tw1628/Desktop/utility-pod/human.fa
+Jun-13 13:22:32.916 [Actor Thread 9] DEBUG nextflow.util.CacheHelper - Unable to get file attributes file: /Users/tw1628/Desktop/utility-pod/s1_1.fq -- Cause: java.nio.file.NoSuchFileException: /Users/tw1628/Desktop/utility-pod/s1_1.fq
+Jun-13 13:22:32.916 [Actor Thread 8] DEBUG nextflow.util.CacheHelper - Unable to get file attributes file: /Users/tw1628/Desktop/utility-pod/hg19.refGene.gtf -- Cause: java.nio.file.NoSuchFileException: /Users/tw1628/Desktop/utility-pod/hg19.refGene.gtf
+Jun-13 13:22:32.917 [Actor Thread 9] DEBUG nextflow.util.CacheHelper - Unable to get file attributes file: /Users/tw1628/Desktop/utility-pod/s1_2.fq -- Cause: java.nio.file.NoSuchFileException: /Users/tw1628/Desktop/utility-pod/s1_2.fq
+Jun-13 13:22:32.938 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-13 13:22:32.939 [Task submitter] INFO  nextflow.Session - [45/508ee7] Submitted process > STAR_INDEX (1)
+Jun-13 13:22:32.941 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-13 13:22:32.941 [Task submitter] INFO  nextflow.Session - [6e/4e0d0f] Submitted process > FASTQC (null)
+Jun-13 13:22:33.786 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: STAR_INDEX (1); status: COMPLETED; exit: 104; error: -; workDir: /Users/tw1628/Desktop/utility-pod/work/45/508ee7ca45095eb89a3088ec791f89]
+Jun-13 13:22:33.788 [Task monitor] DEBUG nextflow.processor.TaskProcessor - Handling unexpected condition for
+  task: name=STAR_INDEX (1); work-dir=/Users/tw1628/Desktop/utility-pod/work/45/508ee7ca45095eb89a3088ec791f89
+  error [nextflow.exception.ProcessFailedException]: Process `STAR_INDEX (1)` terminated with an error exit status (104)
+Jun-13 13:22:33.793 [Task monitor] ERROR nextflow.processor.TaskProcessor - Error executing process > 'STAR_INDEX (1)'
+
+Caused by:
+  Process `STAR_INDEX (1)` terminated with an error exit status (104)
+
+Command executed:
+
+  tracer tool star-index 1.7.0
+  STAR --runThreadN 4 --runMode genomeGenerate --genomeDir human --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99
+
+Command exit status:
+  104
+
+Command output:
+  Processing tool...
+  Tool processed successfully...
+  	STAR --runThreadN 4 --runMode genomeGenerate --genomeDir human --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99
+  	STAR version: 2.7.10b   compiled:  :/Users/distiller/project/STARcompile/source
+  Jun 13 13:22:33 ..... started STAR run
+  Jun 13 13:22:33 ... starting to generate Genome files
+
+Command error:
+  Processing tool...
+  Tool processed successfully...
+  	STAR --runThreadN 4 --runMode genomeGenerate --genomeDir human --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99
+  	STAR version: 2.7.10b   compiled:  :/Users/distiller/project/STARcompile/source
+  Jun 13 13:22:33 ..... started STAR run
+  Jun 13 13:22:33 ... starting to generate Genome files
+  
+  EXITING because of INPUT ERROR: could not open genomeFastaFile: human.fa
+  
+  Jun 13 13:22:33 ...... FATAL ERROR, exiting
+
+Work dir:
+  /Users/tw1628/Desktop/utility-pod/work/45/508ee7ca45095eb89a3088ec791f89
+
+Tip: you can try to figure out what's wrong by changing to the process work dir and showing the script file named `.command.sh`
+Jun-13 13:22:33.795 [Task monitor] DEBUG nextflow.Session - Session aborted -- Cause: Process `STAR_INDEX (1)` terminated with an error exit status (104)
+Jun-13 13:22:33.801 [main] DEBUG nextflow.Session - Session await > all processes finished
+Jun-13 13:22:33.802 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Jun-13 13:22:33.802 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Jun-13 13:22:33.803 [main] WARN  n.processor.TaskPollingMonitor - Killing running tasks (1)
+Jun-13 13:22:33.809 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=0; failedCount=1; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=1; succeedDuration=0ms; failedDuration=829ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=2; peakCpus=2; peakMemory=0; ]
+Jun-13 13:22:34.008 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Jun-13 13:22:34.013 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye
