@@ -32,18 +32,34 @@ To install Tracer on your initialized Gitpod workspace:
 2. Details of dataset available at "./examples/data/human/datasets.txt"
 2. "sh ./rnaseq/STAR.sh"
 
+# Example 5: Nextflow Quality control training example using FASTQC - Human GEO dataset 
+
+1. Generate data metrics and QC characteristics - GC%, reads per bp etc. for raw data (.fq files)
+2. Details of dataset available at "./examples/data/human/datasets.txt"
+2. "nextflow run ./examples/example5.nf"
+
+# Example 6: Nextflow CHIPSEQ training example with indexing & mapping - Human GEO dataset 
+
+1. Generates a human genome index and maps the CHIPSEQ data (.fq) to the index
+2. Details of dataset available at "./examples/data/human/datasets.txt"
+2. "nextflow run ./examples/example6.nf"
+
     ## Files
 
-    - `example1.nf`, `example2.nf`, `example3.nf` : The main workflow script files.
+    - `example1.nf`, `example2.nf`, `example3.nf`, `example4.sh`, `example5.nf`, `example6.nf`: The main workflow script files.
     - `index.nf`: Contains the INDEX process definition [./examples/misc/]
     - `quantpe.nf`: Contains the QUANTIFICATION process definition. [./examples/misc/]
+    - `genomeGenerate.nf`: Contains the GENOME_GENERATE process definition. [./examples/misc/]
+    - `star-align.nf`: Contains the STAR_ALIGN process definition. [./examples/misc/]
+    - `fastqc.nf`: Contains the FASTQC process definition. [./examples/misc/]
 
     ## Workspace
 
     - Conda and salmon are pre-configured in the workspace using docker.
     - Nextflow is pre-configured in the workspace using docker.
     - JAVA is pre-configured in the workspace using docker.
-    - STAR is pre-configured in the workspace using docker.  
+    - STAR is pre-configured in the workspace using docker.
+    - MACS3 is pre-configured in the workspace using docker.  
     - Tracer: The tracking tool used in this workflow. Setup your Tracer account and record your unique API key at https://app.tracer.bio. Enter this one-line installation script prior to running other example scripts.  
 
     ## Usage
