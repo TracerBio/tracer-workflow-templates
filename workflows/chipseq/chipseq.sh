@@ -5,7 +5,7 @@ tracer start;
 tracer log "Started Tracer run";
  
 # FASTQC - QC layer 1
-cd ../data
+cd ./workflows/chipseq
 
 tracer tool fastqc 0.12.1;
 fastqc s1_1.fq s1_2.fq -o .;
@@ -14,7 +14,7 @@ fastqc s1_1.fq s1_2.fq -o .;
 tracer tool star-index 1.7.0;
 
 # Creating a human genome index using STAR
-STAR --runThreadN 4 --runMode genomeGenerate --genomeDir ./human --genomeSAindexNbases 10 --genomeFastaFiles ./human.fa --sjdbGTFfile ./hg19.refGene.gtf --sjdbOverhang 99;
+STAR --runThreadN 4 --runMode genomeGenerate --genomeDir ./human --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99;
 
 
 # Align RNA-Seq reads to the genome using STAR
@@ -28,7 +28,7 @@ samtools index P1s1.sorted.bam;
 
 # Call Peaks for BAM file
 tracer tool macs 3.0.1;
-macs3 callpeak -i P1s1.sorted.bam -f BAMPE -p 0.05 -o *.bed;
+macs3 callpeak -t P1s1.sorted.bam -f BAMPE -p 0.05 --outdir ./Peaks;
 
 # Plot Coverage of Peaks
 tracer tool deeptools 3.5.5;
