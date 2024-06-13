@@ -1,3 +1,0 @@
-Processing tool...
-Status Code: 500 Internal Server Error, Response: {"error":"Failed to store logs","message":"API key not found or not active"}
-Error: Failed to send event: 500 Internal Server Error - {"error":"Failed to store logs","message":"API key not found or not active"}
