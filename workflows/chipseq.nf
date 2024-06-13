@@ -11,6 +11,9 @@ process FASTQC {
 
     script:
     """
+    tracer start
+    tracer log "Started Tracer run"
+    tracer tool fastqc 0.12.1
     fastqc $sample1 $sample2 -o .
     """
 }
@@ -25,6 +28,7 @@ process STAR_INDEX {
     
     script:
     """
+    tracer tool star-index 1.7.0
     STAR --runThreadN 4 --runMode genomeGenerate --genomeDir human --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99
     """
 }
@@ -42,7 +46,9 @@ process STAR_ALIGN {
 
     script:
     """
+    tracer tool star-align 1.7.0
     STAR --runThreadN 4 --genomeDir human --readFilesIn $sample1 $sample2 --outFileNamePrefix P1s1 --outSAMtype BAM SortedByCoordinate
+    tracer tool samtools 1.17
     samtools sort P1s1*.bam -@ 4 -o P1s1.sorted.bam
     samtools index P1s1.sorted.bam
     """
@@ -59,6 +65,7 @@ process MACS {
     
     script:
     """
+    tracer tool macs 3.0.1
     macs3 callpeak -t P1s1.sorted.bam -f BAMPE -p 0.05 --outdir ./P1s1_peaks
     """
 }
@@ -74,6 +81,7 @@ process DEEPTOOLS {
     
     script:
     """
+    tracer tool plotCoverage 3.5.5
     plotCoverage -b P1s1.sorted.bam -o coverage.pdf
     """
 }
