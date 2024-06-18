@@ -1,0 +1,19 @@
+### STAR   --runMode genomeGenerate      --runThreadN 4   --genomeDir human   --genomeFastaFiles human.fa      --genomeSAindexNbases 10   --sjdbGTFfile hg19.refGene.gtf   --sjdbOverhang 99
+### GstrandBit 32
+versionGenome	2.7.4a
+genomeType	Full
+genomeFastaFiles	human.fa 
+genomeSAindexNbases	10
+genomeChrBinNbits	18
+genomeSAsparseD	1
+genomeTransformType	None
+genomeTransformVCF	-
+sjdbOverhang	99
+sjdbFileChrStartEnd	- 
+sjdbGTFfile	hg19.refGene.gtf
+sjdbGTFchrPrefix	-
+sjdbGTFfeatureExon	exon
+sjdbGTFtagExonParentTranscript	transcript_id
+sjdbGTFtagExonParentGene	gene_id
+sjdbInsertSave	Basic
+genomeFileSizes	36489955 102588844

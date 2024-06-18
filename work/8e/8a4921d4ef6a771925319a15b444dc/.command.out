@@ -1,0 +1,16 @@
+	STAR --runThreadN 4 --runMode genomeGenerate --genomeDir human --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99
+	STAR version: 2.7.10b   compiled:  :/Users/distiller/project/STARcompile/source
+Jun 18 23:49:30 ..... started STAR run
+Jun 18 23:49:30 ... starting to generate Genome files
+Jun 18 23:49:30 ..... processing annotations GTF
+Jun 18 23:49:31 ... starting to sort Suffix Array. This may take a long time...
+Jun 18 23:49:31 ... sorting Suffix Array chunks and saving them to disk...
+Jun 18 23:49:36 ... loading chunks from disk, packing SA...
+Jun 18 23:49:36 ... finished generating suffix array
+Jun 18 23:49:36 ... generating Suffix Array index
+Jun 18 23:49:36 ... completed Suffix Array index
+Jun 18 23:49:36 ..... inserting junctions into the genome indices
+Jun 18 23:49:37 ... writing Genome to disk ...
+Jun 18 23:49:37 ... writing Suffix Array to disk ...
+Jun 18 23:49:37 ... writing SAindex to disk
+Jun 18 23:49:37 ..... finished successfully

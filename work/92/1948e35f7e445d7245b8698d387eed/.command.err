@@ -1,0 +1,8 @@
+/Users/tw1628/miniconda3/lib/python3.12/site-packages/deeptools/plotCoverage.py:330: UserWarning:
+
+Attempting to set identical low and high xlims makes transformation singular; automatically expanding.
+
+/Users/tw1628/miniconda3/lib/python3.12/site-packages/deeptools/plotCoverage.py:335: UserWarning:
+
+Attempting to set identical low and high xlims makes transformation singular; automatically expanding.
+

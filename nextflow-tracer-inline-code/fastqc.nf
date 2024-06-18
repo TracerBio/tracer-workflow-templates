@@ -38,6 +38,7 @@ process QC {
     done
 
     tracer start
+    tracer tool fastqc 1.2.5
     fastqc \\
         $args \\
         --threads $task.cpus \\

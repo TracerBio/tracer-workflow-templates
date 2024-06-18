@@ -1,9 +1,2 @@
-2024-06-18 22:32:41	3.1s	mad_dalembert	OK	6d667447c7233de1d807797d8319d7b9	7516f982-96ae-477d-a512-f23318480d7f	nextflow run ./nextflow-tracer-inline-code/example2.nf
-2024-06-18 22:32:58	1.3s	elated_shockley	OK	ec925f5a2336dfda64ad490b7b330f0e	db676493-c788-420d-813c-5256a8ed31f5	nextflow run ./nextflow-tracer-inline-code/example1.nf
-2024-06-18 22:33:06	1.4s	naughty_cajal	ERR	29219c8cd6c3b256aea36c1de5bca2d4	3ec65d87-bdca-432a-b8f2-231cc847457c	nextflow run ./nextflow-tracer-inline-code/example3.nf
-2024-06-18 22:33:38	7s	fervent_swanson	OK	3523379eb40e4dbd057bc88a9e9d1547	07401857-8569-49d4-9925-e6c050ebd615	nextflow run ./nextflow-tracer-inline-code/example3.nf
-2024-06-18 22:33:59	4.2s	elegant_heyrovsky	OK	ab49a718ea39074cec768ad995c17489	de0fa3bb-4618-4ff6-8ac9-a6639afcb34c	nextflow run ./nextflow-tracer-inline-code/example5.nf
-2024-06-18 22:34:12	914ms	backstabbing_dubinsky	ERR	c08ae340b4d270352f13a4030463b2be	f902bac2-1ce7-4066-908a-cf0a1e1170ed	nextflow run ./nextflow-tracer-inline-code/example6.nf
-2024-06-18 23:24:17	22.6s	backstabbing_baekeland	ERR	c08ae340b4d270352f13a4030463b2be	e600bec1-ba83-4021-9f3c-4eeb06976a2d	nextflow run ./nextflow-tracer-inline-code/example6.nf
-2024-06-18 23:34:15	13.6s	kickass_dalembert	ERR	c08ae340b4d270352f13a4030463b2be	0e6f95bd-24c5-4f00-b9af-23330cb1be8f	nextflow run ./nextflow-tracer-inline-code/example6.nf
-2024-06-18 23:36:19	22s	insane_lichterman	OK	c08ae340b4d270352f13a4030463b2be	a63cd9aa-1bce-4c60-b7dd-e182287173ea	nextflow run ./nextflow-tracer-inline-code/example6.nf
+2024-06-18 23:48:53	1.6s	drunk_minsky	ERR	00ef71634d879d9f21d4d70658e49018	2639d833-eeac-4899-b0f0-babee5b9a865	nextflow run ./nextflow-tracer-inline-code/chipseq.nf
+2024-06-18 23:49:30	1m 13s	small_easley	OK	8d2a810558050299a6b180b0bf4e6c0f	1b1d5164-1bba-4c01-96ea-01410d25bca1	nextflow run ./nextflow-tracer-inline-code/chipseq.nf

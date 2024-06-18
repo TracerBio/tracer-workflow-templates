@@ -1,0 +1,8 @@
+	STAR --runThreadN 4 --runMode genomeGenerate --genomeDir human --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99
+	STAR version: 2.7.10b   compiled:  :/Users/distiller/project/STARcompile/source
+Jun 18 23:48:54 ..... started STAR run
+Jun 18 23:48:54 ... starting to generate Genome files
+
+EXITING because of INPUT ERROR: could not open genomeFastaFile: human.fa
+
+Jun 18 23:48:54 ...... FATAL ERROR, exiting

@@ -89,10 +89,10 @@ process DEEPTOOLS {
 
 workflow {
     params.sample_id = "P1s1"
-    params.sample1 = "./workflows/chipseq/s1_1.fq"
-    params.sample2 = "./workflows/chipseq/s1_2.fq"
-    params.genome_fasta = "./workflows/chipseq/human.fa"
-    params.annotation_gtf = "./workflows/chipseq/hg19.refGene.gtf"
+    params.sample1 = "$projectDir/../data/s1_1.fq"
+    params.sample2 = "$projectDir/../data/s1_2.fq"
+    params.genome_fasta = "$projectDir/../data/human.fa"
+    params.annotation_gtf = "$projectDir/../data/hg19.refGene.gtf"
     
     Channel
         .fromPath(params.sample1)

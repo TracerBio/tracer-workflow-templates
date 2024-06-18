@@ -1,0 +1,9 @@
+	STAR --runThreadN 4 --genomeDir human --readFilesIn s1_1.fq s1_2.fq --outFileNamePrefix P1s1 --outSAMtype BAM SortedByCoordinate
+	STAR version: 2.7.10b   compiled:  :/Users/distiller/project/STARcompile/source
+Jun 18 23:49:37 ..... started STAR run
+Jun 18 23:49:37 ..... loading genome
+Jun 18 23:49:37 ..... started mapping
+Jun 18 23:50:11 ..... finished mapping
+Jun 18 23:50:11 ..... started sorting BAM
+Jun 18 23:50:11 ..... finished successfully
+[bam_sort_core] merging from 0 files and 4 in-memory blocks...

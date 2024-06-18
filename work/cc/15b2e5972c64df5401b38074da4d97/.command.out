@@ -1,7 +1,0 @@
-	STAR --genomeDir index --readFilesIn RARA.fq --runThreadN 1 --outFileNamePrefix Human. --outSAMtype BAM Unsorted --outSAMattrRGline ID:Human CN:CRUK SM:Human
-	STAR version: 2.7.10b   compiled:  :/Users/distiller/project/STARcompile/source
-Jun 18 23:36:32 ..... started STAR run
-Jun 18 23:36:32 ..... loading genome
-Jun 18 23:36:32 ..... started mapping
-Jun 18 23:36:40 ..... finished mapping
-Jun 18 23:36:40 ..... finished successfully

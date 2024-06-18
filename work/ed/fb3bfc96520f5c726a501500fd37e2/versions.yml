@@ -1,4 +1,0 @@
-"STAR_GENOMEGENERATE":
-    star: 2.7.10b
-    samtools: 1.20 
-    gawk: /Users/tw1628/Desktop/tracer-workflow-templates/work/ed/fb3bfc96520f5c726a501500fd37e2/.command.sh: line 13: gawk: command not found
