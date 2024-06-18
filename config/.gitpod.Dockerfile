@@ -1,2 +1,2 @@
-FROM tw599/nextflow-gitpod-v3:latest
+FROM tracerbio/tracer-workflow-templates:latest
 # Additional setup if needed

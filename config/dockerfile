@@ -58,12 +58,15 @@ RUN conda config --add channels defaults && \
         nextflow \
         nf-core \
         nf-test \
+        stringtie \
         black \
         prettier \
         pre-commit \
         pytest-workflow && \
     conda clean --all --force-pkgs-dirs --yes
 
+# Install deeptools
+RUN python -m ensurepip --upgrade && pip install deeptools
 
 # Update Nextflow
 RUN nextflow self-update && nextflow -version
