@@ -1,5 +1,0 @@
-2024-06-13 13:20:17	1.7s	serene_miescher	ERR	704986628f2b7b22d79193f1d9f96c03	f5c66700-6b49-4b66-b394-83452747392b	nextflow run ./workflows/chipseq.nf
-2024-06-13 13:22:32	2s	condescending_shirley	ERR	704986628f2b7b22d79193f1d9f96c03	de6ec3cc-1a9a-459e-90c1-d3f005eb5278	nextflow run ./workflows/chipseq.nf
-2024-06-13 13:26:04	783ms	furious_dalembert	ERR	f75ed105705f425a66b8f74cbe67d2f1	cb89a184-af3c-4b73-beac-c0649e97c5a5	nextflow run ./workflows/chipseq.nf
-2024-06-13 13:28:50	1.9s	pedantic_heisenberg	ERR	704986628f2b7b22d79193f1d9f96c03	086b84df-bf7b-4263-8c3d-6c59dae6e738	nextflow run ./workflows/chipseq/chipseq.nf
-2024-06-13 13:30:36	1m 16s	distracted_linnaeus	OK	e4ad754bb4f11d7328f7e9d2c79cae7c	2f27cf39-4a7f-4622-b112-78ffdf02fdaa	nextflow run ./workflows/chipseq/chipseq.nf
