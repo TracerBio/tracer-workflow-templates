@@ -1,0 +1,122 @@
+nextflow.enable.dsl=2
+
+process FASTQC {
+    tag "$sample_id"
+    input:
+    path sample1
+    path sample2
+    
+    output:
+    path '*'
+
+    script:
+    """
+    tracer start
+    tracer log "Started Tracer run"
+    tracer tool fastqc 0.12.1
+    fastqc $sample1 $sample2 -o .
+    """
+}
+
+process STAR_INDEX {
+    input:
+    path 'human.fa'
+    path 'hg19.refGene.gtf'
+    
+    output:
+    path 'human/*'
+    
+    script:
+    """
+    tracer tool star-index 1.7.0
+    STAR --runThreadN 4 --runMode genomeGenerate --genomeDir human --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99
+    """
+}
+
+process STAR_ALIGN {
+    tag "$sample_id"
+    input:
+    path 'human/*'
+    path sample1
+    path sample2
+    
+    output:
+    path 'P1s1*.sorted.bam'
+    path 'P1s1*.sorted.bam.bai'
+
+    script:
+    """
+    tracer tool star-align 1.7.0
+    STAR --runThreadN 4 --genomeDir human --readFilesIn $sample1 $sample2 --outFileNamePrefix P1s1 --outSAMtype BAM SortedByCoordinate
+    tracer tool samtools 1.17
+    samtools sort P1s1*.bam -@ 4 -o P1s1.sorted.bam
+    samtools index P1s1.sorted.bam
+    """
+}
+
+process MACS {
+    tag "$sample_id"
+    input:
+    path 'P1s1.sorted.bam'
+    path 'P1s1.sorted.bam.bai'
+    
+    output:
+    path './P1s1_peaks/'
+    
+    script:
+    """
+    tracer tool macs 3.0.1
+    macs3 callpeak -t P1s1.sorted.bam -f BAMPE -p 0.05 --outdir ./P1s1_peaks
+    """
+}
+
+process DEEPTOOLS {
+    tag "$sample_id"
+    input:
+    path 'P1s1.sorted.bam'
+    path 'P1s1.sorted.bam.bai'
+    
+    output:
+    path 'coverage.pdf'
+    
+    script:
+    """
+    tracer tool plotCoverage 3.5.5
+    plotCoverage -b P1s1.sorted.bam -o coverage.pdf
+    tracer end
+    """
+}
+
+workflow {
+    params.sample_id = "P1s1"
+    params.sample1 = "./workflows/chipseq/s1_1.fq"
+    params.sample2 = "./workflows/chipseq/s1_2.fq"
+    params.genome_fasta = "./workflows/chipseq/human.fa"
+    params.annotation_gtf = "./workflows/chipseq/hg19.refGene.gtf"
+    
+    Channel
+        .fromPath(params.sample1)
+        .set { sample1_ch }
+
+    Channel
+        .fromPath(params.sample2)
+        .set { sample2_ch }
+
+    Channel
+        .fromPath(params.genome_fasta)
+        .set { genome_fasta_ch }
+
+    Channel
+        .fromPath(params.annotation_gtf)
+        .set { annotation_gtf_ch }
+
+    fastqc_output = FASTQC(sample1_ch, sample2_ch)
+
+    star_index_output = STAR_INDEX(genome_fasta_ch, annotation_gtf_ch)
+    
+    star_align_output = STAR_ALIGN(star_index_output, sample1_ch, sample2_ch)
+    
+    macs_output = MACS(star_align_output)
+    
+    deeptools_output = DEEPTOOLS(star_align_output)
+}

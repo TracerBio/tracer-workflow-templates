@@ -1,0 +1,22 @@
+{
+    "read_files": "[ ecol_1.fq, ecol_2.fq]",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 1.0,
+    "num_compatible_fragments": 9365,
+    "num_assigned_fragments": 9365,
+    "num_frags_with_concordant_consistent_mappings": 9070,
+    "num_frags_with_inconsistent_or_orphan_mappings": 295,
+    "strand_mapping_bias": 0.6089305402425579,
+    "MSF": 0,
+    "OSF": 0,
+    "ISF": 5523,
+    "MSR": 0,
+    "OSR": 0,
+    "ISR": 3547,
+    "SF": 198,
+    "SR": 97,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

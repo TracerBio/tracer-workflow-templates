@@ -1,0 +1,68 @@
+Jun-18 22:33:38.434 [main] DEBUG nextflow.cli.Launcher - $> nextflow run ./nextflow-tracer-inline-code/example3.nf
+Jun-18 22:33:38.477 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 23.10.1
+Jun-18 22:33:38.485 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; embedded=false; plugins-dir=/Users/tw1628/.nextflow/plugins; core-plugins: nf-amazon@2.1.4,nf-azure@1.3.3,nf-cloudcache@0.3.0,nf-codecommit@0.1.5,nf-console@1.0.6,nf-ga4gh@1.1.0,nf-google@1.8.3,nf-tower@1.6.3,nf-wave@1.0.1
+Jun-18 22:33:38.488 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Jun-18 22:33:38.488 [main] INFO  o.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Jun-18 22:33:38.489 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Jun-18 22:33:38.494 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Jun-18 22:33:38.501 [main] DEBUG nextflow.config.ConfigBuilder - Found config base: /Users/tw1628/Desktop/tracer-workflow-templates/nextflow-tracer-inline-code/nextflow.config
+Jun-18 22:33:38.502 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /Users/tw1628/Desktop/tracer-workflow-templates/nextflow-tracer-inline-code/nextflow.config
+Jun-18 22:33:38.509 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Jun-18 22:33:38.702 [main] DEBUG nextflow.cli.CmdRun - Applied DSL=2 from script declararion
+Jun-18 22:33:38.709 [main] INFO  nextflow.cli.CmdRun - Launching `./nextflow-tracer-inline-code/example3.nf` [fervent_swanson] DSL2 - revision: 3523379eb4
+Jun-18 22:33:38.710 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Jun-18 22:33:38.710 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins resolved requirement=[]
+Jun-18 22:33:38.714 [main] DEBUG n.secret.LocalSecretsProvider - Secrets store: /Users/tw1628/.nextflow/secrets/store.json
+Jun-18 22:33:38.716 [main] DEBUG nextflow.secret.SecretsLoader - Discovered secrets providers: [nextflow.secret.LocalSecretsProvider@5740ff5e] - activable => nextflow.secret.LocalSecretsProvider@5740ff5e
+Jun-18 22:33:38.741 [main] DEBUG nextflow.Session - Session UUID: 07401857-8569-49d4-9925-e6c050ebd615
+Jun-18 22:33:38.741 [main] DEBUG nextflow.Session - Run name: fervent_swanson
+Jun-18 22:33:38.742 [main] DEBUG nextflow.Session - Executor pool size: 8
+Jun-18 22:33:38.745 [main] DEBUG nextflow.file.FilePorter - File porter settings maxRetries=3; maxTransfers=50; pollTimeout=null
+Jun-18 22:33:38.747 [main] DEBUG nextflow.util.ThreadPoolBuilder - Creating thread pool 'FileTransfer' minSize=10; maxSize=24; workQueue=LinkedBlockingQueue[10000]; allowCoreThreadTimeout=false
+Jun-18 22:33:38.764 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 23.10.1 build 5891
+  Created: 12-01-2024 22:01 UTC (23:01 CEST)
+  System: Mac OS X 14.5
+  Runtime: Groovy 3.0.19 on OpenJDK 64-Bit Server VM 17.0.10+7
+  Encoding: UTF-8 (UTF-8)
+  Process: 23771@Tushars-MacBook-Pro.local [127.0.0.1]
+  CPUs: 8 - Mem: 8 GB (47.3 MB) - Swap: 7 GB (650.1 MB)
+Jun-18 22:33:38.769 [main] DEBUG nextflow.Session - Work-dir: /Users/tw1628/Desktop/tracer-workflow-templates/work [Mac OS X]
+Jun-18 22:33:38.769 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /Users/tw1628/Desktop/tracer-workflow-templates/nextflow-tracer-inline-code/bin
+Jun-18 22:33:38.774 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Jun-18 22:33:38.778 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Jun-18 22:33:38.785 [main] DEBUG nextflow.cache.CacheFactory - Using Nextflow cache factory: nextflow.cache.DefaultCacheFactory
+Jun-18 22:33:38.790 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 9; maxThreads: 1000
+Jun-18 22:33:38.816 [main] DEBUG nextflow.Session - Session start
+Jun-18 22:33:38.903 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Jun-18 22:33:39.006 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-18 22:33:39.007 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-18 22:33:39.008 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Jun-18 22:33:39.010 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=8; memory=8 GB; capacity=8; pollInterval=100ms; dumpInterval=5m
+Jun-18 22:33:39.011 [main] DEBUG n.processor.TaskPollingMonitor - >>> barrier register (monitor: local)
+Jun-18 22:33:39.035 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Jun-18 22:33:39.035 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Jun-18 22:33:39.036 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: QUANTIFICATION, INDEX
+Jun-18 22:33:39.036 [main] DEBUG nextflow.Session - Igniting dataflow network (3)
+Jun-18 22:33:39.038 [PathVisitor-1] DEBUG nextflow.file.PathVisitor - files for syntax: glob; folder: /Users/tw1628/Desktop/tracer-workflow-templates/nextflow-tracer-inline-code/../data/; pattern: aml_{1,2}.fq; options: [checkIfExists:true]
+Jun-18 22:33:39.039 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > INDEX
+Jun-18 22:33:39.039 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > QUANTIFICATION
+Jun-18 22:33:39.039 [main] DEBUG nextflow.script.ScriptRunner - Parsed script files:
+  Script_ea36f340f142e09c: /Users/tw1628/Desktop/tracer-workflow-templates/nextflow-tracer-inline-code/./quantpe.nf
+  Script_e082aaa2120252a0: /Users/tw1628/Desktop/tracer-workflow-templates/nextflow-tracer-inline-code/./index.nf
+  Script_57bd8d3a02c1a56d: /Users/tw1628/Desktop/tracer-workflow-templates/nextflow-tracer-inline-code/example3.nf
+Jun-18 22:33:39.039 [main] DEBUG nextflow.script.ScriptRunner - > Awaiting termination 
+Jun-18 22:33:39.039 [main] DEBUG nextflow.Session - Session await
+Jun-18 22:33:39.074 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-18 22:33:39.074 [Task submitter] INFO  nextflow.Session - [a5/c69809] Submitted process > INDEX
+Jun-18 22:33:43.665 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 1; name: INDEX; status: COMPLETED; exit: 0; error: -; workDir: /Users/tw1628/Desktop/tracer-workflow-templates/work/a5/c698091aa39a558ff2873390b8be30]
+Jun-18 22:33:43.676 [Task submitter] DEBUG n.executor.local.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Jun-18 22:33:43.676 [Task submitter] INFO  nextflow.Session - [65/5871be] Submitted process > QUANTIFICATION (1)
+Jun-18 22:33:44.768 [Task monitor] DEBUG n.processor.TaskPollingMonitor - Task completed > TaskHandler[id: 2; name: QUANTIFICATION (1); status: COMPLETED; exit: 0; error: -; workDir: /Users/tw1628/Desktop/tracer-workflow-templates/work/65/5871be257d49e88afe5091ddcfda5a]
+Jun-18 22:33:44.770 [main] DEBUG nextflow.Session - Session await > all processes finished
+Jun-18 22:33:44.772 [Task monitor] DEBUG n.processor.TaskPollingMonitor - <<< barrier arrives (monitor: local) - terminating tasks monitor poll loop
+Jun-18 22:33:44.772 [main] DEBUG nextflow.Session - Session await > all barriers passed
+Jun-18 22:33:44.777 [main] DEBUG n.trace.WorkflowStatsObserver - Workflow completed > WorkflowStats[succeededCount=2; failedCount=0; ignoredCount=0; cachedCount=0; pendingCount=0; submittedCount=0; runningCount=0; retriesCount=0; abortedCount=0; succeedDuration=5.5s; failedDuration=0ms; cachedDuration=0ms;loadCpus=0; loadMemory=0; peakRunning=1; peakCpus=1; peakMemory=0; ]
+Jun-18 22:33:44.991 [main] DEBUG nextflow.cache.CacheDB - Closing CacheDB done
+Jun-18 22:33:44.997 [main] DEBUG nextflow.util.ThreadPoolManager - Thread pool 'FileTransfer' shutdown completed (hard=false)
+Jun-18 22:33:44.997 [main] DEBUG nextflow.script.ScriptRunner - > Execution complete -- Goodbye

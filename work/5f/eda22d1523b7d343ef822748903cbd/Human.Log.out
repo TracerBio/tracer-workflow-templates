@@ -1,0 +1,178 @@
+STAR version=2.7.10b
+STAR compilation time,server,dir= :/Users/distiller/project/STARcompile/source
+STAR git: On branch master ; commit c6f8efc2c7043ef83bf8b0d9bed36bbb6b9b1133 ; diff files: 
+##### Command Line:
+STAR --genomeDir index --readFilesIn RARA.fq --runThreadN 1 --outFileNamePrefix Human. --outSAMtype BAM Unsorted --outSAMattrRGline ID:Human CN:CRUK SM:Human
+##### Initial USER parameters from Command Line:
+outFileNamePrefix                 Human.
+###### All USER parameters from Command Line:
+genomeDir                     index     ~RE-DEFINED
+readFilesIn                   RARA.fq        ~RE-DEFINED
+runThreadN                    1     ~RE-DEFINED
+outFileNamePrefix             Human.     ~RE-DEFINED
+outSAMtype                    BAM   Unsorted        ~RE-DEFINED
+outSAMattrRGline              ID:Human   CN:CRUK   SM:Human        ~RE-DEFINED
+##### Finished reading parameters from all sources
+
+##### Final user re-defined parameters-----------------:
+runThreadN                        1
+genomeDir                         index
+readFilesIn                       RARA.fq   
+outFileNamePrefix                 Human.
+outSAMtype                        BAM   Unsorted   
+outSAMattrRGline                  ID:Human   CN:CRUK   SM:Human   
+
+-------------------------------
+##### Final effective command line:
+STAR   --runThreadN 1   --genomeDir index   --readFilesIn RARA.fq      --outFileNamePrefix Human.   --outSAMtype BAM   Unsorted      --outSAMattrRGline ID:Human   CN:CRUK   SM:Human   
+----------------------------------------
+
+Number of fastq files for each mate = 1
+WARNING --outSAMattrRG defines a read group, therefore STAR will output RG attribute
+ParametersSolo: --soloCellFilterType CellRanger2.2 filtering parameters:  3000 0.99 10
+Finished loading and checking parameters
+Reading genome generation parameters:
+### STAR   --runMode genomeGenerate      --runThreadN 1   --genomeDir index/   --genomeFastaFiles human.fa      --genomeSAindexNbases 10   --sjdbGTFfile hg19.refGene.gtf
+### GstrandBit=32
+versionGenome                 2.7.4a     ~RE-DEFINED
+genomeType                    Full     ~RE-DEFINED
+genomeFastaFiles              human.fa        ~RE-DEFINED
+genomeSAindexNbases           10     ~RE-DEFINED
+genomeChrBinNbits             18     ~RE-DEFINED
+genomeSAsparseD               1     ~RE-DEFINED
+genomeTransformType           None     ~RE-DEFINED
+genomeTransformVCF            -     ~RE-DEFINED
+sjdbOverhang                  100     ~RE-DEFINED
+sjdbFileChrStartEnd           -        ~RE-DEFINED
+sjdbGTFfile                   hg19.refGene.gtf     ~RE-DEFINED
+sjdbGTFchrPrefix              -     ~RE-DEFINED
+sjdbGTFfeatureExon            exon     ~RE-DEFINED
+sjdbGTFtagExonParentTranscripttranscript_id     ~RE-DEFINED
+sjdbGTFtagExonParentGene      gene_id     ~RE-DEFINED
+sjdbInsertSave                Basic     ~RE-DEFINED
+genomeFileSizes               36490477   102593151        ~RE-DEFINED
+Genome version is compatible with current STAR
+Number of real (reference) chromosomes= 93
+1	chr1	1246253	0
+2	chr2	1215996	1310720
+3	chr3	990112	2621440
+4	chr4	955771	3670016
+5	chr5	904576	4718592
+6	chr6	855575	5767168
+7	chr7	795693	6815744
+8	chrX	776352	7864320
+9	chr8	731820	8650752
+10	chr9	706067	9437184
+11	chr10	677673	10223616
+12	chr11	675032	11010048
+13	chr12	669259	11796480
+14	chr13	575849	12582912
+15	chr14	536747	13369344
+16	chr15	512656	14155776
+17	chr16	451773	14680064
+18	chr17	405976	15204352
+19	chr18	390386	15728640
+20	chr20	315127	16252928
+21	chrY	296867	16777216
+22	chr19	295644	17301504
+23	chr22	256522	17825792
+24	chr21	240649	18087936
+25	chr6_ssto_hap7	24642	18350080
+26	chr6_mcf_hap5	24166	18612224
+27	chr6_cox_hap2	23976	18874368
+28	chr6_mann_hap4	23416	19136512
+29	chr6_apd_hap1	23111	19398656
+30	chr6_qbl_hap6	23059	19660800
+31	chr6_dbb_hap3	23051	19922944
+32	chr17_ctg5_hap1	8404	20185088
+33	chr4_ctg9_hap1	2952	20447232
+34	chr1_gl000192_random	2737	20709376
+35	chrUn_gl000225	1055	20971520
+36	chr4_gl000194_random	957	21233664
+37	chr4_gl000193_random	948	21495808
+38	chr9_gl000200_random	935	21757952
+39	chrUn_gl000222	934	22020096
+40	chrUn_gl000212	934	22282240
+41	chr7_gl000195_random	914	22544384
+42	chrUn_gl000223	902	22806528
+43	chrUn_gl000224	898	23068672
+44	chrUn_gl000219	895	23330816
+45	chr17_gl000205_random	872	23592960
+46	chrUn_gl000215	862	23855104
+47	chrUn_gl000216	861	24117248
+48	chrUn_gl000217	860	24379392
+49	chr9_gl000199_random	849	24641536
+50	chrUn_gl000211	832	24903680
+51	chrUn_gl000213	821	25165824
+52	chrUn_gl000220	809	25427968
+53	chrUn_gl000218	805	25690112
+54	chr19_gl000209_random	795	25952256
+55	chrUn_gl000221	776	26214400
+56	chrUn_gl000214	688	26476544
+57	chrUn_gl000228	645	26738688
+58	chrUn_gl000227	641	27000832
+59	chr1_gl000191_random	532	27262976
+60	chr19_gl000208_random	463	27525120
+61	chr9_gl000198_random	450	27787264
+62	chr17_gl000204_random	406	28049408
+63	chrUn_gl000233	229	28311552
+64	chrUn_gl000237	229	28573696
+65	chrUn_gl000230	218	28835840
+66	chrUn_gl000242	217	29097984
+67	chrUn_gl000243	216	29360128
+68	chrUn_gl000241	210	29622272
+69	chrUn_gl000236	209	29884416
+70	chrUn_gl000240	209	30146560
+71	chr17_gl000206_random	205	30408704
+72	chrUn_gl000232	203	30670848
+73	chrUn_gl000234	202	30932992
+74	chr11_gl000202_random	200	31195136
+75	chrUn_gl000238	199	31457280
+76	chrUn_gl000244	199	31719424
+77	chrUn_gl000248	198	31981568
+78	chr8_gl000196_random	194	32243712
+79	chrUn_gl000249	192	32505856
+80	chrUn_gl000246	190	32768000
+81	chr17_gl000203_random	187	33030144
+82	chr8_gl000197_random	185	33292288
+83	chrUn_gl000245	183	33554432
+84	chrUn_gl000247	182	33816576
+85	chr9_gl000201_random	180	34078720
+86	chrUn_gl000235	172	34340864
+87	chrUn_gl000239	169	34603008
+88	chr21_gl000210_random	138	34865152
+89	chrUn_gl000231	136	35127296
+90	chrUn_gl000229	99	35389440
+91	chrM	82	35651584
+92	chrUn_gl000226	75	35913728
+93	chr18_gl000207_random	21	36175872
+--sjdbOverhang = 100 taken from the generated genome
+Started loading the genome: Tue Jun 18 23:24:30 2024
+
+Genome: size given as a parameter = 36490477
+SA: size given as a parameter = 102593151
+SAindex: size given as a parameter = 1
+Read from SAindex: pGe.gSAindexNbases=10  nSAi=1398100
+nGenome=36490477;  nSAbyte=102593151
+GstrandBit=32   SA number of indices=24871066
+Shared memory is not used for genomes. Allocated a private copy of the genome.
+Genome file size: 36490477 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading Genome ... done! state: good=1 eof=0 fail=0 bad=0; loaded 36490477 bytes
+SA file size: 102593151 bytes; state: good=1 eof=0 fail=0 bad=0
+Loading SA ... done! state: good=1 eof=0 fail=0 bad=0; loaded 102593151 bytes
+Loading SAindex ... done: 6116787 bytes
+Finished loading the genome: Tue Jun 18 23:24:30 2024
+
+Sum of all Genome bytes: 135500912
+Sum of all SA bytes: 10143699776
+Sum of all SAi bytes: 542999332
+Processing splice junctions database sjdbN=261,   pGe.sjdbOverhang=100 
+alignIntronMax=alignMatesGapMax=0, the max intron size will be approximately determined by (2^winBinNbits)*winAnchorDistNbins=589824
+Thread #0 end of input stream, nextChar=-1
+Completed: thread #0
+Jun 18 23:24:39 ..... finished mapping
+RAM after mapping:
+
+RAM after freeing genome index memory:
+
+ALL DONE!
