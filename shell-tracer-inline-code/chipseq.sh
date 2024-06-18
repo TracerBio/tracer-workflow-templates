@@ -5,7 +5,7 @@ tracer start;
 tracer log "Started Tracer run";
  
 # FASTQC - QC layer 1
-cd ./workflows/chipseq
+cd ./data/chipseq
 
 tracer tool fastqc 0.12.1;
 fastqc s1_1.fq s1_2.fq -o .;
@@ -14,12 +14,12 @@ fastqc s1_1.fq s1_2.fq -o .;
 tracer tool star-index 1.7.0;
 
 # Creating a human genome index using STAR
-STAR --runThreadN 4 --runMode genomeGenerate --genomeDir ./human --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99;
+STAR --runThreadN 4 --runMode genomeGenerate --genomeDir ./human_genome --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99;
 
 
 # Align RNA-Seq reads to the genome using STAR
 tracer tool star-align 1.7.0;
-STAR --runThreadN 4 --genomeDir ./human --readFilesIn s1_1.fq s1_2.fq --outFileNamePrefix P1s1 --outSAMtype BAM SortedByCoordinate;
+STAR --runThreadN 4 --genomeDir ./human_genome --readFilesIn s1_1.fq s1_2.fq --outFileNamePrefix P1s1 --outSAMtype BAM SortedByCoordinate;
 
 # Sort and Index the output bam file
 tracer tool samtools 1.17;

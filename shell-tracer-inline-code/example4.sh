@@ -1,9 +1,9 @@
 #!/bin/bash
  
 # Specify input files and parameters
-FASTQ_FILES="./examples/data/human"
-GENOME_DIR="./examples/data/human/hg19"
-OUTPUT_DIR="./examples/data/human/STAR"
+FASTQ_FILES="./data/human"
+GENOME_DIR="./data/human/hg19"
+OUTPUT_DIR="./data/human/STAR"
  
 # Start a new Tracer run
 tracer log "Started Tracer run"
@@ -14,10 +14,10 @@ tracer tool STAR v2.7.10a
 # Generate genome index
 STAR --runThreadN 8 \
      --runMode genomeGenerate \
-     --genomeDir ./examples/data/human/hg19 \
+     --genomeDir ./data/human/hg19 \
      --genomeSAindexNbases 10 \
-     --genomeFastaFiles ./examples/data/human/human.fa \
-     --sjdbGTFfile ./examples/data/human/hg19.refGene.gtf \
+     --genomeFastaFiles ./data/human/human.fa \
+     --sjdbGTFfile ./data/human/hg19.refGene.gtf \
      --sjdbOverhang 99
 
 # Log progress
