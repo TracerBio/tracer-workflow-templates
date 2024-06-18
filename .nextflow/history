@@ -1,2 +1,0 @@
-2024-06-18 23:48:53	1.6s	drunk_minsky	ERR	00ef71634d879d9f21d4d70658e49018	2639d833-eeac-4899-b0f0-babee5b9a865	nextflow run ./nextflow-tracer-inline-code/chipseq.nf
-2024-06-18 23:49:30	1m 13s	small_easley	OK	8d2a810558050299a6b180b0bf4e6c0f	1b1d5164-1bba-4c01-96ea-01410d25bca1	nextflow run ./nextflow-tracer-inline-code/chipseq.nf
