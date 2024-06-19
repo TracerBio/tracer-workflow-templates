@@ -1,4 +1,4 @@
-# Nextflow Tracer Use-Case Examples
+# Nextflow Tracer Workflow Templates
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracer-pod/utility-pod)
 
@@ -12,37 +12,54 @@ To install Tracer on your initialized Gitpod workspace:
 # Example 1: Nextflow RNASEQ training example with indexing & quantification
 
 1. INDEX and QUANTIFICATION processes are run and tracked by Tracer
-2. "nextflow run ./examples/example1.nf"
+2. "nextflow run ./nextflow-tracer-inline-code/example1.nf"
 
 # Example 2: Nextflow RNASEQ training example with indexing & quantification - Bacterial GEO dataset
 
 1. INDEX and QUANTIFICATION processes are run and tracked by Tracer using GEO E.coli dataset
 2. Details of dataset available at "./examples/data/bacteria/datasets.txt"
-2. "nextflow run ./examples/example2.nf"
+2. "nextflow run ./nextflow-tracer-inline-code/example2.nf"
 
 # Example 3: Nextflow RNASEQ training example with indexing & quantification - Human GEO dataset
 
 1. INDEX and QUANTIFICATION processes are run and tracked by Tracer using GEO human AML dataset
 2. Details of dataset available at "./examples/data/human/datasets.txt"
-2. "nextflow run ./examples/example3.nf"
+2. "nextflow run ./nextflow-tracer-inline-code/example3.nf"
 
-# Example 4: Shell script tracking for STAR mapper with RNASEQ data
-
-1. Generate a genome index and performs mapping of sample dataset using STAR
-2. Details of dataset available at "./examples/data/human/datasets.txt"
-2. "sh ./rnaseq/STAR.sh"
-
-# Example 5: Nextflow Quality control training example using FASTQC - Human GEO dataset 
+# Example 4: Nextflow Quality control training example using FASTQC - Human GEO dataset 
 
 1. Generate data metrics and QC characteristics - GC%, reads per bp etc. for raw data (.fq files)
 2. Details of dataset available at "./examples/data/human/datasets.txt"
-2. "nextflow run ./examples/example5.nf"
+2. "nextflow run ./nextflow-tracer-inline-code/example4.nf"
 
-# Example 6: Nextflow CHIPSEQ training example with indexing & mapping - Human GEO dataset 
+# Example 5: Nextflow CHIPSEQ training example with indexing & mapping - Human GEO dataset 
 
 1. Generates a human genome index and maps the CHIPSEQ data (.fq) to the index
 2. Details of dataset available at "./examples/data/human/datasets.txt"
-2. "nextflow run ./examples/example6.nf"
+2. "nextflow run ./nextflow-tracer-inline-code/example5.nf"
+
+# Example 6: Nextflow complete CHIPSEQ workflow - from index to peaks - Human GEO dataset
+
+1. Generate a genome index and performs mapping of sample dataset using STAR
+2. Calls peaks on mapped data using samtools and MACS3
+3. Performs mapping coverage analysis using deeptools
+4. "nextflow run ./nextflow-tracer-inline-code/chipseq.sh"
+
+# Shell Script Tracer Examples
+
+# Example 1: Shell script tracking for STAR mapper with RNASEQ data
+
+1. Generate a genome index and performs mapping of sample dataset using STAR
+2. Details of dataset available at "./examples/data/human/datasets.txt"
+2. "sh ./shell-tracer-inline-code/example1.sh"
+
+# Example 2: Complete CHIPSEQ processing example
+
+1. Generate a genome index and performs mapping of sample dataset using STAR
+2. Calls peaks on mapped data using samtools and MACS3
+3. Performs mapping coverage analysis using deeptools
+4. "sh ./shell-tracer-inline-code/chipseq.sh"
+
 
     ## Files
 
@@ -56,6 +73,7 @@ To install Tracer on your initialized Gitpod workspace:
     ## Workspace
 
     - Conda and salmon are pre-configured in the workspace using docker.
+    - deeptools, samtools are configured into the docker container.
     - Nextflow is pre-configured in the workspace using docker.
     - JAVA is pre-configured in the workspace using docker.
     - STAR is pre-configured in the workspace using docker.
