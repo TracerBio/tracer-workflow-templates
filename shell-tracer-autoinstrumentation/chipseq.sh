@@ -1,7 +1,7 @@
 #!/bin/bash
  
 # FASTQC - QC layer 1
-cd ./data;
+cd ~/workspaces/tracer-workflow-templates/data;
 
 fastqc s1_1.fq s1_2.fq -o .;
 

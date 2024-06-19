@@ -1,17 +1,17 @@
 #!/bin/bash
  
 # Specify input files and parameters
-FASTQ_FILES="./data/"
-GENOME_DIR="./data/hg19"
-OUTPUT_DIR="./data/STAR"
+FASTQ_FILES="~/workspaces/tracer-workflow-templates/data/"
+GENOME_DIR="~/workspaces/tracer-workflow-templates/data/hg19"
+OUTPUT_DIR="~/workspaces/tracer-workflow-templates/data/STAR"
  
 # Generate genome index
 STAR --runThreadN 8 \
      --runMode genomeGenerate \
-     --genomeDir ./data/hg19 \
+     --genomeDir ~/workspaces/tracer-workflow-templates/data/hg19 \
      --genomeSAindexNbases 10 \
-     --genomeFastaFiles ./data/human.fa \
-     --sjdbGTFfile ./data/hg19.refGene.gtf \
+     --genomeFastaFiles ~/workspaces/tracer-workflow-templates/data/human.fa \
+     --sjdbGTFfile ~/workspaces/tracer-workflow-templates/data/hg19.refGene.gtf \
      --sjdbOverhang 99
 
  
