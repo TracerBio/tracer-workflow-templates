@@ -1,6 +1,6 @@
 # Tracer Workflow Templates
 
-1.1 Nextflow Tracer Workflow Templates
+# 1.1 Nextflow Tracer Workflow Templates
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracer-pod/utility-pod)
 
@@ -47,7 +47,7 @@ To install Tracer on your initialized Gitpod workspace:
 3. Performs mapping coverage analysis using deeptools
 4. "nextflow run ./nextflow-tracer-inline-code/chipseq.nf"
 
-1.2 Shell Script Tracer Examples
+# 1.2 Shell Script Tracer Examples
 
 # Example 1: Shell script tracking for STAR mapper with RNASEQ data
 
