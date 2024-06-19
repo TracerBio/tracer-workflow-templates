@@ -1,4 +1,6 @@
-# Nextflow Tracer Workflow Templates
+# Tracer Workflow Templates
+
+1.1 Nextflow Tracer Workflow Templates
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracer-pod/utility-pod)
 
@@ -43,9 +45,9 @@ To install Tracer on your initialized Gitpod workspace:
 1. Generate a genome index and performs mapping of sample dataset using STAR
 2. Calls peaks on mapped data using samtools and MACS3
 3. Performs mapping coverage analysis using deeptools
-4. "nextflow run ./nextflow-tracer-inline-code/chipseq.sh"
+4. "nextflow run ./nextflow-tracer-inline-code/chipseq.nf"
 
-# Shell Script Tracer Examples
+1.2 Shell Script Tracer Examples
 
 # Example 1: Shell script tracking for STAR mapper with RNASEQ data
 
@@ -63,7 +65,7 @@ To install Tracer on your initialized Gitpod workspace:
 
     ## Files
 
-    - `example1.nf`, `example2.nf`, `example3.nf`, `example4.sh`, `example5.nf`, `example6.nf`: The main workflow script files.
+    - `example1.nf`, `example2.nf`, `example3.nf`, `example1.sh`, `example5.nf`, `example6.nf`, `chipseq.sh`, `chipseq.nf`: The main workflow script files.
     - `index.nf`: Contains the INDEX process definition [./examples/misc/]
     - `quantpe.nf`: Contains the QUANTIFICATION process definition. [./examples/misc/]
     - `genomeGenerate.nf`: Contains the GENOME_GENERATE process definition. [./examples/misc/]
