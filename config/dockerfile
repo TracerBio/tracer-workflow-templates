@@ -53,6 +53,8 @@ RUN conda config --add channels defaults && \
         star \
         macs3 \
         multiqc \
+        cufflinks-py \
+        kallisto \
         subread \
         bowtie2 \
         fastqc \
