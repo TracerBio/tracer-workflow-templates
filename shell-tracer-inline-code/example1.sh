@@ -1,9 +1,9 @@
 #!/bin/bash
  
 # Specify input files and parameters
-FASTQ_FILES="/workspaces/tracer-workflow-templates/data/"
-GENOME_DIR="/workspaces/tracer-workflow-templates/data/hg19"
-OUTPUT_DIR="/workspaces/tracer-workflow-templates/data/STAR"
+FASTQ_FILES="/workspace/tracer-workflow-templates/data/"
+GENOME_DIR="/workspace/tracer-workflow-templates/data/hg19"
+OUTPUT_DIR="/workspace/tracer-workflow-templates/data/STAR"
  
 # Start a new Tracer run
 tracer log "Started Tracer run"
@@ -14,10 +14,10 @@ tracer tool STAR v2.7.10a
 # Generate genome index
 STAR --runThreadN 8 \
      --runMode genomeGenerate \
-     --genomeDir /workspaces/tracer-workflow-templates/data/hg19 \
+     --genomeDir /workspace/tracer-workflow-templates/data/hg19 \
      --genomeSAindexNbases 10 \
-     --genomeFastaFiles /workspaces/tracer-workflow-templates/data/human.fa \
-     --sjdbGTFfile /workspaces/tracer-workflow-templates/data/hg19.refGene.gtf \
+     --genomeFastaFiles /workspace/tracer-workflow-templates/data/human.fa \
+     --sjdbGTFfile /workspace/tracer-workflow-templates/data/hg19.refGene.gtf \
      --sjdbOverhang 99
 
 # Log progress
