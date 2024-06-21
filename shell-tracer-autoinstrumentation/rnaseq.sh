@@ -39,6 +39,33 @@ kallisto quant -t 4 -i control_index -o ./control_quant control1_1.fq control1_2
 # Quantify RNA-Seq reads of test experiment to the genome using kallisto - KALLISTO-TEST-QUANT
 kallisto quant -t 4 -i test_index -o ./test_quant test1_1.fq test1_2.fq;
 
+# Creating a human genome index using salmon - SALMON-INDEX
+salmon index --threads 4 -t human.fa -i salmon_index;
+
+# Align RNA-Seq reads of control to the genome using salmon - SALMON-CONTROL-QUANT
+salmon quant --threads 4 --libType=U -i salmon_index -1 control1_1.fq -2 control1_2.fq -o ./salmon_control;
+
+# Align RNA-Seq reads of test experiment to the genome using salmon - SALMON-TEST-QUANT
+salmon quant --threads 4 --libType=U -i salmon_index -1 test1_1.fq -2 test1_2.fq -o ./salmon_test;
+
+# Creating a human genome index using hisat2 - HISAT2-INDEX
+hisat2-build human.fa hisat2_index;
+
+# Align RNA-Seq reads of control to the genome using hisat2 - HISAT2-CONTROL-ALIGN
+hisat2 --fast -x hisat2_index -1 control1_1.fq -2 control1_2.fq -S control_hs2.sam;
+
+# Align RNA-Seq reads of test experiment to the genome using hisat2 - HISAT2-TEST-ALIGN
+hisat2 --fast -x hisat2_index -1 test1_1.fq -2 test1_2.fq -S test_hs2.sam;
+
+# Creating a human genome index using bwa - BWA-INDEX
+bwa index -p bwa_index human.fa;
+
+# Align RNA-Seq reads of control to the genome using bwa - BWA-CONTROL-QUANT
+bwa mem bwa_index control1_1.fq control1_2.fq > control_reads.sam;
+
+# Align RNA-Seq reads of test experiment to the genome using bwa - BWA-TEST-QUANT
+bwa mem bwa_index test1_1.fq test1_2.fq > test_reads.sam;
+
 # Sort and Index the output sam files - SAMTOOLS-CONTROL
 samtools view -@ 4 -b control.sam > control.bam 
 samtools sort control.bam -@ 4 -o control.sorted.bam;
