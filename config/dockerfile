@@ -52,6 +52,8 @@ RUN conda config --add channels defaults && \
         boost \
         star \
         macs3 \
+        multiqc \
+        subread \
         fastqc \
         gawk \
         samtools \
