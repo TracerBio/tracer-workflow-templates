@@ -124,6 +124,8 @@ ps -e | grep tracer
 ```
 
 **latest stable version June 21st**
+```bash
 git checkout cbd49684df61419a08e41f1a3ebe99507a2de0ed
+```
 
 This README provides a comprehensive guide for users to understand and execute a nextflow RNA-Seq workflow with Tracer enabled tracking. Adjust the repository URL, license details, and acknowledgments as per your specific project details.
