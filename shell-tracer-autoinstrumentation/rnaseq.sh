@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # FASTQC - QC layer 1
-cd /workflows/tracer-workflow-templates/data
+cd /workspace/tracer-workflow-templates/data
 
 # Record the execution of the FASTQC tool
 fastqc control1_1.fq control1_2.fq -o .;
@@ -11,10 +11,10 @@ fastqc test1_1.fq test1_2.fq -o .;
 bowtie2-build human.fa human_index;
 
 # Align RNA-Seq reads of control to the genome using bowtie2
-bowtie2 --local -x human_index -1 control_1.fq -2 control_2.fq -S control.sam;
+bowtie2 --local -x human_index -1 control1_1.fq -2 control1_2.fq -S control.sam;
 
 # Align RNA-Seq reads of test experiment to the genome using bowtie2
-bowtie2 --local -x human_index -1 test_1.fq -2 test_2.fq -S test.sam;
+bowtie2 --local -x human_index -1 test1_1.fq -2 test1_2.fq -S test.sam;
 
 # Sort and Index the output sam files
 samtools view -@ 4 -b control.sam > control.bam 
@@ -25,12 +25,12 @@ samtools sort test.bam -@ 4 -o test.sorted.bam;
 samtools index test.sorted.bam;
 
 # Predict potential transcripts in control and test BAM files using StringTie
-stringtie -o control.gtf -G hg19.refGene.gtf control.sorted.bam;
-stringtie -o test.gtf -G hg19.refGene.gtf test.sorted.bam;
+stringtie -o control.gtf -G hg19_anno.gtf control.sorted.bam;
+stringtie -o test.gtf -G hg19_anno.gtf test.sorted.bam;
 
 # Calculate transcript counts from BAM files using featureCounts
-featureCounts -p --countReadPairs -B -C -T 4 -a hg19.refGene.gtf -o control_counts control.sorted.bam;
-featureCounts -p --countReadPairs -B -C -T 4 -a hg19.refGene.gtf -o test_counts test.sorted.bam;
+featureCounts -p --countReadPairs -B -C -T 4 -a hg19_anno.gtf -o control_counts control.sorted.bam;
+featureCounts -p --countReadPairs -B -C -T 4 -a hg19_anno.gtf -o test_counts test.sorted.bam;
 
 # Collate logs and perform post-mapping QC with MULTIQC
 multiqc .;
