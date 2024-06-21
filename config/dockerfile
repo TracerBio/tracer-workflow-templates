@@ -54,6 +54,7 @@ RUN conda config --add channels defaults && \
         macs3 \
         multiqc \
         subread \
+        kallisto \
         bowtie2 \
         fastqc \
         gawk \
@@ -71,15 +72,6 @@ RUN conda config --add channels defaults && \
 
 # Install deeptools
 RUN python -m ensurepip --upgrade && pip install deeptools
-
-# Install kallisto
-RUN python -m ensurepip --upgrade && pip install kallisto
-
-# Install plotly
-RUN python -m ensurepip --upgrade && pip install plotly
-
-# Install cufflinks
-RUN python -m ensurepip --upgrade && pip install cufflinks
 
 # Update Nextflow
 RUN nextflow self-update && nextflow -version
