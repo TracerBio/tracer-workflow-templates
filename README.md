@@ -1,4 +1,19 @@
 # Tracer Workflow Templates
+**how to install tracer**
+To install Tracer on your initialized Gitpod workspace:
+
+--> Create your account on Tracer 
+--> Copy & Paste one-line installation script at https://app.tracer.bio/app/setup
+
+**how to run tracer daemon** 
+```bash
+tracer-deamon 
+```
+**How to check if Tracer Daemon Is Running**
+```bash
+ps -e | grep tracer
+
+```
 
 # 1.1 Nextflow Tracer Workflow Templates
 
@@ -6,10 +21,6 @@
 
 This repository provides an example of using Nextflow with our tracking & observability tool - Tracer.
 
-To install Tracer on your initialized Gitpod workspace:
-
---> Create your account on Tracer 
---> Copy & Paste one-line installation script at https://app.tracer.bio/app/setup
 
 # Example 1: Nextflow RNASEQ training example with indexing & quantification
 
