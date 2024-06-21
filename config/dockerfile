@@ -55,6 +55,8 @@ RUN conda config --add channels defaults && \
         multiqc \
         subread \
         kallisto \
+        hisat2 \
+        bwa \
         bowtie2 \
         fastqc \
         gawk \
