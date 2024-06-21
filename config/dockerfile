@@ -49,6 +49,7 @@ RUN conda config --add channels defaults && \
     conda update --quiet --yes --all && \
     conda install --quiet --yes --name base \
         salmon \
+        boost \
         star \
         macs3 \
         fastqc \

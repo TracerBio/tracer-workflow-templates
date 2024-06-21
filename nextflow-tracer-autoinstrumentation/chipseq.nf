@@ -43,7 +43,6 @@ process STAR_ALIGN {
     script:
     """
     STAR --runThreadN 4 --genomeDir human --readFilesIn $sample1 $sample2 --outFileNamePrefix P1s1 --outSAMtype BAM SortedByCoordinate
-    tracer tool samtools 1.17
     samtools sort P1s1*.bam -@ 4 -o P1s1.sorted.bam
     samtools index P1s1.sorted.bam
     """
@@ -76,7 +75,6 @@ process DEEPTOOLS {
     script:
     """
     plotCoverage -b P1s1.sorted.bam -o coverage.pdf
-    tracer end
     """
 }
 
