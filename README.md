@@ -1,20 +1,4 @@
 # Tracer Workflow Templates
-**how to install tracer**
-To install Tracer on your initialized Gitpod workspace:
-
---> Create your account on Tracer 
---> Copy & Paste one-line installation script at https://app.tracer.bio/app/setup
-
-**how to run tracer daemon** 
-```bash
-tracer-deamon 
-# should return similar to: 1305 ?        00:00:00 tracer-daemon
-```
-**How to check if Tracer Daemon Is Running**
-```bash
-ps -e | grep tracer
-
-```
 
 # 1.1 Nextflow Tracer Workflow Templates
 
@@ -119,5 +103,27 @@ This repository provides an example of using Nextflow with our tracking & observ
 
     [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracer-pod/utility-pod)
 ---
+
+
+# Tracer-daemon instructions
+**how to install tracer**
+To install Tracer on your initialized Gitpod workspace:
+
+--> Create your account on Tracer 
+--> Copy & Paste one-line installation script at https://app.tracer.bio/app/setup
+
+**how to run tracer daemon** 
+```bash
+tracer-deamon 
+# should return similar to: 1305 ?        00:00:00 tracer-daemon
+```
+**How to check if Tracer Daemon Is Running**
+```bash
+ps -e | grep tracer
+
+```
+
+**latest stable version June 21st**
+git checkout cbd49684df61419a08e41f1a3ebe99507a2de0ed
 
 This README provides a comprehensive guide for users to understand and execute a nextflow RNA-Seq workflow with Tracer enabled tracking. Adjust the repository URL, license details, and acknowledgments as per your specific project details.
