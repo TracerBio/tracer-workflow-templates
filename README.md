@@ -8,6 +8,7 @@ To install Tracer on your initialized Gitpod workspace:
 **how to run tracer daemon** 
 ```bash
 tracer-deamon 
+# should return similar to: 1305 ?        00:00:00 tracer-daemon
 ```
 **How to check if Tracer Daemon Is Running**
 ```bash
