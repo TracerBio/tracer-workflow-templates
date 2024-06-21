@@ -5,7 +5,7 @@ tracer start;
 tracer log "Started Tracer run";
  
 # FASTQC - QC layer 1
-cd ~/workspaces/tracer-workflow-templates/data;
+cd /workspaces/tracer-workflow-templates/data;
 
 tracer tool fastqc 0.12.1;
 fastqc s1_1.fq s1_2.fq -o .;
