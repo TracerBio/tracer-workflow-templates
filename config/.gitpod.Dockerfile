@@ -1,2 +1,2 @@
-FROM tracerbio/tracer-workflows:v3
+FROM tracerbio/tracer-workflows:v4
 # Additional setup if needed
