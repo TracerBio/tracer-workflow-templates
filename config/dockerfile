@@ -75,9 +75,6 @@ RUN conda config --add channels defaults && \
 # Install deeptools
 RUN python -m ensurepip --upgrade && pip install deeptools
 
-# Install deeptools
-RUN python -m ensurepip --upgrade && pip install cufflinks --upgrade
-
 # Update Nextflow
 RUN nextflow self-update && nextflow -version
 
