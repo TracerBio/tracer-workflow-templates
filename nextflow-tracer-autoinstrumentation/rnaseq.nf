@@ -100,8 +100,8 @@ process STARMapCONTROL {
     path("human_star")
 
     output:
-    path "control_star_Aligned.sortedByCoord.out.bam"
-    path "control_star_ReadsPerGene.out.tab"
+    path "control_starAligned.sortedByCoord.out.bam"
+    path "control_starReadsPerGene.out.tab"
 
     script:
     """
@@ -117,8 +117,8 @@ process STARMapTEST {
     path("human_star")
 
     output:
-    path "test_star_Aligned.sortedByCoord.out.bam"
-    path "test_star_ReadsPerGene.out.tab"
+    path "test_starAligned.sortedByCoord.out.bam"
+    path "test_starReadsPerGene.out.tab"
 
     script:
     """
@@ -160,11 +160,11 @@ process KallistoIndexCONTROL {
     path("control.fa")
 
     output:
-    path ("control_index")
+    path ("control_index.idx")
 
     script:
     """
-    kallisto index -t 4 -i control_index control.fa
+    kallisto index -t 4 -i control_index.idx control.fa
     """
 }
 
@@ -174,11 +174,11 @@ process KallistoIndexTEST {
     path ("test.fa")
 
     output:
-    path "test_index"
+    path ("test_index.idx")
 
     script:
     """
-    kallisto index -t 4 -i test_index test.fa
+    kallisto index -t 4 -i test_index.idx test.fa
     """
 }
 
@@ -187,14 +187,14 @@ process KallistoQuantCONTROL {
     input:
     path(control1)
     path(control2)
-    path ("control_index/*")
+    path ("control_index.idx")
 
     output:
     path "control_quant"
 
     script:
     """
-    kallisto quant -t 4 -i control_index -o control_quant $control1 $control2
+    kallisto quant -t 4 -i control_index.idx -o control_quant $control1 $control2
     """
 }
 
@@ -203,14 +203,14 @@ process KallistoQuantTEST {
     input:
     path(test1)
     path(test2)
-    path ("test_index/*")
-
+    path ("test_index.idx")
+    
     output:
     path "test_quant"
 
     script:
     """
-    kallisto quant -t 4 -i test_index -o test_quant $test1 $test2
+    kallisto quant -t 4 -i test_index.idx -o test_quant $test1 $test2
     """
 }
 
@@ -445,36 +445,6 @@ process IndexTEST {
     """
 }
 
-process StringTieCONTROL {
-    tag "$sample_id1"
-    input:
-    path("control.sorted.bam")
-    path(genome_gtf)
-
-    output:
-    path "control.gtf"
-
-    script:
-    """
-    stringtie -o control.gtf -G $genome_gtf control.sorted.bam
-    """
-}
-
-process StringTieTEST {
-    tag "$sample_id2"
-    input:
-    path("test.sorted.bam")
-    path(genome_gtf)
-
-    output:
-    path "test.gtf"
-
-    script:
-    """
-    stringtie -o test.gtf -G $genome_gtf test.sorted.bam
-    """
-}
-
 process FeatureCountsCONTROL {
     tag "$sample_id1"
     input:
@@ -551,6 +521,8 @@ process Fingerprint {
     input:
     path("control.sorted.bam")
     path("test.sorted.bam")
+    path("control.sorted.bam.bai")
+    path("test.sorted.bam.bai")
 
     output:
     path "fingerprint_rnaseq.png"
@@ -563,7 +535,7 @@ process Fingerprint {
 
 process BamCompare {
     input:
-    path("constrol.sorted.bam")
+    path("control.sorted.bam")
     path("test.sorted.bam")
     path("control.sorted.bam.bai")
     path("test.sorted.bam.bai")
@@ -584,7 +556,7 @@ workflow {
     params.test2 = "$projectDir/../data/test1_2.fq"
     params.genome_fa = "$projectDir/../data/human.fa"
     params.genome_gtf = "$projectDir/../data/hg19_anno.gtf"
-    params.gtf = "$projectDir/../data/hg19.refGene.gtf"
+    params.gtf = "$projectDir/../data/hg19.gtf"
     params.sample_id1 = "control"
     params.sample_id2 = "test"
     params.work_dir = "$projectDir/../data/"
@@ -676,10 +648,6 @@ workflow {
     samtools_index_control = IndexCONTROL(samtools_sort_control)
     samtools_index_test = IndexTEST(samtools_sort_test)
 
-    // Assemble transcripts using StringTie for control and test samples
-    stringtie_control = StringTieCONTROL(samtools_sort_control, gtf2_ch)
-    stringtie_test = StringTieTEST(samtools_sort_test, gtf2_ch)
-
     // Count features using FeatureCounts for control and test samples
     featurecounts_control = FeatureCountsCONTROL(samtools_sort_control, gtf_ch)
     featurecounts_test = FeatureCountsTEST(samtools_sort_test, gtf_ch)
@@ -694,7 +662,7 @@ workflow {
     pca = PCA(bam_summary)
 
     // Generate fingerprint plot
-    fingerprint = Fingerprint(samtools_sort_control, samtools_sort_test)
+    fingerprint = Fingerprint(samtools_sort_control, samtools_sort_test, samtools_index_control, samtools_index_test)
 
     // Compare BAM files
     bam_compare = BamCompare(samtools_sort_control, samtools_sort_test, samtools_index_control, samtools_index_test)
