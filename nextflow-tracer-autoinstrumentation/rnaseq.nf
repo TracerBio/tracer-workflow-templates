@@ -1,24 +1,13 @@
 nextflow.enable.dsl=2
 
-params.control1 = "$projectDir/../data/control1_1.fq"
-params.control2 = "$projectDir/../data/control1_2.fq"
-params.test1 = "$projectDir/../data/test1_1.fq"
-params.test2 = "$projectDir/../data/test1_2.fq"
-params.test2 = "$projectDir/../data/test1_2.fq"
-params.output_dir = "$projectDir/../data/s1_1.fq"
-params.genome_fa = "$projectDir/../data/human.fa"
-params.genome_gtf = "$projectDir/../data/hg19_anno.gtf"
-params.sample_id1 = "control"
-params.sample_id2 = "test"
-
-process FastQC-CONTROL {
+process FastQCCONTROL {
     tag "$sample_id1"
     input:
     path(control1)
     path(control2)
 
     output:
-    path '$projectDir/../data/'
+    path "."
 
     script:
     """
@@ -26,14 +15,14 @@ process FastQC-CONTROL {
     """
 }
 
-process FastQC-TEST {
+process FastQCTEST {
     tag "$sample_id2"
     input:
     path(test1)
     path(test2)
 
     output:
-    path '$projectDir/../data/'
+    path "."
 
     script:
     """
@@ -46,7 +35,8 @@ process Bowtie2Index {
     path genome_fa
 
     output:
-    path "$projectDir/../data/human_index"
+    path "human_index.*.bt2"
+    path "human_index.rev.*.bt2"
 
     script:
     """
@@ -54,13 +44,16 @@ process Bowtie2Index {
     """
 }
 
-process Bowtie2Map-CONTROL {
+process Bowtie2MapCONTROL {
     tag "$sample_id1"
     input:
-    tuple val(sample_id1), path(control1), path(control2), path 'human_index'
+    path(control1)
+    path(control2) 
+    path "human_index.*.bt2"
+    path "human_index.rev.*.bt2"
 
     output:
-    path '$projectDir/../data/control.sam'
+    path ("control.sam")
 
     script:
     """
@@ -68,13 +61,16 @@ process Bowtie2Map-CONTROL {
     """
 }
 
-process Bowtie2Map-TEST {
+process Bowtie2MapTEST {
     tag "$sample_id2"
     input:
-    tuple val(sample_id2), path(test1), path(test2), path 'human_index'
+    path(test1)
+    path(test2)
+    path "human_index.*.bt2"
+    path "human_index.rev.*.bt2"
 
     output:
-    path '$projectDir/../data/test.sam'
+    path ("test.sam")
 
     script:
     """
@@ -84,10 +80,11 @@ process Bowtie2Map-TEST {
 
 process STARIndex {
     input:
-    path genome_fa, path genome_gtf
+    path genome_fa
+    path genome_gtf
 
     output:
-    path '$projectDir/../data/human_star'
+    path ("human_star")
 
     script:
     """
@@ -95,14 +92,16 @@ process STARIndex {
     """
 }
 
-process STARMap-CONTROL {
+process STARMapCONTROL {
     tag "$sample_id1"
     input:
-    tuple val(sample_id1), path(control1), path(control2), path 'human_star'
+    path(control1)
+    path(control2)
+    path("human_star")
 
     output:
-    path "$projectDir/../data/control_star_Aligned.sortedByCoord.out.bam"
-    path "$projectDir/../data/control_star_ReadsPerGene.out.tab"
+    path "control_star_Aligned.sortedByCoord.out.bam"
+    path "control_star_ReadsPerGene.out.tab"
 
     script:
     """
@@ -110,14 +109,16 @@ process STARMap-CONTROL {
     """
 }
 
-process STARMap-TEST {
+process STARMapTEST {
     tag "$sample_id2"
     input:
-    tuple val(sample_id2), path(test1), path(test2), path 'human_star'
+    path(test1)
+    path(test2)
+    path("human_star")
 
     output:
-    path "$projectDir/../data/test_star_Aligned.sortedByCoord.out.bam"
-    path "$projectDir/../data/test_star_ReadsPerGene.out.tab"
+    path "test_star_Aligned.sortedByCoord.out.bam"
+    path "test_star_ReadsPerGene.out.tab"
 
     script:
     """
@@ -125,13 +126,13 @@ process STARMap-TEST {
     """
 }
 
-process SamToFasta-CONTROL {
+process SamToFastaCONTROL {
     tag "$sample_id1"
     input:
-    path 'control.sam'
+    path("control.sam")
 
     output:
-    path "$projectDir/../data/control.fa"
+    path "control.fa"
 
     script:
     """
@@ -139,13 +140,13 @@ process SamToFasta-CONTROL {
     """
 }
 
-process SamToFasta-TEST {
+process SamToFastaTEST {
     tag "$sample_id2"
     input:
-    path 'test.sam'
+    path ("test.sam")
 
     output:
-    path "$projectDir/../data/test.fa"
+    path "test.fa"
 
     script:
     """
@@ -153,13 +154,13 @@ process SamToFasta-TEST {
     """
 }
 
-process KallistoIndex-CONTROL {
+process KallistoIndexCONTROL {
     tag "$sample_id1"
     input:
-    tuple val(sample_id1), path 'control.fa'
+    path("control.fa")
 
     output:
-    path "$projectDir/../data/control_index"
+    path ("control_index")
 
     script:
     """
@@ -167,13 +168,13 @@ process KallistoIndex-CONTROL {
     """
 }
 
-process KallistoIndex-TEST {
+process KallistoIndexTEST {
     tag "$sample_id2"
     input:
-    tuple val(sample_id2), path 'test.fa'
+    path ("test.fa")
 
     output:
-    path "$projectDir/../data/test_index"
+    path "test_index"
 
     script:
     """
@@ -181,31 +182,35 @@ process KallistoIndex-TEST {
     """
 }
 
-process KallistoQuant-CONTROL {
+process KallistoQuantCONTROL {
     tag "$sample_id1"
     input:
-    tuple val(sample_id1), path(control1), path(control2), path 'control_index'
+    path(control1)
+    path(control2)
+    path ("control_index/*")
 
     output:
-    path "$projectDir/../data/control_quant"
+    path "control_quant"
 
     script:
     """
-    kallisto quant -t 4 -i control_index -o ./control_quant $control1 $control2
+    kallisto quant -t 4 -i control_index -o control_quant $control1 $control2
     """
 }
 
-process KallistoQuant-TEST {
+process KallistoQuantTEST {
     tag "$sample_id2"
     input:
-    tuple val(sample_id2), path(test1), path(test2), path 'test_index'
+    path(test1)
+    path(test2)
+    path ("test_index/*")
 
     output:
-    path "$projectDir/../data/test_quant"
+    path "test_quant"
 
     script:
     """
-    kallisto quant -t 4 -i test_index -o ./test_quant $test1 $test2
+    kallisto quant -t 4 -i test_index -o test_quant $test1 $test2
     """
 }
 
@@ -214,7 +219,7 @@ process SalmonIndex {
     path genome_fa
 
     output:
-    path "$projectDir/../data/salmon_index"
+    path "salmon_index/*"
 
     script:
     """
@@ -222,31 +227,35 @@ process SalmonIndex {
     """
 }
 
-process SalmonQuant-CONTROL {
+process SalmonQuantCONTROL {
     tag "$sample_id1"
     input:
-    tuple val(sample_id1), path(control1), path(control2), path 'salmon_index'
+    path(control1)
+    path(control2)
+    path("salmon_index/*")
 
     output:
-    path "$projectDir/../data/salmon_control"
+    path "salmon_control"
 
     script:
     """
-    salmon quant --threads 4 --libType=U -i salmon_index -1 $control1 -2 $control2 -o ./salmon_control
+    salmon quant --threads 4 --libType=U -i salmon_index -1 $control1 -2 $control2 -o salmon_control
     """
 }
 
-process SalmonQuant-TEST {
+process SalmonQuantTEST {
     tag "$sample_id2"
     input:
-    tuple val(sample_id2), path(test1), path(test2), path 'salmon_index'
+    path(test1)
+    path(test2)
+    path("salmon_index/*")
 
     output:
-    path "$projectDir/../data/salmon_test"
+    path "salmon_test"
 
     script:
     """
-    salmon quant --threads 4 --libType=U -i salmon_index -1 $test1 -2 $test2 -o ./salmon_test
+    salmon quant --threads 4 --libType=U -i salmon_index -1 $test1 -2 $test2 -o salmon_test
     """
 }
 
@@ -255,7 +264,7 @@ process Hisat2Index {
     path genome_fa
 
     output:
-    path "$projectDir/../data/hisat2_index"
+    path "hisat2_index.*.ht2"
 
     script:
     """
@@ -263,13 +272,15 @@ process Hisat2Index {
     """
 }
 
-process Hisat2Align-CONTROL {
+process Hisat2AlignCONTROL {
     tag "$sample_id1"
     input:
-    tuple val(sample_id1), path(control1), path(control2), path 'hisat2_index'
+    path(control1)
+    path(control2)
+    path("hisat2_index.*.ht2")
 
     output:
-    path "$projectDir/../data/control_hs2.sam"
+    path "control_hs2.sam"
 
     script:
     """
@@ -277,13 +288,15 @@ process Hisat2Align-CONTROL {
     """
 }
 
-process Hisat2Align-TEST {
+process Hisat2AlignTEST {
     tag "$sample_id2"
     input:
-    tuple val(sample_id2), path(test1), path(test2), path 'hisat2_index'
+    path(test1)
+    path(test2)
+    path("hisat2_index.*.ht2")
 
     output:
-    path "$projectDir/../data/test_hs2.sam"
+    path "test_hs2.sam"
 
     script:
     """
@@ -296,7 +309,11 @@ process BWAIndex {
     path genome_fa
 
     output:
-    path "$projectDir/../data/bwa_index"
+    path "bwa_index.amb"
+    path "bwa_index.ann"
+    path "bwa_index.bwt"
+    path "bwa_index.pac"
+    path "bwa_index.sa"
 
     script:
     """
@@ -304,13 +321,19 @@ process BWAIndex {
     """
 }
 
-process BWAAlign-CONTROL {
+process BWAAlignCONTROL {
     tag "$sample_id1"
     input:
-    tuple val(sample_id1), path(control1), path(control2), path 'bwa_index'
+    path(control1)
+    path(control2)
+    path "bwa_index.amb"
+    path "bwa_index.ann"
+    path "bwa_index.bwt"
+    path "bwa_index.pac"
+    path "bwa_index.sa"
 
     output:
-    path "$projectDir/../data/control_reads.sam"
+    path "control_reads.sam"
 
     script:
     """
@@ -318,13 +341,19 @@ process BWAAlign-CONTROL {
     """
 }
 
-process BWAAlign-TEST {
+process BWAAlignTEST {
     tag "$sample_id2"
     input:
-    tuple val(sample_id2), path(test1), path(test2), path 'bwa_index'
+    path(test1)
+    path(test2)
+    path "bwa_index.amb"
+    path "bwa_index.ann"
+    path "bwa_index.bwt"
+    path "bwa_index.pac"
+    path "bwa_index.sa"
 
     output:
-    path "$projectDir/../data/test_reads.sam"
+    path "test_reads.sam"
 
     script:
     """
@@ -332,47 +361,98 @@ process BWAAlign-TEST {
     """
 }
 
-process SamtoolsSortIndex-CONTROL {
+process SamToBamCONTROL {
     tag "$sample_id1"
     input:
     path("control.sam")
 
     output:
-    path("$projectDir/../data/control.bam")
-    path("$projectDir/../data/control.sorted.bam")
+    path "control.bam"
 
     script:
     """
     samtools view -@ 4 -b control.sam > control.bam
-    samtools sort -@ 4 control.bam -o control.sorted.bam
-    samtools index control.sorted.bam
     """
 }
 
-process SamtoolsSortIndex-TEST {
+process SamToBamTEST {
     tag "$sample_id2"
     input:
     path("test.sam")
 
     output:
-    path("$projectDir/../data/test.bam")
-    path("$projectDir/../data/test.sorted.bam")
+    path "test.bam"
 
     script:
     """
     samtools view -@ 4 -b test.sam > test.bam
+    """
+}
+
+process BamSortedCONTROL {
+    tag "$sample_id1"
+    input:
+    path("control.bam")
+
+    output:
+    path "control.sorted.bam"
+
+    script:
+    """
+    samtools sort -@ 4 control.bam -o control.sorted.bam
+    """
+}
+
+process BamSortedTEST {
+    tag "$sample_id2"
+    input:
+    path("test.bam")
+
+    output:
+    path "test.sorted.bam"
+
+    script:
+    """
     samtools sort -@ 4 test.bam -o test.sorted.bam
+    """
+}
+
+process IndexCONTROL {
+    tag "$sample_id1"
+    input:
+    path("control.sorted.bam")
+
+    output:
+    path "control.sorted.bam.bai"
+
+    script:
+    """
+    samtools index control.sorted.bam
+    """
+}
+
+process IndexTEST {
+    tag "$sample_id2"
+    input:
+    path("test.sorted.bam")
+
+    output:
+    path "test.sorted.bam.bai"
+
+    script:
+    """
     samtools index test.sorted.bam
     """
 }
 
-process StringTie-CONTROL {
+process StringTieCONTROL {
     tag "$sample_id1"
     input:
-    path("$projectDir/../data/control.sorted.bam"), path(genome_gtf)
+    path("control.sorted.bam")
+    path(genome_gtf)
 
     output:
-    path("$projectDir/../data/control.gtf")
+    path "control.gtf"
 
     script:
     """
@@ -380,13 +460,14 @@ process StringTie-CONTROL {
     """
 }
 
-process StringTie-TEST {
+process StringTieTEST {
     tag "$sample_id2"
     input:
-    path("$projectDir/../data/test.sorted.bam"), path(genome_gtf)
+    path("test.sorted.bam")
+    path(genome_gtf)
 
     output:
-    path("$projectDir/../data/test.gtf")
+    path "test.gtf"
 
     script:
     """
@@ -394,13 +475,14 @@ process StringTie-TEST {
     """
 }
 
-process FeatureCounts-CONTROL {
+process FeatureCountsCONTROL {
     tag "$sample_id1"
     input:
-    path("control.sorted.bam"), path(genome_gtf)
+    path("control.sorted.bam")
+    path(genome_gtf)
 
     output:
-    path("$projectDir/../data/control_counts")
+    path "control_counts"
 
     script:
     """
@@ -408,13 +490,14 @@ process FeatureCounts-CONTROL {
     """
 }
 
-process FeatureCounts-TEST {
+process FeatureCountsTEST {
     tag "$sample_id2"
     input:
-    path("test.sorted.bam"), path(genome_gtf)
+    path("test.sorted.bam")
+    path(genome_gtf)
 
     output:
-    path("$projectDir/../data/test_counts")
+    path "test_counts"
 
     script:
     """
@@ -424,10 +507,10 @@ process FeatureCounts-TEST {
 
 process MultiQC {
     input:
-    path("$projectDir/../data/*")
+    path("*")
 
     output:
-    path("$projectDir/../data/")
+    path "."
 
     script:
     """
@@ -437,10 +520,13 @@ process MultiQC {
 
 process BamSummary {
     input:
-    path("control.sorted.bam"), path("test.sorted.bam")
+    path("control.sorted.bam")
+    path("test.sorted.bam")
+    path("control.sorted.bam.bai")
+    path("test.sorted.bam.bai")
 
     output:
-    path "$projectDir/../data/rnaseq.npz"
+    path "rnaseq.npz"
 
     script:
     """
@@ -450,10 +536,10 @@ process BamSummary {
 
 process PCA {
     input:
-    path "$projectDir/../data/rnaseq.npz"
+    path "rnaseq.npz"
 
     output:
-    path "$projectDir/../data/PCA_rnaseq.png"
+    path "PCA_rnaseq.png"
 
     script:
     """
@@ -463,23 +549,27 @@ process PCA {
 
 process Fingerprint {
     input:
-    path("control.sorted.bam"), path("test.sorted.bam")
+    path("control.sorted.bam")
+    path("test.sorted.bam")
 
     output:
-    path "$projectDir/../data/fingerprint_rnaseq.png"
+    path "fingerprint_rnaseq.png"
 
     script:
     """
-    plotFingerprint -b ${bam_files.join(' ')} --labels Control Test --plotFile fingerprint_rnaseq.png
+    plotFingerprint -b control.sorted.bam test.sorted.bam --labels Control Test --plotFile fingerprint_rnaseq.png
     """
 }
 
 process BamCompare {
     input:
-    tuple path(test_bam), path(control_bam)
+    path("constrol.sorted.bam")
+    path("test.sorted.bam")
+    path("control.sorted.bam.bai")
+    path("test.sorted.bam.bai")
 
     output:
-    path "$projectDir/../data/differential.bw"
+    path "differential.bw"
 
     script:
     """
@@ -488,95 +578,124 @@ process BamCompare {
 }
 
 workflow {
-    // Channel to read input files
-    read_pairs = Channel.fromFilePairs("${params.reads_dir}/*_{1,2}.fq", flat: false)
+    params.control1 = "$projectDir/../data/control1_1.fq"
+    params.control2 = "$projectDir/../data/control1_2.fq"
+    params.test1 = "$projectDir/../data/test1_1.fq"
+    params.test2 = "$projectDir/../data/test1_2.fq"
+    params.genome_fa = "$projectDir/../data/human.fa"
+    params.genome_gtf = "$projectDir/../data/hg19_anno.gtf"
+    params.gtf = "$projectDir/../data/hg19.refGene.gtf"
+    params.sample_id1 = "control"
+    params.sample_id2 = "test"
+    params.work_dir = "$projectDir/../data/"
+    
+    Channel
+        .fromPath(params.control1)
+        .set { control1_ch }
 
-    // FASTQC process
-    fastqc_results = read_pairs.map { sample_id, reads -> tuple(sample_id, reads) }
-                              .set { read_pairs_ch }
-                              .map { sample_id, reads -> tuple(sample_id, reads) }
-                              .into { fastqc_ch; fastqc_ch2 }
+    Channel
+        .fromPath(params.control2)
+        .set { control2_ch }
 
-    // Bowtie2 index
-    bowtie2_index = Bowtie2Index(genome_fa: file(params.genome_fa))
+    Channel
+        .fromPath(params.test1)
+        .set { test1_ch }
 
-    // Bowtie2 mapping
-    bowtie2_map = read_pairs_ch.map { sample_id, reads -> tuple(sample_id, reads, bowtie2_index) }
-                               .set { bowtie2_map_ch }
-    Bowtie2Map(bowtie2_map_ch)
+    Channel
+        .fromPath(params.test2)
+        .set { test2_ch }
+    
+    Channel
+        .fromPath(params.genome_fa)
+        .set { fasta_ch }
 
-    // STAR index
-    star_index = STARIndex(genome_fa: file(params.genome_fa), genome_gtf: file(params.genome_gtf))
+    Channel
+        .fromPath(params.genome_gtf)
+        .set { gtf_ch }
 
-    // STAR mapping
-    star_map = read_pairs_ch.map { sample_id, reads -> tuple(sample_id, reads, star_index) }
-                            .set { star_map_ch }
-    STARMap(star_map_ch)
+    Channel
+        .fromPath(params.gtf)
+        .set { gtf2_ch }
 
-    // Sam to Fasta
-    sam_files = Channel.of(["control.sam", "test.sam"])
-    SamToFasta(sam_files)
+    // Run FastQC on control and test samples
+    fastqc_control = FastQCCONTROL(control1_ch, control2_ch)
+    fastqc_test = FastQCTEST(test1_ch, test2_ch)
 
-    // Kallisto index
-    fasta_files = Channel.of(["control.fa", "test.fa"])
-    kallisto_index = fasta_files.map { fasta -> tuple(fasta, fasta) }
-    KallistoIndex(kallisto_index)
+    // Build Bowtie2 index
+    bowtie2_index = Bowtie2Index(fasta_ch)
 
-    // Kallisto quantification
-    kallisto_quant = read_pairs_ch.map { sample_id, reads -> tuple(sample_id, reads, kallisto_index) }
-                                  .set { kallisto_quant_ch }
-    KallistoQuant(kallisto_quant_ch)
+    // Map control and test samples using Bowtie2
+    bowtie2_map_control = Bowtie2MapCONTROL(control1_ch, control2_ch, bowtie2_index)
+    bowtie2_map_test = Bowtie2MapTEST(test1_ch, test2_ch, bowtie2_index)
 
-    // Salmon index
-    salmon_index = SalmonIndex(genome_fa: file(params.genome_fa))
+    // Build STAR index
+    star_index = STARIndex(fasta_ch, gtf_ch)
 
-    // Salmon quantification
-    salmon_quant = read_pairs_ch.map { sample_id, reads -> tuple(sample_id, reads, salmon_index) }
-                                .set { salmon_quant_ch }
-    SalmonQuant(salmon_quant_ch)
+    // Map control and test samples using STAR
+    star_map_control = STARMapCONTROL(control1_ch, control2_ch, star_index)
+    star_map_test = STARMapTEST(test1_ch, test2_ch, star_index)
 
-    // Hisat2 index
-    hisat2_index = Hisat2Index(genome_fa: file(params.genome_fa))
+    // Convert SAM to FASTA for control and test samples
+    sam_to_fasta_control = SamToFastaCONTROL(bowtie2_map_control)
+    sam_to_fasta_test = SamToFastaTEST(bowtie2_map_test)
 
-    // Hisat2 alignment
-    hisat2_align = read_pairs_ch.map { sample_id, reads -> tuple(sample_id, reads, hisat2_index) }
-                                .set { hisat2_align_ch }
-    Hisat2Align(hisat2_align_ch)
+    // Build Kallisto index for control and test samples
+    kallisto_index_control = KallistoIndexCONTROL(sam_to_fasta_control)
+    kallisto_index_test = KallistoIndexTEST(sam_to_fasta_test)
 
-    // BWA index
-    bwa_index = BWAIndex(genome_fa: file(params.genome_fa))
+    // Quantify control and test samples using Kallisto
+    kallisto_quant_control = KallistoQuantCONTROL(control1_ch, control2_ch, kallisto_index_control)
+    kallisto_quant_test = KallistoQuantTEST(test1_ch, test2_ch, kallisto_index_test)
 
-    // BWA alignment
-    bwa_align = read_pairs_ch.map { sample_id, reads -> tuple(sample_id, reads, bwa_index) }
-                             .set { bwa_align_ch }
-    BWAAlign(bwa_align_ch)
+    // Build Salmon index
+    salmon_index = SalmonIndex(fasta_ch)
 
-    // Samtools sort and index
-    sam_files_from_alignments = Channel.of(["control.sam", "test.sam"])
-    SamtoolsSortIndex(sam_files_from_alignments)
+    // Quantify control and test samples using Salmon
+    salmon_quant_control = SalmonQuantCONTROL(control1_ch, control2_ch, salmon_index)
+    salmon_quant_test = SalmonQuantTEST(test1_ch, test2_ch, salmon_index)
 
-    // StringTie
-    bam_files = Channel.of(["control.sorted.bam", "test.sorted.bam"])
-    StringTie(bam_files)
+    // Build Hisat2 index
+    hisat2 = Hisat2Index(fasta_ch)
 
-    // FeatureCounts
-    feature_counts = Channel.of(["control.sorted.bam", "test.sorted.bam"])
-    FeatureCounts(feature_counts)
+    // Align control and test samples using Hisat2
+    hisat2_align_control = Hisat2AlignCONTROL(control1_ch, control2_ch, hisat2)
+    hisat2_align_test = Hisat2AlignTEST(test1_ch, test2_ch, hisat2)
 
-    // MultiQC
-    multiqc_results = Channel.of("${params.output_dir}/*")
-    MultiQC(multiqc_results)
+    // Build BWA index
+    bwa_index = BWAIndex(fasta_ch)
 
-    // BamSummary
-    bam_files_for_summary = Channel.of(["control.sorted.bam", "test.sorted.bam"])
-    BamSummary(bam_files_for_summary)
+    // Align control and test samples using BWA
+    bwa_align_control = BWAAlignCONTROL(control1_ch, control2_ch, bwa_index)
+    bwa_align_test = BWAAlignTEST(test1_ch, test2_ch, bwa_index)
 
-    // PCA
-    PCA(bam_files_for_summary)
+    // Sort and index SAM files using Samtools for control and test samples
+    samtools_view_control = SamToBamCONTROL(bowtie2_map_control)
+    samtools_view_test = SamToBamTEST(bowtie2_map_test)
+    samtools_sort_control = BamSortedCONTROL(samtools_view_control)
+    samtools_sort_test = BamSortedTEST(samtools_view_test)
+    samtools_index_control = IndexCONTROL(samtools_sort_control)
+    samtools_index_test = IndexTEST(samtools_sort_test)
 
-    // Fingerprint
-    Fingerprint(bam_files_for_summary)
+    // Assemble transcripts using StringTie for control and test samples
+    stringtie_control = StringTieCONTROL(samtools_sort_control, gtf2_ch)
+    stringtie_test = StringTieTEST(samtools_sort_test, gtf2_ch)
 
-    // BamCompare
-    BamCompare(bam_files_for_summary.collect())
+    // Count features using FeatureCounts for control and test samples
+    featurecounts_control = FeatureCountsCONTROL(samtools_sort_control, gtf_ch)
+    featurecounts_test = FeatureCountsTEST(samtools_sort_test, gtf_ch)
+
+    // Run MultiQC to summarize the results
+    multiqc = MultiQC(bowtie2_map_control)
+
+    // Generate BAM summary
+    bam_summary = BamSummary(samtools_sort_control, samtools_sort_test, samtools_index_control, samtools_index_test)
+
+    // Generate PCA plot
+    pca = PCA(bam_summary)
+
+    // Generate fingerprint plot
+    fingerprint = Fingerprint(samtools_sort_control, samtools_sort_test)
+
+    // Compare BAM files
+    bam_compare = BamCompare(samtools_sort_control, samtools_sort_test, samtools_index_control, samtools_index_test)
 }
