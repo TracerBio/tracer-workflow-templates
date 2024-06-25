@@ -1,0 +1,4 @@
+a1_1.fq filter=lfs diff=lfs merge=lfs -text
+a1_2.fq filter=lfs diff=lfs merge=lfs -text
+b1_1.fq filter=lfs diff=lfs merge=lfs -text
+b1_2.fq filter=lfs diff=lfs merge=lfs -text
