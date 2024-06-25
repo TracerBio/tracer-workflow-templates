@@ -2,3 +2,9 @@ a1_1.fq filter=lfs diff=lfs merge=lfs -text
 a1_2.fq filter=lfs diff=lfs merge=lfs -text
 b1_1.fq filter=lfs diff=lfs merge=lfs -text
 b1_2.fq filter=lfs diff=lfs merge=lfs -text
+refGene.gtf filter=lfs diff=lfs merge=lfs -text
+control2_1.fq filter=lfs diff=lfs merge=lfs -text
+control2_2.fq filter=lfs diff=lfs merge=lfs -text
+test2_1.fq filter=lfs diff=lfs merge=lfs -text
+test2_2.fq filter=lfs diff=lfs merge=lfs -text
+genome.fa filter=lfs diff=lfs merge=lfs -text
