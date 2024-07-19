@@ -1,20 +1,5 @@
 nextflow.enable.dsl=2
 
-process FASTQC {
-    tag "$sample_id"
-    input:
-    path sample1
-    path sample2
-    
-    output:
-    path '*'
-
-    script:
-    """
-    fastqc $sample1 $sample2 -o .
-    """
-}
-
 process STAR_INDEX {
     input:
     path 'human.fa'
@@ -100,8 +85,6 @@ workflow {
     Channel
         .fromPath(params.annotation_gtf)
         .set { annotation_gtf_ch }
-
-    fastqc_output = FASTQC(sample1_ch, sample2_ch)
 
     star_index_output = STAR_INDEX(genome_fasta_ch, annotation_gtf_ch)
     

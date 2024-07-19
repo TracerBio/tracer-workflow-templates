@@ -3,10 +3,6 @@
 # FASTQC - QC layer 1
 cd /workspace/tracer-workflow-templates/data
 
-# Record the execution of the FASTQC tool - FASTQC
-fastqc control1_1.fq control1_2.fq -o .;
-fastqc test1_1.fq test1_2.fq -o .;
-
 # Creating a human genome index using bowtie2 - BOWTIE2-INDEX
 bowtie2-build human.fa human_index;
 

@@ -1,13 +1,6 @@
 #!/bin/bash
  
-# FASTQC - QC layer 1
 cd /workspace/tracer-workflow-templates/data;
-
-echo "Running FASTQC...";
-start_fastqc=$(date +%s%3N);
-fastqc s1_1.fq s1_2.fq -o .;
-end_fastqc=$(date +%s%3N);
-fastqc_duration=$((end_fastqc - start_fastqc));
 
 # Creating a human genome index using STAR
 echo "Creating a human genome index using STAR...";
@@ -52,7 +45,6 @@ total_duration=$((end_time - start_time))
 
 # Print the durations in milliseconds
 {
-	echo "Execution duration of FASTQC: $fastqc_duration milliseconds"
 	echo "Execution duration of STAR genome generation: $star_genome_duration milliseconds"
 	echo "Execution duration of STAR alignment: $star_align_duration milliseconds"
 	echo "Execution duration of samtools: $samtools_duration milliseconds"

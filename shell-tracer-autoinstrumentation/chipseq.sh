@@ -1,13 +1,9 @@
 #!/bin/bash
  
-# FASTQC - QC layer 1
 cd /workspace/tracer-workflow-templates/data;
-
-fastqc s1_1.fq s1_2.fq -o .;
 
 # Creating a human genome index using STAR
 STAR --runThreadN 4 --runMode genomeGenerate --genomeDir ./human_genome --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99;
-
 
 # Align RNA-Seq reads to the genome using STAR
 STAR --runThreadN 4 --genomeDir ./human_genome --readFilesIn s1_1.fq s1_2.fq --outFileNamePrefix P1s1 --outSAMtype BAM SortedByCoordinate;

@@ -4,13 +4,6 @@
 tracer start;
 tracer log "Started Tracer run";
  
-# FASTQC - QC layer 1
-cd /workspace/tracer-workflow-templates/data;
-
-tracer tool fastqc 0.12.1;
-fastqc s1_1.fq s1_2.fq -o .;
-
-# Record the execution of the FASTQC tool
 tracer tool star-index 1.7.0;
 
 # Creating a human genome index using STAR

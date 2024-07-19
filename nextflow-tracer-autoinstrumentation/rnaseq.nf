@@ -1,35 +1,5 @@
 nextflow.enable.dsl=2
 
-process FastQCCONTROL {
-    tag "$sample_id1"
-    input:
-    path(control1)
-    path(control2)
-
-    output:
-    path "."
-
-    script:
-    """
-    fastqc $control1 $control2 -o .
-    """
-}
-
-process FastQCTEST {
-    tag "$sample_id2"
-    input:
-    path(test1)
-    path(test2)
-
-    output:
-    path "."
-
-    script:
-    """
-    fastqc $test1 $test2 -o .
-    """
-}
-
 process Bowtie2Index {
     input:
     path genome_fa
@@ -589,9 +559,6 @@ workflow {
         .fromPath(params.gtf)
         .set { gtf2_ch }
 
-    // Run FastQC on control and test samples
-    fastqc_control = FastQCCONTROL(control1_ch, control2_ch)
-    fastqc_test = FastQCTEST(test1_ch, test2_ch)
 
     // Build Bowtie2 index
     bowtie2_index = Bowtie2Index(fasta_ch)
