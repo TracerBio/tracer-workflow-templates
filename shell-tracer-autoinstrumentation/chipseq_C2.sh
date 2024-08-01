@@ -5,7 +5,7 @@ cd /workspace/tracer-workflow-templates/data;
 # Creating a human genome index using STAR
 echo "Creating a human genome index using STAR...";
 start_star_genome=$(date +%s%3N);
-STAR --runThreadN 4 --runMode genomeGenerate --genomeDir ./hg16_genome --genomeSAindexNbases 10 --genomeFastaFiles hg16.fa --sjdbGTFfile hg19.refGene.gtf --sjdbOverhang 99;
+STAR --runThreadN 4 --runMode genomeGenerate --genomeDir ./hg16_genome --genomeSAindexNbases 10 --genomeFastaFiles hg16.fa --sjdbOverhang 99;
 end_star_genome=$(date +%s%3N);
 star_genome_duration=$((end_star_genome - start_star_genome));
 
