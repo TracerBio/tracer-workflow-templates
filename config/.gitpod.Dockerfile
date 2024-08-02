@@ -1,2 +1,2 @@
-FROM tracer-worflows-r:tracerbio
+FROM tracerbio/tracer-worflows-r:tracerbio
 # Additional setup if needed
