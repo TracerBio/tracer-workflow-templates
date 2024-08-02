@@ -34,6 +34,38 @@ ENV PATH="/opt/conda/bin:$PATH"
 RUN mkdir -p /home/gitpod/.cache/conda && \
     chown -R gitpod:gitpod /home/gitpod/.cache /opt/conda /workspace
 
+# Install R and required dependencies
+RUN apt-get update --quiet && \
+    apt-get install --quiet --yes \
+        r-base \
+        libxml2-dev \
+        libcurl4-openssl-dev \
+        libssl-dev \
+        libfontconfig1-dev \
+        libharfbuzz-dev \
+        libfribidi-dev \
+        libfreetype6-dev \
+        libpng-dev \
+        libtiff5-dev \
+        libjpeg-dev \
+        libgit2-dev \
+        libglpk-dev \
+        make \
+        build-essential
+
+# Create a writable library path for R packages
+ENV R_LIBS_USER=/usr/local/lib/R/site-library
+
+# Ensure the library path is writable
+RUN mkdir -p $R_LIBS_USER && \
+    chmod -R 777 $R_LIBS_USER
+
+# Install R packages
+RUN R -e "install.packages(c('BiocManager', 'ggplot2'), repos='http://cran.rstudio.com/')"
+
+# Install Bioconductor packages
+RUN R -e "BiocManager::install(c('DESeq2', 'tximport', 'apeglm'))"
+
 # Change user to gitpod
 USER gitpod
 
