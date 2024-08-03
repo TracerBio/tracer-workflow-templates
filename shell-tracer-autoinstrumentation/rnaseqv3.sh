@@ -140,37 +140,27 @@ print(summary(decideTests(et)))
 # Save the results to a CSV file
 write.csv(res, file = "edger_results.csv")
 
-# Create a random matrix for the heatmap
-# Simulating log fold changes for 5 random genes and 2 samples (control and test)
-set.seed(123)  # For reproducibility
+# Read the diff.txt file for heatmap generation
+diff_data <- read.table("diff.txt", header = TRUE, sep = ",", row.names = 1)
 
-# Generate 5 random gene names
-randomGenes <- paste0("Gene_", 1:5)
+# Print the data to verify
+print("Data from diff.txt:")
+print(diff_data)
 
-# Create a 5x2 matrix of random logFC values
-logCounts <- matrix(runif(5 * 2, -2, 2), nrow = 5, dimnames = list(randomGenes, c("control", "test")))
+# Ensure melted_data has the correct column names
+colnames(diff_data) <- c("logFC")
 
-# Convert the random log-transformed data to a data frame
-heatmapData <- as.data.frame(logCounts)
-heatmapData$Gene <- rownames(heatmapData)
-
-# Reshape data to long format for ggplot2
-meltedHeatmapData <- melt(heatmapData, id.vars = "Gene")
-
-# Ensure meltedHeatmapData has the correct column names
-colnames(meltedHeatmapData) <- c("Gene", "Sample", "Expression")
-
-# Plot heatmap using ggplot2
-ggplot(meltedHeatmapData, aes(x = Sample, y = Gene, fill = Expression)) +
+# Plot the heatmap using ggplot2
+ggplot(diff_data, aes(x = rownames(diff_data), y = logFC, fill = logFC)) +
   geom_tile() +
-  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  scale_fill_gradient2(low = "blue", mid = "white", high = "red", midpoint = 0) +
   theme_minimal() +
-  labs(title = "Randomly Simulated Heatmap", x = "Sample", y = "Gene") +
-  theme(axis.text.y = element_text(size = 8)) +
+  labs(title = "Heatmap of Differential Expression", x = "Gene", y = "logFC") +
+  theme(axis.text.y = element_text(size = 10)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Save the plot
-ggsave("heatmap_random_genes.png", width = 10, height = 8)
+ggsave("diff_heatmap.png", width = 6, height = 4)
 
 EOF
 
