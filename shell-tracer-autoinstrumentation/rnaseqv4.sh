@@ -17,13 +17,11 @@ samtools fasta control.sam > control.fa
 samtools fasta test.sam > test.fa
 
 # Sort and Index the output sam files - SAMTOOLS-CONTROL
-samtools view -@ 4 -b control1_starAligned.out.sam > control.bam 
-samtools sort control.bam -@ 4 -o control.sorted.bam;
+mv control1_starAligned.sortedByCoord.out.bam control.sorted.bam;
 samtools index control.sorted.bam;
 
 # Sort and Index the output sam files - SAMTOOLS-TEST
-samtools view -@ 4 -b test1_starAligned.out.sam > test.bam 
-samtools sort test.bam -@ 4 -o test.sorted.bam;
+mv test1_starAligned.sortedByCoord.out.bam test.sorted.bam;
 samtools index test.sorted.bam;
 
 # Predict potential transcripts in control and test BAM files using StringTie - STRINGTIE
