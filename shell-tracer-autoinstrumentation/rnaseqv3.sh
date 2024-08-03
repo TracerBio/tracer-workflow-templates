@@ -12,55 +12,9 @@ bowtie2 --local -x human_index -1 control1_1.fq -2 control1_2.fq -S control.sam;
 # Align RNA-Seq reads of test experiment to the genome using bowtie2 - BOWTIE2-TEST-MAP
 bowtie2 --local -x human_index -1 test1_1.fq -2 test1_2.fq -S test.sam;
 
-# Creating a human genome index using STAR - STAR-INDEX
-STAR --runThreadN 4 --runMode genomeGenerate --genomeDir ./human_star --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19_anno.gtf --sjdbOverhang 99;
-
-# Align RNA-Seq reads of control to the genome using STAR - STAR-CONTROL-MAP
-STAR --runThreadN 4 --genomeDir ./human_star --readFilesIn control1_1.fq control1_2.fq --outFileNamePrefix control1_star --outSAMtype BAM SortedByCoordinate --quantMode GeneCounts;
-
-# Align RNA-Seq reads of test experiment to the genome using STAR - STAR-TEST-MAP
-STAR --runThreadN 4 --genomeDir ./human_star --readFilesIn test1_1.fq test1_2.fq --outFileNamePrefix test1_star --outSAMtype BAM SortedByCoordinate --quantMode GeneCounts;
-
 # Convert SAM files into transcriptome FASTA files - SAM2FASTA
 samtools fasta control.sam > control.fa
 samtools fasta test.sam > test.fa
-
-# Creating a transcriptome index using kallisto - KALLISTO-INDEX
-kallisto index -t 4 -i control_index control.fa;
-kallisto index -t 4 -i test_index test.fa;
-
-# Quantify RNA-Seq reads of control to the genome using kallisto - KALLISTO-CONTROL-QUANT
-kallisto quant -t 4 -i control_index -o ./control_quant control1_1.fq control1_2.fq;
-
-# Quantify RNA-Seq reads of test experiment to the genome using kallisto - KALLISTO-TEST-QUANT
-kallisto quant -t 4 -i test_index -o ./test_quant test1_1.fq test1_2.fq;
-
-# Creating a human genome index using salmon - SALMON-INDEX
-salmon index --threads 4 -t human.fa -i salmon_index;
-
-# Align RNA-Seq reads of control to the genome using salmon - SALMON-CONTROL-QUANT
-salmon quant --threads 4 --libType=U -i salmon_index -1 control1_1.fq -2 control1_2.fq -o ./salmon_control;
-
-# Align RNA-Seq reads of test experiment to the genome using salmon - SALMON-TEST-QUANT
-salmon quant --threads 4 --libType=U -i salmon_index -1 test1_1.fq -2 test1_2.fq -o ./salmon_test;
-
-# Creating a human genome index using hisat2 - HISAT2-INDEX
-hisat2-build human.fa hisat2_index;
-
-# Align RNA-Seq reads of control to the genome using hisat2 - HISAT2-CONTROL-ALIGN
-hisat2 --fast -x hisat2_index -1 control1_1.fq -2 control1_2.fq -S control_hs2.sam;
-
-# Align RNA-Seq reads of test experiment to the genome using hisat2 - HISAT2-TEST-ALIGN
-hisat2 --fast -x hisat2_index -1 test1_1.fq -2 test1_2.fq -S test_hs2.sam;
-
-# Creating a human genome index using bwa - BWA-INDEX
-bwa index -p bwa_index human.fa;
-
-# Align RNA-Seq reads of control to the genome using bwa - BWA-CONTROL-QUANT
-bwa mem bwa_index control1_1.fq control1_2.fq > control_reads.sam;
-
-# Align RNA-Seq reads of test experiment to the genome using bwa - BWA-TEST-QUANT
-bwa mem bwa_index test1_1.fq test1_2.fq > test_reads.sam;
 
 # Sort and Index the output sam files - SAMTOOLS-CONTROL
 samtools view -@ 4 -b control.sam > control.bam 
@@ -77,8 +31,8 @@ stringtie -o control.gtf -G hg19_anno.gtf control.sorted.bam;
 stringtie -o test.gtf -G hg19_anno.gtf test.sorted.bam;
 
 # Calculate transcript counts from BAM files using featureCounts - FEATURECOUNTS
-featureCounts -p --countReadPairs -B -C -T 4 -a hg19_anno.gtf -o control_counts control.sorted.bam;
-featureCounts -p --countReadPairs -B -C -T 4 -a hg19_anno.gtf -o test_counts test.sorted.bam;
+featureCounts -p --countReadPairs -B -C -T 4 -a hg19_anno.gtf -o control_counts.txt control.sorted.bam;
+featureCounts -p --countReadPairs -B -C -T 4 -a hg19_anno.gtf -o test_counts.txt test.sorted.bam;
 
 # Collate logs and perform post-mapping QC with MULTIQC - MULTIQC
 multiqc .;
@@ -95,47 +49,135 @@ plotFingerprint -b control.sorted.bam test.sorted.bam --labels Control Test --pl
 # Obtain bigwig files for visualization of data - BAMCOMPARE
 bamCompare -b1 test.sorted.bam -b2 control.sorted.bam -o differential.bw -of bigwig
 
+# Run the R script for edgeR analysis and heatmap creation
 Rscript - <<EOF
 # Load necessary libraries
-library(DESeq2)
+if (!requireNamespace("edgeR", quietly = TRUE)) {
+  install.packages("edgeR", repos='http://cran.rstudio.com/')
+}
+
+if (!requireNamespace("ggplot2", quietly = TRUE)) {
+  install.packages("ggplot2", repos='http://cran.rstudio.com/')
+}
+
+if (!requireNamespace("reshape2", quietly = TRUE)) {
+  install.packages("reshape2", repos='http://cran.rstudio.com/')
+}
+
+library(edgeR)
+library(ggplot2)
+library(reshape2)
 
 # Set working directory to where the count files are
 setwd("/workspace/tracer-workflow-templates/data")
 
 # List all count files
-files <- list.files(pattern = "*.counts.txt", full.names = TRUE)
+files <- list.files(pattern = "*_counts.txt$", full.names = TRUE)
 
-# Define sample names
+# Check if files are loaded correctly
+print("Count files found:")
+print(files)
+
+# Define sample names based on the number of count files detected
 sampleNames <- c("control", "test")
 
-# Read count data into DESeq2 format
+# Read count data into edgeR format
 countData <- lapply(files, function(x) {
-  data <- read.table(x, header = TRUE, row.names = 1)
-  data[, 1]
+  data <- read.table(x, header = TRUE, row.names = 1, sep = "\t")  # Ensure correct delimiter
+  counts <- data[, ncol(data)]  # Take the count column
+  names(counts) <- rownames(data)
+  return(counts)
 })
 
 # Combine into a single matrix
 countMatrix <- do.call(cbind, countData)
+print("Count matrix dimensions:")
+print(dim(countMatrix))
 
-# Define conditions for each sample
-condition <- factor(c("control", "test"))
+# Verify consistency of row names across all files
+consistent_rows <- Reduce(intersect, lapply(countData, names))
+print("Number of consistent rows (genes) across samples:")
+print(length(consistent_rows))
 
-# Create a DESeq2 dataset
-colData <- data.frame(row.names = sampleNames, condition)
-dds <- DESeqDataSetFromMatrix(countData = countMatrix, colData = colData, design = ~ condition)
+# Ensure the count matrix is constructed using consistent row names
+countMatrix <- countMatrix[consistent_rows, , drop=FALSE]
 
-# Run DESeq2 analysis
-dds <- DESeq(dds)
+# Visualize distribution of counts to understand data before filtering
+boxplot(countMatrix, main = "Boxplot of raw counts", las = 2)
+
+# Define group for each sample
+group <- factor(sampleNames)
+
+# Create a DGEList
+dge <- DGEList(counts = countMatrix, group = group)
+
+# Check the DGEList object
+print("DGEList object:")
+print(dge)
+
+# Explore filtering threshold for low counts
+# Print number of genes before filtering
+print(paste("Number of genes before filtering:", nrow(dge$counts)))
+
+# Filter lowly expressed genes with a less stringent threshold
+keep <- rowSums(cpm(dge) > 0.5) >= 1  # At least 1 sample should have CPM > 0.5
+dge <- dge[keep, , keep.lib.sizes=FALSE]
+
+# Check dimensions after filtering
+print("Dimensions after filtering:")
+print(dim(dge$counts))
+
+# Normalize the data
+dge <- calcNormFactors(dge)
+
+# Manually set the common dispersion for data without replicates
+common_dispersion <- 0.1  # You can adjust this value based on prior knowledge or literature
+dge$common.dispersion <- common_dispersion
+
+# Perform exact test using the manually set common dispersion
+et <- exactTest(dge, dispersion = common_dispersion)
 
 # Obtain results
-res <- results(dds)
+res <- topTags(et, n = Inf)$table
 
 # Print summary of results
-print(summary(res))
+print(summary(decideTests(et)))
 
 # Save the results to a CSV file
-write.csv(as.data.frame(res), file = "deseq2_results.csv")
+write.csv(res, file = "edger_results.csv")
+
+# Create a random matrix for the heatmap
+# Simulating log fold changes for 5 random genes and 2 samples (control and test)
+set.seed(123)  # For reproducibility
+
+# Generate 5 random gene names
+randomGenes <- paste0("Gene_", 1:5)
+
+# Create a 5x2 matrix of random logFC values
+logCounts <- matrix(runif(5 * 2, -2, 2), nrow = 5, dimnames = list(randomGenes, c("control", "test")))
+
+# Convert the random log-transformed data to a data frame
+heatmapData <- as.data.frame(logCounts)
+heatmapData$Gene <- rownames(heatmapData)
+
+# Reshape data to long format for ggplot2
+meltedHeatmapData <- melt(heatmapData, id.vars = "Gene")
+
+# Ensure meltedHeatmapData has the correct column names
+colnames(meltedHeatmapData) <- c("Gene", "Sample", "Expression")
+
+# Plot heatmap using ggplot2
+ggplot(meltedHeatmapData, aes(x = Sample, y = Gene, fill = Expression)) +
+  geom_tile() +
+  scale_fill_gradient2(low = "blue", high = "red", mid = "white", midpoint = 0) +
+  theme_minimal() +
+  labs(title = "Randomly Simulated Heatmap", x = "Sample", y = "Gene") +
+  theme(axis.text.y = element_text(size = 8)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Save the plot
+ggsave("heatmap_random_genes.png", width = 10, height = 8)
 
 EOF
 
-echo "Analysis completed. DESeq2 results saved to deseq2_results.csv."
+echo "Analysis completed. edgeR results and heatmap saved."
