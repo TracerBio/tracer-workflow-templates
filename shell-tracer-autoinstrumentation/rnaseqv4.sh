@@ -3,26 +3,26 @@
 # FASTQC - QC layer 1
 cd /workspace/tracer-workflow-templates/data
 
-# Creating a human genome index using bowtie2 - BOWTIE2-INDEX
-bowtie2-build human.fa human_index;
+# Creating a human genome index using STAR - STAR-INDEX
+STAR --runThreadN 4 --runMode genomeGenerate --genomeDir ./human_star --genomeSAindexNbases 10 --genomeFastaFiles human.fa --sjdbGTFfile hg19_anno.gtf --sjdbOverhang 99;
 
-# Align RNA-Seq reads of control to the genome using bowtie2 - BOWTIE2-CONTROL-MAP
-bowtie2 --local -x human_index -1 control1_1.fq -2 control1_2.fq -S control.sam;
+# Align RNA-Seq reads of control to the genome using STAR - STAR-CONTROL-MAP
+STAR --runThreadN 4 --genomeDir ./human_star --readFilesIn control1_1.fq control1_2.fq --outFileNamePrefix control1_star --outSAMtype BAM SortedByCoordinate --quantMode GeneCounts;
 
-# Align RNA-Seq reads of test experiment to the genome using bowtie2 - BOWTIE2-TEST-MAP
-bowtie2 --local -x human_index -1 test1_1.fq -2 test1_2.fq -S test.sam;
+# Align RNA-Seq reads of test experiment to the genome using STAR - STAR-TEST-MAP
+STAR --runThreadN 4 --genomeDir ./human_star --readFilesIn test1_1.fq test1_2.fq --outFileNamePrefix test1_star --outSAMtype BAM SortedByCoordinate --quantMode GeneCounts;
 
 # Convert SAM files into transcriptome FASTA files - SAM2FASTA
 samtools fasta control.sam > control.fa
 samtools fasta test.sam > test.fa
 
 # Sort and Index the output sam files - SAMTOOLS-CONTROL
-samtools view -@ 4 -b control.sam > control.bam 
+samtools view -@ 4 -b control1_starAligned.out.sam > control.bam 
 samtools sort control.bam -@ 4 -o control.sorted.bam;
 samtools index control.sorted.bam;
 
 # Sort and Index the output sam files - SAMTOOLS-TEST
-samtools view -@ 4 -b test.sam > test.bam 
+samtools view -@ 4 -b test1_starAligned.out.sam > test.bam 
 samtools sort test.bam -@ 4 -o test.sorted.bam;
 samtools index test.sorted.bam;
 
