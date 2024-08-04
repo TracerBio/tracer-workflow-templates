@@ -101,7 +101,8 @@ RUN conda config --add channels defaults && \
         black \
         prettier \
         pre-commit \
-        pytest-workflow && \
+        pytest-workflow \
+        snakemake && \
     conda clean --all --force-pkgs-dirs --yes
 
 # Install deeptools
