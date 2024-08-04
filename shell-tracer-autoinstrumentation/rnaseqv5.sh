@@ -44,6 +44,6 @@ plotFingerprint -b control.sorted.bam test.sorted.bam --labels Control Test --pl
 bamCompare -b1 test.sorted.bam -b2 control.sorted.bam -o differential.bw -of bigwig
 
 # Run the R script for edgeR analysis and heatmap creation
-Rscript rnaseq.r
+Rscript DESeq2.r
 
 echo "Analysis completed. edgeR results and heatmap saved."
