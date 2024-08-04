@@ -1,13 +1,32 @@
 # Use the data directory from the configuration file
 DATA_DIR = "/workspace/tracer-workflow-templates/data"
 
+# Final target rule that depends on the final outputs you want
+rule all:
+    input:
+        f"{DATA_DIR}/control.sorted.bam",
+        f"{DATA_DIR}/test.sorted.bam",
+        f"{DATA_DIR}/control.sorted.bam.bai",
+        f"{DATA_DIR}/test.sorted.bam.bai",
+        f"{DATA_DIR}/control_counts.txt",
+        f"{DATA_DIR}/test_counts.txt",
+        f"{DATA_DIR}/control.gtf",
+        f"{DATA_DIR}/test.gtf",
+        f"{DATA_DIR}/multiqc_report.html",
+        f"{DATA_DIR}/rnaseq.npz",
+        f"{DATA_DIR}/PCA_rnaseq.png",
+        f"{DATA_DIR}/fingerprint_rnaseq.png",
+        f"{DATA_DIR}/differential.bw",
+        f"{DATA_DIR}/edger_results.csv",
+        f"{DATA_DIR}/diff_heatmap.png"
+
 # Rule for creating a STAR genome index
 rule star_index:
     input:
         fasta=f"{DATA_DIR}/human.fa",
         gtf=f"{DATA_DIR}/hg19_anno.gtf"
     output:
-        index_dir=directory("human_star")
+        index_dir=directory(f"{DATA_DIR}/human_star")
     threads: 4
     shell:
         """
@@ -20,11 +39,11 @@ rule star_index:
 # Rule for aligning control RNA-Seq reads using STAR
 rule star_align_control:
     input:
-        index_dir="human_star",
+        index_dir=f"{DATA_DIR}/human_star",  # Fixed: No directory() function here
         reads1=f"{DATA_DIR}/control1_1.fq",
         reads2=f"{DATA_DIR}/control1_2.fq"
     output:
-        bam="control.sorted.bam"
+        bam=f"{DATA_DIR}/control.sorted.bam"
     threads: 4
     shell:
         """
@@ -37,11 +56,11 @@ rule star_align_control:
 # Rule for aligning test RNA-Seq reads using STAR
 rule star_align_test:
     input:
-        index_dir="human_star",
+        index_dir=f"{DATA_DIR}/human_star",  # Fixed: No directory() function here
         reads1=f"{DATA_DIR}/test1_1.fq",
         reads2=f"{DATA_DIR}/test1_2.fq"
     output:
-        bam="test.sorted.bam"
+        bam=f"{DATA_DIR}/test.sorted.bam"
     threads: 4
     shell:
         """
@@ -54,9 +73,9 @@ rule star_align_test:
 # Rule for indexing control BAM files with SAMtools
 rule samtools_index_control:
     input:
-        bam="control.sorted.bam"
+        bam=f"{DATA_DIR}/control.sorted.bam"
     output:
-        bai="control.sorted.bam.bai"
+        bai=f"{DATA_DIR}/control.sorted.bam.bai"
     shell:
         """
         samtools index {input.bam}
@@ -65,9 +84,9 @@ rule samtools_index_control:
 # Rule for indexing test BAM files with SAMtools
 rule samtools_index_test:
     input:
-        bam="test.sorted.bam"
+        bam=f"{DATA_DIR}/test.sorted.bam"
     output:
-        bai="test.sorted.bam.bai"
+        bai=f"{DATA_DIR}/test.sorted.bam.bai"
     shell:
         """
         samtools index {input.bam}
@@ -76,22 +95,23 @@ rule samtools_index_test:
 # Rule for predicting transcripts using StringTie for control
 rule stringtie_control:
     input:
-        bam="control.sorted.bam",
+        bam=f"{DATA_DIR}/control.sorted.bam",
         gtf=f"{DATA_DIR}/hg19_anno.gtf"
     output:
-        gtf="control.gtf"
+        gtf=f"{DATA_DIR}/control.gtf"
+    threads: 4  # Use multiple threads for performance
     shell:
         """
-        stringtie -o {output.gtf} -G {input.gtf} {input.bam}
+        stringtie -p {threads} -v -G {input.gtf} {input.bam} -o {output.gtf} 
         """
 
 # Rule for calculating transcript counts using featureCounts for control
 rule featurecounts_control:
     input:
-        bam="control.sorted.bam",
+        bam=f"{DATA_DIR}/control.sorted.bam",
         gtf=f"{DATA_DIR}/hg19_anno.gtf"
     output:
-        counts="control_counts.txt"
+        counts=f"{DATA_DIR}/control_counts.txt"
     threads: 4
     shell:
         """
@@ -101,22 +121,23 @@ rule featurecounts_control:
 # Rule for predicting transcripts using StringTie for test
 rule stringtie_test:
     input:
-        bam="test.sorted.bam",
+        bam=f"{DATA_DIR}/test.sorted.bam",
         gtf=f"{DATA_DIR}/hg19_anno.gtf"
     output:
-        gtf="test.gtf"
+        gtf=f"{DATA_DIR}/test.gtf"
+    threads: 4  # Use multiple threads for performance
     shell:
         """
-        stringtie -o {output.gtf} -G {input.gtf} {input.bam}
+        stringtie -p {threads} -v -G {input.gtf} {input.bam} -o {output.gtf} 
         """
 
 # Rule for calculating transcript counts using featureCounts for test
 rule featurecounts_test:
     input:
-        bam="test.sorted.bam",
+        bam=f"{DATA_DIR}/test.sorted.bam",
         gtf=f"{DATA_DIR}/hg19_anno.gtf"
     output:
-        counts="test_counts.txt"
+        counts=f"{DATA_DIR}/test_counts.txt"
     threads: 4
     shell:
         """
@@ -126,23 +147,26 @@ rule featurecounts_test:
 # Rule for collating logs and performing post-mapping QC with MultiQC
 rule multiqc:
     input:
-        expand("{sample}_counts.txt", sample=["control", "test"]),
-        expand("{sample}.gtf", sample=["control", "test"]),
-        expand("{sample}.sorted.bam", sample=["control", "test"])
+        f"{DATA_DIR}/control_counts.txt",
+        f"{DATA_DIR}/test_counts.txt",
+        f"{DATA_DIR}/control.gtf",
+        f"{DATA_DIR}/test.gtf",
+        f"{DATA_DIR}/control.sorted.bam",
+        f"{DATA_DIR}/test.sorted.bam"
     output:
-        report="multiqc_report.html"
+        report=f"{DATA_DIR}/multiqc_report.html"
     shell:
         """
-        multiqc .
+        multiqc {DATA_DIR}
         """
 
 # Rule for generating summary of BAM files using deeptools
 rule deeptools_summary:
     input:
-        bam_control="control.sorted.bam",
-        bam_test="test.sorted.bam"
+        bam_control=f"{DATA_DIR}/control.sorted.bam",
+        bam_test=f"{DATA_DIR}/test.sorted.bam"
     output:
-        npz="rnaseq.npz"
+        npz=f"{DATA_DIR}/rnaseq.npz"
     shell:
         """
         multiBamSummary bins --bamfiles {input.bam_control} {input.bam_test} -o {output.npz}
@@ -151,9 +175,9 @@ rule deeptools_summary:
 # Rule for PCA analysis using deeptools
 rule pca_plot:
     input:
-        npz="rnaseq.npz"
+        npz=f"{DATA_DIR}/rnaseq.npz"
     output:
-        pca_png="PCA_rnaseq.png"
+        pca_png=f"{DATA_DIR}/PCA_rnaseq.png"
     shell:
         """
         plotPCA -in {input.npz} -o {output.pca_png}
@@ -162,10 +186,10 @@ rule pca_plot:
 # Rule for RNA-Seq data comparison via Fingerprint plots using deeptools
 rule fingerprint_plot:
     input:
-        bam_control="control.sorted.bam",
-        bam_test="test.sorted.bam"
+        bam_control=f"{DATA_DIR}/control.sorted.bam",
+        bam_test=f"{DATA_DIR}/test.sorted.bam"
     output:
-        fingerprint_png="fingerprint_rnaseq.png"
+        fingerprint_png=f"{DATA_DIR}/fingerprint_rnaseq.png"
     shell:
         """
         plotFingerprint -b {input.bam_control} {input.bam_test} --labels Control Test --plotFile {output.fingerprint_png}
@@ -174,10 +198,10 @@ rule fingerprint_plot:
 # Rule for obtaining bigwig files for visualization using deeptools
 rule bamcompare:
     input:
-        bam_control="control.sorted.bam",
-        bam_test="test.sorted.bam"
+        bam_control=f"{DATA_DIR}/control.sorted.bam",
+        bam_test=f"{DATA_DIR}/test.sorted.bam"
     output:
-        bw="differential.bw"
+        bw=f"{DATA_DIR}/differential.bw"
     shell:
         """
         bamCompare -b1 {input.bam_test} -b2 {input.bam_control} -o {output.bw} -of bigwig
@@ -186,30 +210,13 @@ rule bamcompare:
 # Rule for running the R script for edgeR analysis and heatmap creation
 rule run_deseq2_r:
     input:
-        counts_control="control_counts.txt",
-        counts_test="test_counts.txt",
+        counts_control=f"{DATA_DIR}/control_counts.txt",
+        counts_test=f"{DATA_DIR}/test_counts.txt",
         diff_txt=f"{DATA_DIR}/diff.txt"  # Assuming diff.txt is in the data directory
     output:
-        csv="edger_results.csv",
-        heatmap_png="diff_heatmap.png"
+        csv=f"{DATA_DIR}/edger_results.csv",
+        heatmap_png=f"{DATA_DIR}/diff_heatmap.png"
     shell:
         """
         Rscript ./DESeq2.r
         """
-
-# Final target rule that depends on the final outputs you want
-rule all:
-    input:
-        "control.sorted.bam.bai",
-        "test.sorted.bam.bai",
-        "control_counts.txt",
-        "test_counts.txt",
-        "control.gtf",
-        "test.gtf",
-        "multiqc_report.html",
-        "rnaseq.npz",
-        "PCA_rnaseq.png",
-        "fingerprint_rnaseq.png",
-        "differential.bw",
-        "edger_results.csv",
-        "diff_heatmap.png"
