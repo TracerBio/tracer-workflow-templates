@@ -10,8 +10,6 @@ rule all:
         f"{DATA_DIR}/test.sorted.bam.bai",
         f"{DATA_DIR}/control_counts.txt",
         f"{DATA_DIR}/test_counts.txt",
-        f"{DATA_DIR}/control.gtf",
-        f"{DATA_DIR}/test.gtf",
         f"{DATA_DIR}/multiqc_report.html",
         f"{DATA_DIR}/rnaseq.npz",
         f"{DATA_DIR}/PCA_rnaseq.png",
@@ -92,19 +90,6 @@ rule samtools_index_test:
         samtools index {input.bam}
         """
 
-# Rule for predicting transcripts using StringTie for control
-rule stringtie_control:
-    input:
-        bam=f"{DATA_DIR}/control.sorted.bam",
-        gtf=f"{DATA_DIR}/hg19_anno.gtf"
-    output:
-        gtf=f"{DATA_DIR}/control.gtf"
-    threads: 4  # Use multiple threads for performance
-    shell:
-        """
-        stringtie -p {threads} -v -G {input.gtf} {input.bam} -o {output.gtf} 
-        """
-
 # Rule for calculating transcript counts using featureCounts for control
 rule featurecounts_control:
     input:
@@ -116,19 +101,6 @@ rule featurecounts_control:
     shell:
         """
         featureCounts -p --countReadPairs -B -C -T {threads} -a {input.gtf} -o {output.counts} {input.bam}
-        """
-
-# Rule for predicting transcripts using StringTie for test
-rule stringtie_test:
-    input:
-        bam=f"{DATA_DIR}/test.sorted.bam",
-        gtf=f"{DATA_DIR}/hg19_anno.gtf"
-    output:
-        gtf=f"{DATA_DIR}/test.gtf"
-    threads: 4  # Use multiple threads for performance
-    shell:
-        """
-        stringtie -p {threads} -v -G {input.gtf} {input.bam} -o {output.gtf} 
         """
 
 # Rule for calculating transcript counts using featureCounts for test
@@ -149,8 +121,6 @@ rule multiqc:
     input:
         f"{DATA_DIR}/control_counts.txt",
         f"{DATA_DIR}/test_counts.txt",
-        f"{DATA_DIR}/control.gtf",
-        f"{DATA_DIR}/test.gtf",
         f"{DATA_DIR}/control.sorted.bam",
         f"{DATA_DIR}/test.sorted.bam"
     output:
@@ -218,5 +188,5 @@ rule run_deseq2_r:
         heatmap_png=f"{DATA_DIR}/diff_heatmap.png"
     shell:
         """
-        Rscript ./DESeq2.r
+        Rscript ../data/DESeq2.r
         """
