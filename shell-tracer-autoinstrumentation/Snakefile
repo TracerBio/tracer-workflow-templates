@@ -10,7 +10,6 @@ rule all:
         f"{DATA_DIR}/test.sorted.bam.bai",
         f"{DATA_DIR}/control_counts.txt",
         f"{DATA_DIR}/test_counts.txt",
-        f"{DATA_DIR}/multiqc_report.html",  # Updated to match directory
         f"{DATA_DIR}/rnaseq.npz",
         f"{DATA_DIR}/PCA_rnaseq.png",
         f"{DATA_DIR}/fingerprint_rnaseq.png",
