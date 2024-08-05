@@ -10,7 +10,7 @@ rule all:
         f"{DATA_DIR}/test.sorted.bam.bai",
         f"{DATA_DIR}/control_counts.txt",
         f"{DATA_DIR}/test_counts.txt",
-        f"{DATA_DIR}/multiqc_report.html",
+        f"{DATA_DIR}/multiqc_report.html",  # Updated to match directory
         f"{DATA_DIR}/rnaseq.npz",
         f"{DATA_DIR}/PCA_rnaseq.png",
         f"{DATA_DIR}/fingerprint_rnaseq.png",
@@ -37,7 +37,7 @@ rule star_index:
 # Rule for aligning control RNA-Seq reads using STAR
 rule star_align_control:
     input:
-        index_dir=f"{DATA_DIR}/human_star",  # Fixed: No directory() function here
+        index_dir=f"{DATA_DIR}/human_star",
         reads1=f"{DATA_DIR}/control1_1.fq",
         reads2=f"{DATA_DIR}/control1_2.fq"
     output:
@@ -54,7 +54,7 @@ rule star_align_control:
 # Rule for aligning test RNA-Seq reads using STAR
 rule star_align_test:
     input:
-        index_dir=f"{DATA_DIR}/human_star",  # Fixed: No directory() function here
+        index_dir=f"{DATA_DIR}/human_star",
         reads1=f"{DATA_DIR}/test1_1.fq",
         reads2=f"{DATA_DIR}/test1_2.fq"
     output:
@@ -124,10 +124,10 @@ rule multiqc:
         f"{DATA_DIR}/control.sorted.bam",
         f"{DATA_DIR}/test.sorted.bam"
     output:
-        report=f"{DATA_DIR}/multiqc_report.html"
+        report=directory(f"{DATA_DIR}/multiqc_report")  # Specify as directory
     shell:
         """
-        multiqc {DATA_DIR}
+        multiqc {DATA_DIR} -o {output.report}
         """
 
 # Rule for generating summary of BAM files using deeptools
