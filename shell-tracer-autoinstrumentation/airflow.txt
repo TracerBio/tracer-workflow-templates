@@ -1,0 +1,1 @@
+airflow users create     --username tracer     --firstname Admin     --lastname User     --role Admin     --email hello@tracer.bio
