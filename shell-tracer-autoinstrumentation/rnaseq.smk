@@ -1,37 +1,42 @@
 # Snakefile for RNA-Seq analysis pipeline
 
-configfile: "config.yaml"
+# Use the data directory from the configuration file
+DATA_DIR = "/workspace/tracer-workflow-templates/data"
 
+# Define the samples that will be processed
+SAMPLES = ["control"]
+
+# Final target rule that depends on the final outputs you want
 rule all:
     input:
-        # Specify final output files for the entire pipeline
-        "results/multiqc/multiqc_report.html",
-        "results/deeptools/PCA_rnaseq.png",
-        "results/deeptools/fingerprint_rnaseq.png",
-        "results/deeptools/differential.bw"
-
-# FASTQC - QC layer 1
-rule fastqc:
-    input:
-        fq1=config["fq1"],
-        fq2=config["fq2"]
-    output:
-        "results/fastqc/{sample}_1_fastqc.html",
-        "results/fastqc/{sample}_2_fastqc.html"
-    shell:
-        """
-        fastqc {input.fq1} -o results/fastqc/
-        fastqc {input.fq2} -o results/fastqc/
-        """
-
+        f"{DATA_DIR}/control.sorted.bam",
+        f"{DATA_DIR}/control.sorted.bam.bai",
+        f"{DATA_DIR}/control.fa",
+        f"{DATA_DIR}/control_counts.txt",
+        f"{DATA_DIR}/rnaseq.npz",
+        f"{DATA_DIR}/PCA_rnaseq.png",
+        f"{DATA_DIR}/fingerprint_rnaseq.png",
+        f"{DATA_DIR}/differential.bw",
+        f"{DATA_DIR}/multiqc_report.html",
+        expand(f"{DATA_DIR}/human_index.{{i}}.bt2", i=range(1, 4)),
+        expand(f"{DATA_DIR}/human_index.rev.{{i}}.bt2", i=range(1, 2)),
+        expand(f"{DATA_DIR}/hisat2_index.{{i}}.ht2", i=range(1, 9)),
+        expand(f"{DATA_DIR}/bwa_index.{{suffix}}", suffix=["bwt", "pac", "ann", "amb", "sa"]),
+        f"{DATA_DIR}/control_starAligned.sortedByCoord.out.bam",
+        f"{DATA_DIR}/control_starAligned.sortedByCoord.out.bam",
+        f"{DATA_DIR}/control_starReadsPerGene.out.tab",
+        directory(f"{DATA_DIR}/salmon_index"),
+        directory(f"{DATA_DIR}/control_salmon_quant"),
+        
 # Creating a human genome index using bowtie2 - BOWTIE2-INDEX
 rule bowtie2_index:
     input:
-        fa="data/human.fa"
+        fa=f"{DATA_DIR}/human.fa"
     output:
-        "results/bowtie2/human_index.1.bt2"
+        expand(f"{DATA_DIR}/human_index.{{i}}.bt2", i=range(1, 4)),
+        expand(f"{DATA_DIR}/human_index.rev.{{i}}.bt2", i=range(1, 2)),
     params:
-        prefix="results/bowtie2/human_index"
+        prefix=f"{DATA_DIR}/human_index"
     shell:
         """
         bowtie2-build {input.fa} {params.prefix}
@@ -40,11 +45,11 @@ rule bowtie2_index:
 # Align RNA-Seq reads to the genome using bowtie2 - BOWTIE2-MAP
 rule bowtie2_map:
     input:
-        index="results/bowtie2/human_index",
-        fq1="data/{sample}_1.fq",
-        fq2="data/{sample}_2.fq"
+        index=f"{DATA_DIR}/human_index",
+        fq1=f"{DATA_DIR}/control1_1.fq",
+        fq2=f"{DATA_DIR}/control1_2.fq"
     output:
-        "results/bowtie2/{sample}.sam"
+        f"{DATA_DIR}/{{sample}}.sam"
     shell:
         """
         bowtie2 --local -x {input.index} -1 {input.fq1} -2 {input.fq2} -S {output}
@@ -53,10 +58,10 @@ rule bowtie2_map:
 # Creating a human genome index using STAR - STAR-INDEX
 rule star_index:
     input:
-        fa="data/human.fa",
-        gtf="data/hg19_anno.gtf"
+        fa=f"{DATA_DIR}/human.fa",
+        gtf=f"{DATA_DIR}/hg19_anno.gtf"
     output:
-        directory("results/star/human_star")
+        directory(f"{DATA_DIR}/human_star")
     params:
         sjdbOverhang=99
     shell:
@@ -72,14 +77,14 @@ rule star_index:
 # Align RNA-Seq reads to the genome using STAR - STAR-MAP
 rule star_map:
     input:
-        index=directory("results/star/human_star"),
-        fq1="data/{sample}_1.fq",
-        fq2="data/{sample}_2.fq"
+        index=f"{DATA_DIR}/human_star",
+        fq1=f"{DATA_DIR}/{{sample}}1_1.fq",
+        fq2=f"{DATA_DIR}/{{sample}}1_2.fq"
     output:
-        bam="results/star/{sample}_starAligned.sortedByCoord.out.bam",
-        counts="results/star/{sample}_starReadsPerGene.out.tab"
+        bam=f"{DATA_DIR}/{{sample}}_starAligned.sortedByCoord.out.bam",
+        counts=f"{DATA_DIR}/{{sample}}_starReadsPerGene.out.tab"
     params:
-        prefix="results/star/{sample}_star"
+        prefix=f"{DATA_DIR}/{{sample}}_star"
     shell:
         """
         STAR --runThreadN 4 --genomeDir {input.index} \
@@ -92,44 +97,20 @@ rule star_map:
 # Convert SAM files into transcriptome FASTA files - SAM2FASTA
 rule samtools_fasta:
     input:
-        sam="results/bowtie2/{sample}.sam"
+        sam=f"{DATA_DIR}/{{sample}}.sam"
     output:
-        fa="results/bowtie2/{sample}.fa"
+        fa=f"{DATA_DIR}/{{sample}}.fa"
     shell:
         """
         samtools fasta {input.sam} > {output.fa}
         """
 
-# Creating a transcriptome index using kallisto - KALLISTO-INDEX
-rule kallisto_index:
-    input:
-        fa="results/bowtie2/{sample}.fa"
-    output:
-        index="results/kallisto/{sample}_index"
-    shell:
-        """
-        kallisto index -t 4 -i {output.index} {input.fa}
-        """
-
-# Quantify RNA-Seq reads using kallisto - KALLISTO-QUANT
-rule kallisto_quant:
-    input:
-        index="results/kallisto/{sample}_index",
-        fq1="data/{sample}_1.fq",
-        fq2="data/{sample}_2.fq"
-    output:
-        directory("results/kallisto/{sample}_quant")
-    shell:
-        """
-        kallisto quant -t 4 -i {input.index} -o {output} {input.fq1} {input.fq2}
-        """
-
 # Creating a human genome index using salmon - SALMON-INDEX
 rule salmon_index:
     input:
-        fa="data/human.fa"
+        fa=f"{DATA_DIR}/human.fa"
     output:
-        directory("results/salmon/salmon_index")
+        directory(f"{DATA_DIR}/salmon_index")
     shell:
         """
         salmon index --threads 4 -t {input.fa} -i {output}
@@ -138,11 +119,11 @@ rule salmon_index:
 # Quantify RNA-Seq reads using salmon - SALMON-QUANT
 rule salmon_quant:
     input:
-        index=directory("results/salmon/salmon_index"),
-        fq1="data/{sample}_1.fq",
-        fq2="data/{sample}_2.fq"
+        index=f"{DATA_DIR}/salmon_index",
+        fq1=f"{DATA_DIR}/{{sample}}1_1.fq",
+        fq2=f"{DATA_DIR}/{{sample}}1_2.fq"
     output:
-        directory("results/salmon/{sample}_quant")
+        directory(f"{DATA_DIR}/{{sample}}_salmon_quant")
     shell:
         """
         salmon quant --threads 4 --libType=U \
@@ -154,11 +135,11 @@ rule salmon_quant:
 # Creating a human genome index using hisat2 - HISAT2-INDEX
 rule hisat2_index:
     input:
-        fa="data/human.fa"
+        fa=f"{DATA_DIR}/human.fa"
     output:
-        "results/hisat2/hisat2_index.1.ht2"
+        expand(f"{DATA_DIR}/hisat2_index.{{i}}.ht2", i=range(1, 9))
     params:
-        prefix="results/hisat2/hisat2_index"
+        prefix=f"{DATA_DIR}/hisat2_index"
     shell:
         """
         hisat2-build {input.fa} {params.prefix}
@@ -167,24 +148,24 @@ rule hisat2_index:
 # Align RNA-Seq reads to the genome using hisat2 - HISAT2-ALIGN
 rule hisat2_align:
     input:
-        index="results/hisat2/hisat2_index",
-        fq1="data/{sample}_1.fq",
-        fq2="data/{sample}_2.fq"
+        index=f"{DATA_DIR}/hisat2_index",
+        fq1=f"{DATA_DIR}/{{sample}}1_1.fq",
+        fq2=f"{DATA_DIR}/{{sample}}1_2.fq"
     output:
-        sam="results/hisat2/{sample}_hs2.sam"
+        sam=f"{DATA_DIR}/{{sample}}_hs2.sam"
     shell:
         """
-        hisat2 --fast -x {input.index} -1 {input.fq1} -2 {input.fq2} -S {output.sam}
+        hisat2 --fast -x {input.index} -1 {input.fq1} -2 {input.fq2} -S {output}
         """
 
 # Creating a human genome index using bwa - BWA-INDEX
 rule bwa_index:
     input:
-        fa="data/human.fa"
+        fa=f"{DATA_DIR}/human.fa"
     output:
-        "results/bwa/bwa_index.bwt"
+        expand(f"{DATA_DIR}/bwa_index.{{suffix}}", suffix=["bwt", "pac", "ann", "amb", "sa"])
     params:
-        prefix="results/bwa/bwa_index"
+        prefix=f"{DATA_DIR}/bwa_index"
     shell:
         """
         bwa index -p {params.prefix} {input.fa}
@@ -193,11 +174,11 @@ rule bwa_index:
 # Align RNA-Seq reads to the genome using bwa - BWA-QUANT
 rule bwa_quant:
     input:
-        index="results/bwa/bwa_index",
-        fq1="data/{sample}_1.fq",
-        fq2="data/{sample}_2.fq"
+        index=f"{DATA_DIR}/bwa_index",
+        fq1=f"{DATA_DIR}/{{sample}}1_1.fq",
+        fq2=f"{DATA_DIR}/{{sample}}1_2.fq"
     output:
-        sam="results/bwa/{sample}_reads.sam"
+        sam=f"{DATA_DIR}/{{sample}}_reads.sam"
     shell:
         """
         bwa mem {input.index} {input.fq1} {input.fq2} > {output.sam}
@@ -206,98 +187,87 @@ rule bwa_quant:
 # Sort and index the output SAM files - SAMTOOLS-SORT-INDEX
 rule samtools_sort_index:
     input:
-        sam="results/bowtie2/{sample}.sam"
+        sam=f"{DATA_DIR}/{{sample}}.sam"
     output:
-        bam="results/samtools/{sample}.sorted.bam",
-        bai="results/samtools/{sample}.sorted.bam.bai"
+        bam=f"{DATA_DIR}/{{sample}}.sorted.bam",
+        bai=f"{DATA_DIR}/{{sample}}.sorted.bam.bai"
     shell:
         """
         samtools view -@ 4 -b {input.sam} > {wildcards.sample}.bam
         samtools sort {wildcards.sample}.bam -@ 4 -o {output.bam}
         samtools index {output.bam}
-        rm {wildcards.sample
-
-# Predict potential transcripts in BAM files using StringTie - STRINGTIE
-rule stringtie:
-    input:
-        bam="results/samtools/{sample}.sorted.bam",
-        bai="results/samtools/{sample}.sorted.bam.bai",
-        gtf="data/hg19_anno.gtf"
-    output:
-        gtf="results/stringtie/{sample}.gtf"
-    shell:
-        """
-        stringtie {input.bam} -o {output.gtf} -G {input.gtf}
+        rm {wildcards.sample}.bam
         """
 
 # Calculate transcript counts from BAM files using featureCounts - FEATURECOUNTS
 rule featurecounts:
     input:
-        bam="results/samtools/{sample}.sorted.bam",
-        bai="results/samtools/{sample}.sorted.bam.bai",
-        gtf="data/hg19_anno.gtf"
+        bam=f"{DATA_DIR}/{{sample}}.sorted.bam",
+        bai=f"{DATA_DIR}/{{sample}}.sorted.bam.bai",
+        gtf=f"{DATA_DIR}/hg19_anno.gtf"
     output:
-        counts="results/featurecounts/{sample}_counts.txt"
+        counts=f"{DATA_DIR}/{{sample}}_counts.txt"
     shell:
         """
         featureCounts -p --countReadPairs -B -C -T 4 -a {input.gtf} -o {output.counts} {input.bam}
         """
 
-# Collate logs and perform post-mapping QC with MULTIQC - MULTIQC
+# Collate logs and perform post-mapping QC with MultiQC - MULTIQC
 rule multiqc:
     input:
-        expand("results/fastqc/{sample}_1_fastqc.html", sample=config["samples"]),
-        expand("results/fastqc/{sample}_2_fastqc.html", sample=config["samples"]),
-        expand("results/featurecounts/{sample}_counts.txt", sample=config["samples"])
+        # Collect all relevant input files for MultiQC
+        expand(f"{DATA_DIR}/{{sample}}.sam", sample=SAMPLES),
+        expand(f"{DATA_DIR}/{{sample}}_starAligned.sortedByCoord.out.bam", sample=SAMPLES),
+        expand(f"{DATA_DIR}/{{sample}}_counts.txt", sample=SAMPLES),
+        expand(f"{DATA_DIR}/{{sample}}.sorted.bam", sample=SAMPLES),
+        expand(f"{DATA_DIR}/{{sample}}.sorted.bam.bai", sample=SAMPLES)
     output:
-        html="results/multiqc/multiqc_report.html"
+        html=f"{DATA_DIR}/multiqc_report.html"
     shell:
         """
-        multiqc results/fastqc results/featurecounts -o results/multiqc/
+        multiqc {DATA_DIR} -o {DATA_DIR} --force
         """
 
-# Summary of BAM files using deeptools - BAMSUMMARY
+# Summary of BAM files using deepTools - multiBamSummary
 rule multiBamSummary:
     input:
-        bam1="results/samtools/control.sorted.bam",
-        bam2="results/samtools/test.sorted.bam"
+        bam=f"{DATA_DIR}/control.sorted.bam"
     output:
-        npz="results/deeptools/rnaseq.npz"
+        npz=f"{DATA_DIR}/rnaseq.npz"
     shell:
         """
-        multiBamSummary bins --bamfiles {input.bam1} {input.bam2} -o {output.npz}
+        multiBamSummary bins --bamfiles {input.bam} -o {output.npz}
         """
 
-# PCA analysis for RNASEQ experiments - PCA
+# PCA analysis for RNA-Seq experiments - PCA
 rule plotPCA:
     input:
-        npz="results/deeptools/rnaseq.npz"
+        npz=f"{DATA_DIR}/rnaseq.npz"
     output:
-        png="results/deeptools/PCA_rnaseq.png"
+        png=f"{DATA_DIR}/PCA_rnaseq.png"
     shell:
         """
-        plotPCA -in {input.npz} -o {output.png}
+        plotPCA --corData {input.npz} --plotFile {output.png}
         """
 
-# RNASEQ data comparison via Fingerprint plots - FINGERPRINT
+# RNA-Seq data comparison via Fingerprint plots - FINGERPRINT
 rule plotFingerprint:
     input:
-        bam1="results/samtools/control.sorted.bam",
-        bam2="results/samtools/test.sorted.bam"
+        bam=f"{DATA_DIR}/control.sorted.bam"
     output:
-        png="results/deeptools/fingerprint_rnaseq.png"
+        png=f"{DATA_DIR}/fingerprint_rnaseq.png"
     shell:
         """
-        plotFingerprint -b {input.bam1} {input.bam2} --labels Control Test --plotFile {output.png}
+        plotFingerprint -b {input.bam} --labels Control --plotFile {output.png}
         """
 
 # Obtain bigwig files for visualization of data - BAMCOMPARE
 rule bamCompare:
     input:
-        bam1="results/samtools/test.sorted.bam",
-        bam2="results/samtools/control.sorted.bam"
+        bam1=f"{DATA_DIR}/control.sorted.bam",
+        bam2=f"{DATA_DIR}/control.sorted.bam"  # Ideally you want a second sample, like test.sorted.bam
     output:
-        bw="results/deeptools/differential.bw"
+        bw=f"{DATA_DIR}/differential.bw"
     shell:
         """
         bamCompare -b1 {input.bam1} -b2 {input.bam2} -o {output.bw} -of bigwig
