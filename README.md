@@ -1,72 +1,62 @@
 # Tracer Workflow Templates
 
-# 1.1 Nextflow Tracer Workflow Templates
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/TracerBio/tracer-workflow-templates)
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracer-pod/utility-pod)
-
-This repository provides an example of using Nextflow with our tracking & observability tool - Tracer.
+This repository provides varied examples of performing RNASEQ & CHIPSEQ analyses using bash scripts and pipeline-based systems (Nextflow, Snakemake, Airflow),  integrated with our tracking & observability tool - Tracer.
 
 
-# Example 1: Nextflow RNASEQ training example with indexing & quantification
+# Example 1: bash CHIPSEQ training example with indexing, mapping & quantification
 
-1. INDEX and QUANTIFICATION processes are run and tracked by Tracer
-2. "nextflow run ./nextflow-tracer-inline-code/example1.nf"
+1. "cd shell-tracer-autoinstrumentation"
+2. "sh chipseq.sh"
+3. Tools included: STAR, samtools, MACS3, plotCoverage [deeptools]
 
-# Example 2: Nextflow RNASEQ training example with indexing & quantification - Bacterial GEO dataset
+# Example 2: bash RNASEQ training example with indexing, mapping & quantification
 
-1. INDEX and QUANTIFICATION processes are run and tracked by Tracer using GEO E.coli dataset
-2. Details of dataset available at "./examples/data/bacteria/datasets.txt"
-2. "nextflow run ./nextflow-tracer-inline-code/example2.nf"
+1. "cd shell-tracer-autoinstrumentation"
+2. "sh rnaseq.sh"
+3. Tools included: bowtie2, STAR, samtools, kallisto, salmon, hisat2, bwa, stringTie, featureCounts, MultiQC, multiBamSummary, plotPCA, plotFingerprint, bamCompare
 
-# Example 3: Nextflow RNASEQ training example with indexing & quantification - Human GEO dataset
+# Example 3: bash + RScript RNASEQ training example with indexing, mapping, quantification and data visualization
 
-1. INDEX and QUANTIFICATION processes are run and tracked by Tracer using GEO human AML dataset
-2. Details of dataset available at "./examples/data/human/datasets.txt"
-2. "nextflow run ./nextflow-tracer-inline-code/example3.nf"
+1. "cd shell-tracer-autoinstrumentation"
+2. "sh rnaseqv5.sh"
+3. Tools included: bowtie2, STAR, samtools, kallisto, salmon, hisat2, bwa, stringTie, featureCounts, MultiQC, multiBamSummary, plotPCA, plotFingerprint, bamCompare
+4. R libraries included: edgeR, ggplot2, reshape2
 
-# Example 4: Nextflow Quality control training example using FASTQC - Human GEO dataset 
+# Example 4: Snakemake RNASEQ training examples - indexing, mapping, quantification and data visualization  
 
-1. Generate data metrics and QC characteristics - GC%, reads per bp etc. for raw data (.fq files)
-2. Details of dataset available at "./examples/data/human/datasets.txt"
-2. "nextflow run ./nextflow-tracer-inline-code/example4.nf"
+1. Run "sh ./config/airflow.sh" to configure Airflow scheduler and webserver at port 8080
+2. Enter Password: tracertothestars
+3. Open webserver portal with credentials:
+    - Username: tracer
+    - Password: tracertothestars
+4. Trigger run for rnaseq_dag (RNASEQ workflow) 
+4. Tools included: bowtie2, STAR, samtools, kallisto, salmon, hisat2, bwa, stringTie, featureCounts, MultiQC, multiBamSummary, plotPCA, plotFingerprint, bamCompare
+5. R libraries included: edgeR, ggplot2, reshape2
 
-# Example 5: Nextflow CHIPSEQ training example with indexing & mapping - Human GEO dataset 
+# Example 5: Airflow RNASEQ training example - indexing, mapping, quantification and data visualization 
 
 1. Generates a human genome index and maps the CHIPSEQ data (.fq) to the index
 2. Details of dataset available at "./examples/data/human/datasets.txt"
 2. "nextflow run ./nextflow-tracer-inline-code/example5.nf"
 
-# Example 6: Nextflow complete CHIPSEQ workflow - from index to peaks - Human GEO dataset
+# Example 6: Nextflow complete CHIPSEQ workflow - from indexing to calling peaks
 
-1. Generate a genome index and performs mapping of sample dataset using STAR
-2. Calls peaks on mapped data using samtools and MACS3
-3. Performs mapping coverage analysis using deeptools
-4. "nextflow run ./nextflow-tracer-inline-code/chipseq.nf"
+1. "cd nextflow-tracer-autoinstrumentation"
+2. "nextflow run chipseq.nf"
+3. Tools included: STAR, samtools, MACS3, plotCoverage [deeptools]
 
-# 1.2 Shell Script Tracer Examples
+# Example 7: Nextflow complete RNASEQ workflow - from indexing to gene counts
 
-# Example 1: Shell script tracking for STAR mapper with RNASEQ data
-
-1. Generate a genome index and performs mapping of sample dataset using STAR
-2. Details of dataset available at "./examples/data/human/datasets.txt"
-2. "sh ./shell-tracer-inline-code/example1.sh"
-
-# Example 2: Complete CHIPSEQ processing example
-
-1. Generate a genome index and performs mapping of sample dataset using STAR
-2. Calls peaks on mapped data using samtools and MACS3
-3. Performs mapping coverage analysis using deeptools
-4. "sh ./shell-tracer-inline-code/chipseq.sh"
-
+1. "cd nextflow-tracer-autoinstrumentation"
+2. "nextflow run rnaseq.nf"
+3. Tools included: bowtie2, STAR, samtools, kallisto, salmon, hisat2, bwa, stringTie, featureCounts, MultiQC, multiBamSummary, plotPCA, plotFingerprint, bamCompare
 
     ## Files
 
-    - `example1.nf`, `example2.nf`, `example3.nf`, `example1.sh`, `example5.nf`, `example6.nf`, `chipseq.sh`, `chipseq.nf`: The main workflow script files.
-    - `index.nf`: Contains the INDEX process definition [./examples/misc/]
-    - `quantpe.nf`: Contains the QUANTIFICATION process definition. [./examples/misc/]
-    - `genomeGenerate.nf`: Contains the GENOME_GENERATE process definition. [./examples/misc/]
-    - `star-align.nf`: Contains the STAR_ALIGN process definition. [./examples/misc/]
-    - `fastqc.nf`: Contains the FASTQC process definition. [./examples/misc/]
+    - `chipseq.sh`, `chipseq.nf`: The main CHIPSEQ bash and Nextflow workflow script files.
+    - `rnaseq.sh`, `rnaseq.nf`: The main RNASEQ bash and Nextflow workflow script files.   
 
     ## Workspace
 
@@ -82,14 +72,17 @@ This repository provides an example of using Nextflow with our tracking & observ
 
     1. To clone the repository:
 
-    git clone https://github.com/tracer-pod/utility-pod.git
+    git clone https://github.com/TracerBio/tracer-workflow-templates
 
-    cd utility-pod
+    cd tracer-workflow-templates
     
 
     ## Tracer Integration
 
-    Tracer is integrated into the workflow to track the execution and versions of the processes. The workflow initiates Tracer at the beginning and terminates it at the end. 
+    Tracer is run as a daemon in your bioinformatics environment.
+
+    Use `tracer start` to initiate a new trackable run & record every step of your bioinformatics workflow!
+
 
     ## License
 
