@@ -81,7 +81,7 @@ This repository provides varied examples of performing RNASEQ & CHIPSEQ analyses
 
     ## Usage
 
-    1. To clone the repository:
+    To clone the repository:
 
     git clone https://github.com/TracerBio/tracer-workflow-templates
 
@@ -101,7 +101,7 @@ This repository provides varied examples of performing RNASEQ & CHIPSEQ analyses
 
     ## Acknowledgments
 
-    - Thanks to the Nextflow community for their excellent documentation and support.
+    - Thanks to the Nextflow, Airflow & Snakemake communities for their excellent documentation and support.
 
     ## GitPod
 
