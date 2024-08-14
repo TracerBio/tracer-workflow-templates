@@ -141,7 +141,7 @@ bamcompare = BashOperator(
 # Task: Run DESeq2 R script
 run_deseq2_r = BashOperator(
     task_id='run_deseq2_r',
-    bash_command=f"Rscript ../data/DESeq2.r",
+    bash_command=f"Rscript {DATA_DIR}/DESeq2.r",
     dag=dag,
 )
 
