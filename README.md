@@ -20,7 +20,7 @@ This repository provides varied examples of performing RNASEQ & CHIPSEQ analyses
 # Example 3: bash + RScript RNASEQ training example with indexing, mapping, quantification and data visualization
 
 1. "cd shell-tracer-autoinstrumentation"
-2. "sh rnaseqv5.sh"
+2. "sh rnaseqv3-0.sh"
 3. Tools included: bowtie2, STAR, samtools, kallisto, salmon, hisat2, bwa, stringTie, featureCounts, MultiQC, multiBamSummary, plotPCA, plotFingerprint, bamCompare
 4. R libraries included: edgeR, ggplot2, reshape2
 
@@ -56,17 +56,28 @@ This repository provides varied examples of performing RNASEQ & CHIPSEQ analyses
     ## Files
 
     - `chipseq.sh`, `chipseq.nf`: The main CHIPSEQ bash and Nextflow workflow script files.
-    - `rnaseq.sh`, `rnaseq.nf`: The main RNASEQ bash and Nextflow workflow script files.   
+    - `rnaseq.sh`, `rnaseq.nf`: The main RNASEQ bash and Nextflow workflow script files.
+    - `rnaseq2-0.sh`: This script combines bash and R to perform RNASEQ analysis - from indexing to data visualization.
+    - `rnaseq3-0.sh`: This script combines bash and RScript to perform RNASEQ analysis - from indexing to data visualization.
+    - `Snakefile`: Default snakemake RNASEQ pipeline file.
+    - `rnaseq.smk`: RNASEQ snakemake pipeline file.
+    - `rnaseq_dag.py`: RNASEQ airflow pipeline file.   
 
-    ## Workspace
+    ## Workspace Configuration
 
-    - Conda and salmon are pre-configured in the workspace using docker.
-    - deeptools, samtools are configured into the docker container.
-    - Nextflow is pre-configured in the workspace using docker.
-    - JAVA is pre-configured in the workspace using docker.
-    - STAR is pre-configured in the workspace using docker.
-    - MACS3 is pre-configured in the workspace using docker.  
-    - Tracer: The tracking tool used in this workflow. Setup your Tracer account and record your unique API key at https://app.tracer.bio. Enter this one-line installation script prior to running other example scripts.  
+    - Conda 
+    - r-base
+    - Mapping tools: salmon, bowtie2, STAR, hisat2, bwa, kallisto    
+    - deeptools, samtools
+    - MACS3, stringTie, featureCounts
+    - Nextflow
+    - Snakemake
+    - Airflow
+    - JAVA
+
+    ## Archive
+
+    Contains other example shell & Nextflow scripts for CHIPSEQ, RNASEQ.    
 
     ## Usage
 
@@ -94,7 +105,7 @@ This repository provides varied examples of performing RNASEQ & CHIPSEQ analyses
 
     ## GitPod
 
-    [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tracer-pod/utility-pod)
+    [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/TracerBio/tracer-workflow-templates)
 ---
 
 
