@@ -104,6 +104,15 @@ RUN conda config --add channels defaults && \
         airflow && \
     conda clean --all --force-pkgs-dirs --yes
 
+# Install additional tools
+RUN conda install --quiet --yes --name base \
+        trimmomatic \
+        picard \
+        gatk4 \
+        snpeff \
+        cnvkit && \
+    conda clean --all --force-pkgs-dirs --yes
+
 # Install deeptools
 RUN python -m ensurepip --upgrade && pip install deeptools
 
