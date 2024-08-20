@@ -11,3 +11,4 @@ genome.fa filter=lfs diff=lfs merge=lfs -text
 mm10.gtf filter=lfs diff=lfs merge=lfs -text
 mouse.fa filter=lfs diff=lfs merge=lfs -text
 mm9.fa filter=lfs diff=lfs merge=lfs -text
+data/exome.fq filter=lfs diff=lfs merge=lfs -text
